@@ -1,21 +1,14 @@
 <template>
-    <div>
-        <div class='message'>
-            <p class='message__text message__text--active'>{{msg}}</p>
-        </div>
-    </div>
+  <div class="weather">
+    weather
+  </div>
 </template>
 
 <script>
 import {mapState} from 'vuex'
 export default {
-  name: 'main',
+  name: 'weather',
   props: [],
-  data() {
-    return {
-      msg: 'PWR'
-    }
-  },
   computed: {
     ...mapState(['main'])
   },
@@ -35,16 +28,8 @@ export default {
 @import '../style/helpers/_responsive.scss';
 @import '../style/_variables.scss';
 
-.message {
-  padding: 20px;
-  background: blue;
-
-  &__text {
-    background: red;
-
-    &--active {
-      color: green;
-    }
-  }
+.weather {
+  height: 180px;
+  background: #bfbfbf;
 }
 </style>

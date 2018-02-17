@@ -1,13 +1,13 @@
 <template>
   <div>
-    temp
+    collection
   </div>
 </template>
 
 <script>
 import {mapState} from 'vuex'
 export default {
-  name: 'temp',
+  name: 'collection',
   props: [],
   computed: {
     ...mapState(['main'])

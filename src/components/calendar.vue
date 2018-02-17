@@ -1,13 +1,13 @@
 <template>
-  <div>
-    temp
+  <div class="calendar">
+    calendar
   </div>
 </template>
 
 <script>
 import {mapState} from 'vuex'
 export default {
-  name: 'temp',
+  name: 'calendar',
   props: [],
   computed: {
     ...mapState(['main'])
@@ -28,7 +28,8 @@ export default {
 @import '../style/helpers/_responsive.scss';
 @import '../style/_variables.scss';
 
-.temp {
-  background: #ff81f2;
+.calendar {
+  height: 100px;
+  background: #bfbfbf;
 }
 </style>

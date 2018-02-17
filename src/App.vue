@@ -1,32 +1,32 @@
 <template>
   <div class='app'>
-    <router-view />
-    <temp />
+    <router-view id='view'/>
+    <foot />
   </div>
 </template>
 
 <script>
 import {mapState, mapActions} from 'vuex'
-import temp from './components/temp'
+import foot from './components/foot'
 
 export default {
   name: 'app',
   components: {
-    temp
+    foot
   },
   data() {
     return {
       meta: {
-        sitename: 'PWR BOILERPLATE',
+        sitename: 'Sophie Hardeman',
         facebook: 'xxxxxxxxx',
         twitter: '@xxxxx',
-        title: 'PWR BOILERPLATE',
+        title: 'Sophie Hardeman',
         description: 'xxxx',
         type: 'website',
         image: 'http://xxxx',
         url: 'http://xxxx',
         defaults: {
-          title: 'PWR BOILERPLATE',
+          title: 'Home',
           description: 'xxxx',
           image: 'http://xxxx',
           type: 'website'
@@ -38,14 +38,18 @@ export default {
     ...mapState(['main'])
   },
   watch: {
-    $route(to, from) {}
-  },
-  mounted() {
-    this.$_languageFallback()
-    this.$_setMetaTags()
+    $route(to, from) {
+      this.$_fetchData(to.name)
+      this.$_setMetaTags()
+    }
   },
   methods: {
-    ...mapActions(['GET_POSTS']),
+    ...mapActions([
+      'GET_BANNER',
+      'GET_COLLECTIONS',
+      'GET_DIARY',
+      'GET_EVENTS'
+    ]),
     $_setMetaTags(meta = {}) {
       this.meta.title = meta.title || this.meta.defaults.title
       this.meta.description = meta.description || this.meta.defaults.description
@@ -54,15 +58,14 @@ export default {
       this.meta.url = 'http://xxx.com' + this.$route.fullPath
       this.$emit('updateHead')
     },
-    $_languageFallback() {
-      if (!this.$route.params.language) {
-        this.$router.push({name: 'home', params: {language: 'en'}})
-      }
-    },
     $_fetchData(routeName) {
       // All requests for data from the server originates from this function
-      if (routeName === 'home') {
-        this.GET_POSTS()
+      if (routeName === 'landing') {
+        console.log('landing')
+        this.GET_BANNER()
+        this.GET_COLLECTIONS()
+        this.GET_DIARY()
+        this.GET_EVENTS()
       }
     }
   },
@@ -74,7 +77,7 @@ export default {
     },
     meta() {
       return [
-        {name: 'application-name', content: 'Beirut Art Center'},
+        {name: 'application-name', content: 'Sophie Hardeman'},
         {name: 'description', content: this.meta.description},
         // Twitter
         {name: 'twitter:card', content: 'summary'},
@@ -105,7 +108,9 @@ export default {
 <style lang='scss'>
 @import './style/helpers/_mixins.scss';
 @import './style/helpers/_responsive.scss';
+@import './style/helpers/_reset.css';
 @import './style/_variables.scss';
+@import './style/_typography.scss';
 
 .app {
   font-family: $sans-serif-stack;
@@ -115,5 +120,11 @@ export default {
   background: $white;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100vh;
+  overflow: hidden;
+
+  #view {
+    height: calc(100% - #{$margin-top + $footer-height});
+  }
 }
 </style>

@@ -1,15 +1,24 @@
 /* Typography */
 $line-height: 26px;
-$serif-stack: 'times new roman', times, georgia, serif;
-$sans-serif-stack: helvetica, arial, sans-serif;
-$font-size: 16px;
+$serif-stack: 'Times New Roman', times, georgia, serif;
+$sans-serif-stack: arial, helvetica, sans-serif;
+$font-size: 15px;
 $line-height: 20px;
+$font-size-s: 12px;
+$line-height-s: 14px;
 /* Color */
 $background-color: #fff;
 /* Space */
 $black: #000;
 $white: #fff;
-$border-width: 1px;
+$grey: #e5e5e5;
+$yellow: #ffffa6;
+$orange: #ff6b00;
+$blue: #0000ff;
+$border: 1px solid #808080;
+$border-light: 1px solid #bfbfbf;
+$margin-top: 20px;
+$footer-height: 40px;
 /* Breakpoints */
 $breakpoints: (
   'small': (max-width: 900px),
@@ -17,3 +26,6 @@ $breakpoints: (
   'large': (max-width: 1600px),
   'short': (max-height: 700px)
 );
+
+$landing-width: 1200px;
+$banner-height: 160px;

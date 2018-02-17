@@ -1,0 +1,285 @@
+<template>
+    <div class="landing">
+      <!-- - -->
+      <!-- - -->
+      <!-- - -->
+      <!-- LEFT -->
+      <div class="landing__column_left">
+        <h1 class="landing__column_left__title">
+          hardeman
+        </h1>
+        <h4 class="landing__column_left__subtitle">
+          amsterdam based <br/>
+          fashion designer
+        </h4>
+        <ul class="landing__column_left__links">
+          <router-link :to="{
+                          name: 'collection',
+                          params: { slug: 'xxx'}
+                       }">link</router-link>
+        </ul>
+        <h4>what to wear?</h4>
+          <weather />
+        <h4>where to go?</h4>
+          <calendar />
+      </div>
+      <!-- - -->
+      <!-- - -->
+      <!-- - -->
+      <!-- MIDDLE -->
+      <div class="landing__column_middle">
+        <div class="landing__column_middle__banner">
+          <img :src='main.banner.acf.banner.sizes["s-h-medium"]'/>
+        </div>
+        <div class="landing__column_middle__sections">
+          <section class="landing__column_middle__sections__collections">
+            <h2>collections</h2>
+            <ul>
+              <router-link class="landing__column_middle__sections__collections__collection"
+                           v-for='collection in main.collections'
+                           tag='li'
+                           :key='collection.id'
+                           :to="{
+                             name: 'collection',
+                             params: { slug: collection.slug}
+                           }">
+                           <span class='landing__column_middle__sections__collections__collection--season'>{{collection.acf.season}}</span>
+                           <span class="landing__column_middle__sections__collections__collection--title">{{collection.title.rendered}}                           <sup v-for='label in collection.acf.label'>{{label.post_title}}</sup></span>
+            </router-link>
+            </ul>
+          </section>
+          <section class="landing__column_middle__sections__about">
+            <h2>about hardeman</h2>
+            <ul class="duo">
+                <li>
+                  bio
+                </li>
+                <li>
+                  contact
+                </li>
+                <li>
+                  press
+                </li>
+                <li>
+                  mailing list
+                </li>
+                <li>
+                  jobs
+                </li>
+                <li>
+                  fun facts
+                </li>
+            </ul>
+          </section>
+          <section class="landing__column_middle__sections__tv">
+            <h2>hardeman tv</h2>
+            <ul>
+              <li>
+                blue and you
+              </li>
+            </ul>
+          </section>
+          <section class="landing__column_middle__sections__shop">
+            <h2>for sale</h2>
+            <ul class="duo">
+              <li>
+                item
+              </li>
+              <li>
+                item
+              </li>
+              <li>
+                item
+              </li>
+              <li>
+                item
+              </li>
+              <li>
+                item
+              </li>
+              <li>
+                item
+              </li>
+              <li>
+                item
+              </li>
+              <li>
+                item
+              </li>
+            </ul>
+          </section>
+          <section class="landing__column_middle__sections__stockists">
+            <h2>stockists</h2>
+            <ul>
+              <li>
+                Stocky 1, Amsterdam
+              </li>
+              <li>
+                Stocky 2, Berlino
+              </li>
+              <li>
+                Etc.
+              </li>
+            </ul>
+          </section>
+        </div>
+      </div>
+      <!-- - -->
+      <!-- - -->
+      <!-- - -->
+      <!-- RIGHT -->
+      <div class="landing__column_right">
+        <h3 class="landing__column_right__head">
+          diary
+        </h3>
+        <ul>
+          <router-link v-for='entry in main.diary'
+                       tag='li'
+                       class='naturel'
+                       :key='entry.id'
+                       :to="{
+                         name: 'diary',
+                         params: { slug: entry.slug}
+                       }">
+                       {{entry.title.rendered}}
+                       <sup v-for='label in entry.acf.label'>
+                         {{label.post_title}}
+                       </sup>
+           </router-link>
+        </ul>
+        <p class="landing__column_right__toe">
+          a personal collection of photographies by sophie hardeman
+        </p>
+      </div>
+    </div>
+</template>
+
+<script>
+import {mapState} from 'vuex'
+import weather from '@/components/weather'
+import calendar from '@/components/calendar'
+
+export default {
+  name: 'landing',
+  components: {
+    weather,
+    calendar
+  },
+  props: [],
+  data() {
+    return {
+    }
+  },
+  computed: {
+    ...mapState(['main'])
+  },
+  mounted() {},
+  updated: function() {
+    this.$nextTick(function() {
+      // Code that will run only after the
+      // entire view has been re-rendered
+    })
+  },
+  methods: {}
+}
+</script>
+
+<style scoped lang='scss'>
+@import '../style/helpers/_mixins.scss';
+@import '../style/helpers/_responsive.scss';
+@import '../style/_variables.scss';
+
+.landing {
+  background: $white;
+  display: grid;
+  width: $landing-width;
+  margin: $margin-top auto 0;
+  height: 100%;
+  grid-template: 'left main right'
+                 / 3fr 9fr 2fr;
+  grid-gap: 20px;
+
+  &__column_left {
+    grid-column: 'left';
+    background: $grey;
+    border-top: $border;
+    border-left: $border;
+    border-right: $border;
+    text-align: center;
+    padding: 10px 20px 40px;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+  }
+
+  &__column_middle {
+    grid-area: 'main';
+    display: flex;
+    flex-flow: column;
+
+    &__banner {
+      width: 100%;
+      height: $banner-height;
+      margin-bottom: $line-height * 2;
+
+      img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    &__sections {
+      width: 100%;
+      height: 0;
+      flex-grow: 1;
+      margin-bottom: $line-height * 2;
+      display: flex;
+      flex-flow: column wrap;
+
+        &__collections,
+        &__about,
+        &__tv,
+        &__shop,
+        &__stockists {
+          width: calc(50% - 20px);
+          margin-right: 40px;
+          margin-bottom: $line-height * 2;
+        }
+
+        &__collections {
+          display: inline;
+          &__collection {
+            display: flex;
+            &--season {
+              display: inline-block;
+              width: 70px;
+            }
+          }
+        }
+    }
+  }
+
+  &__column_right {
+    grid-area: 'right';
+    background: $grey;
+    border-top: $border;
+    border-left: $border;
+    border-right: $border;
+    text-align: center;
+    color: $blue;
+    padding: 10px 20px 40px;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+
+    &__toe {
+      font-size: $font-size-s;
+      line-height: $line-height-s;
+      padding: $line-height-s / 2 0;
+      border-top: $border;
+      border-bottom: $border;
+    }
+  }
+}
+</style>
