@@ -1,3 +1,7 @@
+# Sophie Hardeman
+
+[Auto deploy](http://sophie-hardeman.netlify.com/)
+
 # PWR Boilerplate
 
 vue (+ wp)
@@ -32,7 +36,7 @@ npm test
 
 ## (S)CSS method
 
-[BEM](http://getbem.com/) 
+[BEM](http://getbem.com/)
 
 ## Recommended editor
 
