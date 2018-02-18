@@ -33,7 +33,9 @@
         </div>
         <div class="landing__column_middle__sections">
           <section class="landing__column_middle__sections__collections">
-            <h2>collections</h2>
+            <router-link :to="{ name: 'collection', params: {slug: 'xxx'} }"
+                          tag='h2'>
+              collections</router-link>
             <ul>
               <router-link class="landing__column_middle__sections__collections__collection"
                            v-for='collection in main.collections'

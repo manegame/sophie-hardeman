@@ -32,6 +32,18 @@ export default {
       )
     })
   },
+  getSingleCollection(slug) {
+    return new Promise((resolve, reject) => {
+      Vue.http.get(API_ROOT + 's-h_collection?slug=' + slug + '&field=title,acf,slug').then(
+        response => {
+          resolve(response.body)
+        },
+        response => {
+          reject(response)
+        }
+      )
+    })
+  },
   getDiary() {
     return new Promise((resolve, reject) => {
       Vue.http.get(API_ROOT + 's-h_diary?per_page=100').then(

@@ -4,6 +4,7 @@ import App from './App'
 import router from './router'
 import store from './store'
 import VueHead from 'vue-head'
+
 // --- GOOGLE ANALYTICS
 // import ga from 'vue-ga'
 // --- ERROR TRACKING
@@ -20,6 +21,10 @@ import VueHead from 'vue-head'
 Vue.config.productionTip = false
 
 Vue.use(VueHead)
+
+// required by FullCalendar
+window.jQuery = window.$ = require('jquery')
+// import 'fullcalendar/dist/fullcalendar.min.js'
 
 /* eslint-disable no-new */
 new Vue({

@@ -1,6 +1,8 @@
 <template>
   <div class='app'>
-    <router-view id='view'/>
+    <!-- <keep-alive> -->
+      <router-view id='view'/>
+    <!-- </keep-alive> -->
     <foot />
   </div>
 </template>
@@ -39,7 +41,7 @@ export default {
   },
   watch: {
     $route(to, from) {
-      this.$_fetchData(to.name)
+      this.$_fetchData(to)
       this.$_setMetaTags()
     }
   },
@@ -47,6 +49,8 @@ export default {
     ...mapActions([
       'GET_BANNER',
       'GET_COLLECTIONS',
+      'GET_SINGLE_COLLECTION',
+      'CLEAR_SINGLE_COLLECTION',
       'GET_DIARY',
       'GET_EVENTS'
     ]),
@@ -58,14 +62,23 @@ export default {
       this.meta.url = 'http://xxx.com' + this.$route.fullPath
       this.$emit('updateHead')
     },
-    $_fetchData(routeName) {
+    $_fetchData(route) {
       // All requests for data from the server originates from this function
-      if (routeName === 'landing') {
+      if (route.name === 'landing') {
         console.log('landing')
+        this.CLEAR_SINGLE_COLLECTION()
         this.GET_BANNER()
         this.GET_COLLECTIONS()
         this.GET_DIARY()
         this.GET_EVENTS()
+      }
+      if (route.name === 'collection') {
+        console.log('collection: ', route.params.slug)
+        // this.GET_BANNER()
+        this.GET_COLLECTIONS()
+        this.GET_SINGLE_COLLECTION(route.params.slug)
+        // this.GET_DIARY()
+        // this.GET_EVENTS()
       }
     }
   },
