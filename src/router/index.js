@@ -20,6 +20,21 @@ export default new Router({
       component: collection
     },
     {
+      path: '/about/:slug',
+      name: 'about',
+      component: collection
+    },
+    {
+      path: '/sale/:slug',
+      name: 'sale',
+      component: collection
+    },
+    {
+      path: '/hardeman-tv/:slug',
+      name: 'hardeman tv',
+      component: collection
+    },
+    {
       path: '/diary/:slug',
       name: 'diary',
       component: collection

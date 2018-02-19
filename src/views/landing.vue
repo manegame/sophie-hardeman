@@ -32,82 +32,79 @@
           <img :src='main.banner.acf.banner.sizes["s-h-medium"]'/>
         </div>
         <div class="landing__column_middle__sections">
+          <!-- - -->
+          <!-- - -->
+          <!-- - -->
+          <!-- Collections -->
           <section class="landing__column_middle__sections__collections">
             <router-link :to="{ name: 'collection', params: {slug: 'xxx'} }"
                           tag='h2'>
-              collections</router-link>
+                          collections
+                          </router-link>
             <ul>
               <router-link class="landing__column_middle__sections__collections__collection"
                            v-for='collection in main.collections'
                            tag='li'
                            :key='collection.id'
-                           :to="{
-                             name: 'collection',
-                             params: { slug: collection.slug}
-                           }">
-                           <span class='landing__column_middle__sections__collections__collection--season'>{{collection.acf.season}}</span>
-                           <span class="landing__column_middle__sections__collections__collection--title">{{collection.title.rendered}}                           <sup v-for='label in collection.acf.label'>{{label.post_title}}</sup></span>
-            </router-link>
+                           :to="{name: 'collection', params: { slug: collection.slug}}">
+                             <span class='landing__column_middle__sections__collections__collection--season'>{{collection.acf.season}}</span>
+                             <span class="landing__column_middle__sections__collections__collection--title">{{collection.title.rendered}}
+                               <sup v-for='label in collection.acf.labels'>{{label.post_title}}</sup></span>
+                          </router-link>
             </ul>
           </section>
+          <!-- - -->
+          <!-- - -->
+          <!-- - -->
+          <!-- About -->
           <section class="landing__column_middle__sections__about">
-            <h2>about hardeman</h2>
+            <router-link :to='{name: "about", params: {slug: "xxx"}}'
+                          tag='h2' >
+                          about hardeman
+                          </router-link>
             <ul class="duo">
-                <li>
-                  bio
-                </li>
-                <li>
-                  contact
-                </li>
-                <li>
-                  press
-                </li>
-                <li>
-                  mailing list
-                </li>
-                <li>
-                  jobs
-                </li>
-                <li>
-                  fun facts
-                </li>
+              <router-link tag='li'
+                           v-for='item in main.about'
+                           :key='item.id'
+                           :to='{name: "about", params: {slug: item.slug}}'>
+                             <span>{{item.title.rendered}}<sup v-for='label in item.acf.labels'>{{label.post_title}}</sup></span>
+                           </router-link>
             </ul>
           </section>
+          <!-- - -->
+          <!-- - -->
+          <!-- - -->
+          <!-- Hardeman TV -->
           <section class="landing__column_middle__sections__tv">
-            <h2>hardeman tv</h2>
+            <router-link :to='{name: "hardeman tv", params: {slug: "xxx"}}'
+                          tag='h2' >
+                          hardeman tv
+                          </router-link>
             <ul>
-              <li>
-                blue and you
-              </li>
+              <router-link tag='li'
+                           v-for='video in main.videos'
+                           :key='video.id'
+                           :to='{name: "hardeman tv", params: {slug: video.slug}}'>
+                           <span>{{video.title.rendered}}<sup v-for='label in video.acf.labels'>{{label.post_title}}</sup></span>
+              </router-link>
             </ul>
           </section>
+          <!-- - -->
+          <!-- - -->
+          <!-- - -->
+          <!-- For Sale -->
           <section class="landing__column_middle__sections__shop">
-            <h2>for sale</h2>
+            <router-link :to='{name: "sale", params: {slug: "xxx"}}'
+                          tag='h2' >
+                          for sale
+                          </router-link>
             <ul class="duo">
-              <li>
-                item
-              </li>
-              <li>
-                item
-              </li>
-              <li>
-                item
-              </li>
-              <li>
-                item
-              </li>
-              <li>
-                item
-              </li>
-              <li>
-                item
-              </li>
-              <li>
-                item
-              </li>
-              <li>
-                item
-              </li>
+              <router-link tag='li'
+                           v-for='garment in main.garment_categories'
+                           :key='garment.id'
+                           :to='{name: "sale", params: {slug: garment.slug}}'>
+                           <span>{{garment.name}}<sup v-for='label in garment.acf.labels'>{{label.post_title}}</sup></span>
+              </router-link>
             </ul>
           </section>
           <section class="landing__column_middle__sections__stockists">

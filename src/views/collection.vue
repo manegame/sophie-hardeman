@@ -53,8 +53,7 @@ export default {
       // Code that will run only after the
       // entire view has been re-rendered
     })
-  },
-  methods: {}
+  }
 }
 </script>
 
@@ -80,6 +79,13 @@ export default {
 
       &--ss {
         width: 80px;
+        flex-basis: 80px;
+        flex-shrink: 1;
+      }
+
+      &--tt {
+        flex-basis: 200px;
+        flex-shrink: 2;
       }
       &__sub {
         display: none;

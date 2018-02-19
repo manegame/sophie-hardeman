@@ -20,9 +20,10 @@ add_filter('query_vars', function ($vars) {
 add_action('after_setup_theme', 'image_size_setup');
 function image_size_setup()
 {
-    add_image_size('pwr-small', 500);
-    add_image_size('pwr-medium', 800);
-    add_image_size('pwr-large', 1400);
+    add_image_size('s-h-small', 500);
+    add_image_size('s-h-medium', 800);
+    add_image_size('s-h-large', 1400);
+    add_image_size('s-h-xtra-large', 2200);
     // add_image_size('slide-small', 300, 220, true);
     // add_image_size('slide-large', 710, 480, true);
 }
@@ -166,41 +167,137 @@ function image_size_setup()
 // -------
 // -------
 // CUSTOM POST TYPE
-// add_action('init', 'news_post_type');
-// function news_post_type()
-// {
-//     register_post_type('nyhed',
-//     array(
-//       'labels' => array(
-//         'name' => __('Nyheder'),
-//         'singular_name' => __('Nyhed')
-//       ),
-//       'public' => true,
-//       'show_in_rest' => true,
-//       'has_archive' => true,
-//     )
-//   );
-// }
+add_action('init', 'collection_post_type');
+function collection_post_type()
+{
+    register_post_type('s-h_collection',
+    array(
+      'labels' => array(
+        'name' => __('Collections'),
+        'singular_name' => __('Collection')
+      ),
+      'public' => true,
+      'show_in_rest' => true,
+      'has_archive' => true,
+    )
+  );
+}
+
+add_action('init', 'diary_post_type');
+function diary_post_type()
+{
+    register_post_type('s-h_diary',
+    array(
+      'labels' => array(
+        'name' => __('Diary'),
+        'singular_name' => __('Entry')
+      ),
+      'public' => true,
+      'show_in_rest' => true,
+      'has_archive' => true,
+    )
+  );
+}
+
+add_action('init', 'event_post_type');
+function event_post_type()
+{
+    register_post_type('s-h_events',
+    array(
+      'labels' => array(
+        'name' => __('Events'),
+        'singular_name' => __('Event')
+      ),
+      'public' => true,
+      'show_in_rest' => true,
+      'has_archive' => true,
+    )
+  );
+}
+
+add_action('init', 'label_post_type');
+function label_post_type()
+{
+    register_post_type('s-h_labels',
+    array(
+      'labels' => array(
+        'name' => __('Labels'),
+        'singular_name' => __('Label')
+      ),
+      'public' => true,
+      'show_in_rest' => true,
+      'has_archive' => true,
+    )
+  );
+}
+
+add_action('init', 'garment_post_type');
+function garment_post_type()
+{
+    register_post_type('s-h_garments',
+    array(
+      'labels' => array(
+        'name' => __('Garments'),
+        'singular_name' => __('Garment')
+      ),
+      'public' => true,
+      'show_in_rest' => true,
+      'has_archive' => true,
+    )
+  );
+}
+
+add_action('init', 'video_post_type');
+function video_post_type()
+{
+    register_post_type('s-h_videos',
+    array(
+      'labels' => array(
+        'name' => __('Hardeman TV'),
+        'singular_name' => __('video')
+      ),
+      'public' => true,
+      'show_in_rest' => true,
+      'has_archive' => true,
+    )
+  );
+}
+
+add_action('init', 'about_post_type');
+function about_post_type()
+{
+    register_post_type('s-h_about',
+    array(
+      'labels' => array(
+        'name' => __('About'),
+        'singular_name' => __('section')
+      ),
+      'public' => true,
+      'show_in_rest' => true,
+      'has_archive' => true,
+    )
+  );
+}
 
 // -------
 // -------
 // -------
 // CUSTOM TAXONOMY
-// add_action('init', 'create_project_tax');
-//
-// function create_project_tax()
-// {
-//     register_taxonomy(
-//         'category',
-//         'project',
-//         array(
-//             'label' => __('Category'),
-//             'rewrite' => array( 'slug' => 'category' ),
-//             'hierarchical' => true,
-//             'show_in_rest' => true
-//         )
-//     );
-// }
+add_action('init', 'create_project_tax');
+
+function create_project_tax()
+{
+    register_taxonomy(
+        's-h_garment_category',
+        's-h_garments',
+        array(
+            'label' => __('Garment category'),
+            'rewrite' => array( 'slug' => 'category' ),
+            'hierarchical' => true,
+            'show_in_rest' => true
+        )
+    );
+}
 
 // -------
 // -------
@@ -210,7 +307,10 @@ add_filter('acf/fields/wysiwyg/toolbars', 'my_toolbars');
 function my_toolbars($toolbars)
 {
     $toolbars['Full' ] = array();
-    $toolbars['Full' ][1] = array('italic', 'bullist', 'link', 'unlink');
+    $toolbars['Full' ][1] = array('bold', 'italic', 'link', 'unlink');
+
+    $toolbars['Sophie' ] = array();
+    $toolbars['Sophie' ][1] = array('bold');
 
     // remove the 'Basic' toolbar completely
     unset($toolbars['Basic' ]);
@@ -268,6 +368,23 @@ function my_toolbars($toolbars)
 // add_filter('tiny_mce_before_init', 'my_mce_before_init_insert_formats');
 
 
+// -------
+// -------
+// -------
+// SET ACF IMAGE AS FEATURED IMAGE
+function acf_set_featured_image( $value, $post_id, $field  ){
+
+    if($value != ''){
+	    //Add the value which is the image ID to the _thumbnail_id meta data for the current post
+	    add_post_meta($post_id, '_thumbnail_id', $value);
+    }
+
+    return $value;
+}
+
+// acf/update_value/name={$field_name} - filter for a specific field based on it's name
+add_filter('acf/update_value/name=cursusfoto', 'acf_set_featured_image', 10, 3);
+
 
 // -------
 // -------
@@ -277,7 +394,6 @@ function my_toolbars($toolbars)
 //     return 'AIzaSyA5-e0tQI0E6nqkbdKr19d9jUx7vlDj4Vg';
 // });
 
-// Allow custom order in REST 
 add_action('admin_init', 'posts_order');
 function posts_order()
 {

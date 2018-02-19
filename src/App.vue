@@ -43,6 +43,9 @@ export default {
     $route(to, from) {
       this.$_fetchData(to)
       this.$_setMetaTags()
+    },
+    'main.single'() {
+      this.main.single.acf.garments.map(g => this.GET_GARMENT(g.ID))
     }
   },
   methods: {
@@ -52,7 +55,11 @@ export default {
       'GET_SINGLE_COLLECTION',
       'CLEAR_SINGLE_COLLECTION',
       'GET_DIARY',
-      'GET_EVENTS'
+      'GET_EVENTS',
+      'GET_ABOUT',
+      'GET_GARMENT',
+      'GET_GARMENT_CATEGORIES',
+      'GET_VIDEOS'
     ]),
     $_setMetaTags(meta = {}) {
       this.meta.title = meta.title || this.meta.defaults.title
@@ -69,6 +76,9 @@ export default {
         this.CLEAR_SINGLE_COLLECTION()
         this.GET_BANNER()
         this.GET_COLLECTIONS()
+        this.GET_ABOUT()
+        this.GET_VIDEOS()
+        this.GET_GARMENT_CATEGORIES()
         this.GET_DIARY()
         this.GET_EVENTS()
       }
