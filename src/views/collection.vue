@@ -35,6 +35,18 @@
       <h1 class="collection__main__title">
         {{main.single.acf.season}} {{main.single.title.rendered}}
       </h1>
+      <div class="collection__main__lookbook">
+        <div class="collection__main__lookbook__look" v-for='item in main.single.garments'>
+          <img class="collection__main__lookbook__look__image"
+               :src='item.acf.image.sizes["s-h-medium"]'/>
+          <div class="collection__main__lookbook__look__meta">
+            {{main.single.acf.season}}
+            {{item.title.rendered}}
+            <span v-if='item.acf.sale.for_sale'>sale</span>
+            <del v-else>sale</del>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -69,6 +81,7 @@ export default {
   grid-template: 'left main'
                  / 3fr 11fr;
   grid-gap: 20px;
+  overflow: hidden;
 
   &__navigation {
     grid-template: left;
@@ -102,8 +115,37 @@ export default {
   }
 
   &__main {
+    height: auto;
+    overflow: scroll;
+    @include hide-scroll;
+
     &__title {
       color: $black;
+    }
+
+    &__lookbook {
+      display: flex;
+
+      &__look {
+        margin: 0 20px 0 0;
+        width: 400px;
+        height: 400px;
+
+        &__image {
+          border-radius: 20px 20px 0 0;
+          width: 100%;
+          height: 80%;
+          object-fit: cover;
+        }
+
+        &__meta {
+          height: 20%;
+          width: 100%;
+          border-radius: 0 0 20px 20px;
+          border: $border;
+          background: $white;
+        }
+      }
     }
   }
 }

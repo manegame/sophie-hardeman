@@ -83,10 +83,9 @@ export default {
         this.GET_EVENTS()
       }
       if (route.name === 'collection') {
-        console.log('collection: ', route.params.slug)
         // this.GET_BANNER()
-        this.GET_COLLECTIONS()
         this.GET_SINGLE_COLLECTION(route.params.slug)
+        this.GET_COLLECTIONS()
         // this.GET_DIARY()
         // this.GET_EVENTS()
       }

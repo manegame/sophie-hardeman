@@ -3,14 +3,15 @@ import * as actionTypes from '../actionTypes'
 import * as mutationTypes from '../mutationTypes'
 
 const emptySingle = {
+  acf: {},
   garments: [],
-  acf: {}
+  fetched: false
 }
 
 const state = {
+  single: emptySingle,
   banner: {},
   collections: [],
-  single: emptySingle,
   diary: [],
   events: [],
   garment_categories: [],
@@ -37,8 +38,8 @@ const actions = {
   async [actionTypes.GET_EVENTS]({commit, state}) {
     commit(mutationTypes.SET_EVENTS, await api.getEvents())
   },
-  async [actionTypes.GET_GARMENT]({commit, state}, ID) {
-    commit(mutationTypes.SET_GARMENT, await api.getGarment(ID))
+  async [actionTypes.GET_GARMENT]({commit, state}, slug) {
+    commit(mutationTypes.SET_GARMENT, await api.getGarment(slug))
   },
   async [actionTypes.GET_GARMENT_CATEGORIES]({commit, state}) {
     commit(mutationTypes.SET_GARMENT_CATEGORIES, await api.getGarmentCategories())
@@ -63,7 +64,6 @@ const mutations = {
   [mutationTypes.SET_SINGLE_COLLECTION](state, data) {
     state.single = data[0]
     state.single.garments = []
-    console.log('single collection fetched')
   },
   [mutationTypes.CLEAR_SINGLE_COLLECTION](state, data) {
     state.single = emptySingle
