@@ -4,6 +4,7 @@ import App from './App'
 import router from './router'
 import store from './store'
 import VueHead from 'vue-head'
+import {format} from 'date-fns'
 
 // --- GOOGLE ANALYTICS
 // import ga from 'vue-ga'
@@ -21,6 +22,10 @@ import VueHead from 'vue-head'
 Vue.config.productionTip = false
 
 Vue.use(VueHead)
+
+Vue.filter('dotted', (date) => {
+  return format(date, 'DD.MM.YYYY')
+})
 
 // required by FullCalendar
 window.jQuery = window.$ = require('jquery')

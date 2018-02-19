@@ -1,8 +1,8 @@
 <template>
   <div class='app'>
-    <!-- <keep-alive> -->
+    <keep-alive>
       <router-view id='view'/>
-    <!-- </keep-alive> -->
+    </keep-alive>
     <foot />
   </div>
 </template>
@@ -39,15 +39,6 @@ export default {
   computed: {
     ...mapState(['main'])
   },
-  watch: {
-    $route(to, from) {
-      this.$_fetchData(to)
-      this.$_setMetaTags()
-    },
-    'main.single'() {
-      this.main.single.acf.garments.map(g => this.GET_GARMENT(g.ID))
-    }
-  },
   methods: {
     ...mapActions([
       'GET_BANNER',
@@ -59,7 +50,8 @@ export default {
       'GET_ABOUT',
       'GET_GARMENT',
       'GET_GARMENT_CATEGORIES',
-      'GET_VIDEOS'
+      'GET_VIDEOS',
+      'GET_VIDEO'
     ]),
     $_setMetaTags(meta = {}) {
       this.meta.title = meta.title || this.meta.defaults.title
@@ -83,11 +75,11 @@ export default {
         this.GET_EVENTS()
       }
       if (route.name === 'collection') {
-        // this.GET_BANNER()
         this.GET_SINGLE_COLLECTION(route.params.slug)
         this.GET_COLLECTIONS()
-        // this.GET_DIARY()
-        // this.GET_EVENTS()
+      }
+      if (route.name === 'video') {
+        this.GET_VIDEOS()
       }
     }
   },
@@ -122,6 +114,16 @@ export default {
         {itemprop: 'description', content: this.meta.description},
         {itemprop: 'image', content: this.meta.image}
       ]
+    }
+  },
+  watch: {
+    $route(to, from) {
+      this.$_fetchData(to)
+      this.$_setMetaTags()
+    },
+    'main.single'() {
+      this.main.single.acf.garments.map(g => this.GET_GARMENT(g.ID))
+      this.main.single.acf.videos.map(v => this.GET_VIDEO(v.ID))
     }
   }
 }

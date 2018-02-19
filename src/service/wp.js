@@ -56,6 +56,18 @@ export default {
       )
     })
   },
+  getVideo(slug) {
+    return new Promise((resolve, reject) => {
+      Vue.http.get(API_ROOT + 's-h_videos/' + slug).then(
+        response => {
+          resolve(response.body)
+        },
+        response => {
+          reject(response)
+        }
+      )
+    })
+  },
   getAbout() {
     return new Promise((resolve, reject) => {
       Vue.http.get(API_ROOT + 's-h_about?per_page=10').then(

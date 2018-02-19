@@ -11,6 +11,7 @@
       <ul>
         <template v-for='collection in main.collections'>
           <router-link class="collection__navigation__item"
+                       :class='{"collection__navigation__item--emphasis": main.single.slug === collection.slug}'
                        tag='li'
                        :to='{name: "collection", params: {slug: collection.slug}}'>
                        <span class='collection__navigation__item--ss'>{{collection.acf.season}}</span>
@@ -32,6 +33,17 @@
       </ul>
     </div>
     <div class="collection__main">
+      <div class="collection__main__top_bar">
+        <router-link class="collection__main__top_bar__back"
+                     :to="{ name: 'landing'}"><- back to overview</router-link>
+        <span class="collection__main__top_bar__posted">posted {{main.single.date | dotted}}</span>
+        <a class="collection__main__top_bar__recommend"
+          href='mailto:?subject=Hey! Check out SOPHIE HARDEMAN SUPER NICE COLLECTION&body=Wooowww'>mail to a friend</a>
+        <a class="collection__main__top_bar__reply"
+           href='mailto:sophie@hardemanonline.com'>reply</a>
+        <a class="collection__main__top_bar__print"
+           @click.prevent='printPage'>print</a>
+      </div>
       <h1 class="collection__main__title">
         {{main.single.acf.season}} {{main.single.title.rendered}}
       </h1>
@@ -47,6 +59,13 @@
           </div>
         </div>
       </div>
+      <div class="collection__main__info">
+        <p v-html='main.single.acf.info' />
+      </div>
+      <div class="collection__main__video"
+           v-for='video in main.single.videos'
+           v-html='video.acf.video'>
+      </div>
     </div>
   </div>
 </template>
@@ -59,6 +78,11 @@ export default {
   props: [],
   computed: {
     ...mapState(['main'])
+  },
+  methods: {
+    printPage() {
+      window.print()
+    }
   },
   updated: function() {
     this.$nextTick(function() {
@@ -90,6 +114,10 @@ export default {
     &__item {
       display: flex;
 
+      &--emphasis {
+        font-weight: bold;
+      }
+
       &--ss {
         width: 80px;
         flex-basis: 80px;
@@ -117,7 +145,49 @@ export default {
   &__main {
     height: auto;
     overflow: scroll;
+    padding: 0 20px;
     @include hide-scroll;
+
+    &__top_bar {
+      height: 30px;
+      font-size: $font-size-s;
+      line-height: 20px;
+      display: flex;
+      align-items: center;
+      text-align: left;
+      border-bottom: $border;
+
+      &__back {
+        flex-grow: 10;
+        color: $black;
+        font-weight: bold;
+        text-decoration: none;
+      }
+
+      &__posted,
+      &__recommend,
+      &__reply {
+        color: $black;
+        text-decoration: none;
+        background: $white;
+        padding: 0 8px;
+      }
+
+      &__recommend,
+      &__reply {
+        margin: 0 2px;
+        border: $border;
+        &:hover {
+          background: $yellow;
+        }
+      }
+
+      &__print {
+        padding-left: 8px;
+        color: $blue;
+        text-decoration: underline;
+      }
+    }
 
     &__title {
       color: $black;
@@ -127,9 +197,9 @@ export default {
       display: flex;
 
       &__look {
-        margin: 0 20px 0 0;
-        width: 400px;
-        height: 400px;
+        margin: 20px 20px 0 0;
+        width: 350px;
+        height: 350px;
 
         &__image {
           border-radius: 20px 20px 0 0;
@@ -146,6 +216,14 @@ export default {
           background: $white;
         }
       }
+    }
+
+    &__info {
+      padding-top: $margin-top;
+    }
+
+    &__video {
+      padding-top: $margin-top;
     }
   }
 }

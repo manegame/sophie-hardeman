@@ -5,7 +5,7 @@ import * as mutationTypes from '../mutationTypes'
 const emptySingle = {
   acf: {},
   garments: [],
-  fetched: false
+  videos: []
 }
 
 const state = {
@@ -14,9 +14,9 @@ const state = {
   collections: [],
   diary: [],
   events: [],
-  garment_categories: [],
   about: [],
-  videos: []
+  videos: [],
+  garment_categories: []
 }
 
 const actions = {
@@ -49,6 +49,9 @@ const actions = {
   },
   async [actionTypes.GET_VIDEOS]({commit, state}) {
     commit(mutationTypes.SET_VIDEOS, await api.getVideos())
+  },
+  async [actionTypes.GET_VIDEO]({commit, state}, slug) {
+    commit(mutationTypes.SET_VIDEO, await api.getVideo(slug))
   }
 }
 
@@ -64,6 +67,7 @@ const mutations = {
   [mutationTypes.SET_SINGLE_COLLECTION](state, data) {
     state.single = data[0]
     state.single.garments = []
+    state.single.videos = []
   },
   [mutationTypes.CLEAR_SINGLE_COLLECTION](state, data) {
     state.single = emptySingle
@@ -91,6 +95,10 @@ const mutations = {
   [mutationTypes.SET_VIDEOS](state, data) {
     state.videos = data
     console.log('videos fetched')
+  },
+  [mutationTypes.SET_VIDEO](state, data) {
+    state.single.videos.push(data)
+    console.log('videos set')
   }
 }
 
