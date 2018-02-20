@@ -1,6 +1,7 @@
 <template>
   <div class="navbar">
-    <router-link :to="{ name: 'landing'}"
+    <router-link class='navbar__title'
+                 :to="{ name: 'landing'}"
                  tag='h1'>
                  hardeman
                </router-link>
@@ -39,6 +40,7 @@
     </template>
     <!-- ABOUT -->
     <template v-if='$route.name === "about"'>
+      <p>about </p>
       <ul class="nav">
         <template v-for='page in main.about'>
           <router-link class="nav__item"
@@ -52,6 +54,7 @@
     </template>
     <!-- SALE -->
     <template v-if='$route.name === "sale" || $route.name === "single sale"'>
+      <p>for sale </p>
       <ul class="nav">
         <template v-for='category in main.garment_categories'>
           <router-link class="nav__item"
@@ -65,6 +68,7 @@
     </template>
     <!-- HARDEMAN TV -->
     <template v-if='$route.name === "hardeman tv"'>
+      <p>hardeman tv </p>
       <ul class="nav">
         <template v-for='video in main.videos'>
           <router-link class="nav__item"
@@ -112,7 +116,12 @@ export default {
   grid-template: left;
   padding-left: 20px;
 
+  &__title {
+    margin-bottom: 20px;
+  }
+
   .nav {
+    padding-top: 20px;
     &__item {
       display: flex;
       border-bottom: none;

@@ -16,6 +16,7 @@ export default {
   },
   data() {
     return {
+      cat_id: 6,
       meta: {
         sitename: 'Sophie Hardeman',
         facebook: 'xxxxxxxxx',
@@ -48,6 +49,7 @@ export default {
       'GET_EVENTS',
       'GET_ABOUT',
       'GET_GARMENT',
+      'GET_GARMENTS',
       'GET_GARMENT_CATEGORIES',
       'GET_VIDEOS',
       'GET_VIDEO'
@@ -82,6 +84,12 @@ export default {
           this.CLEAR_SINGLES()
           this.GET_ABOUT()
           this.GET_SINGLE_ABOUT(route.params.slug)
+          break
+        case ('sale'):
+          this.GET_GARMENT_CATEGORIES().then(() => {
+            let cat = this.main.garment_categories.filter(c => { return c.slug === this.$route.params.slug })[0]
+            this.GET_GARMENTS(cat.id)
+          })
           break
         case ('hardeman tv'):
           this.GET_VIDEOS()

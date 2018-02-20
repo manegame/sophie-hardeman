@@ -4,8 +4,13 @@
     <topbar />
     <div class="sale__main">
       <h1 class="sale__main__title">
-        sale
+        {{$route.params.slug}}
       </h1>
+      <div class="sale__main__item"
+           v-for='item in main.garments'>
+             <img :src='item.acf.image.sizes["s-h-large"]' />
+            {{item.title.rendered}}
+      </div>
     </div>
   </div>
 </template>
