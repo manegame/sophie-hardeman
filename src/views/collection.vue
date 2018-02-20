@@ -1,12 +1,13 @@
 <template>
   <div class='collection'>
     <navbar />
+    <topbar />
     <div class="collection__main">
-      <topbar />
-      <h1 class="collection__main__title">
-        {{main.single.acf.season}} {{main.single.title.rendered}}
-      </h1>
-      <div class="collection__main__lookbook">
+      <div v-if='$route.params.section === "lookbook"'
+           class="collection__main__lookbook">
+        <h1>
+          {{main.single.acf.season}} {{main.single.title.rendered}}
+        </h1>
         <div class="collection__main__lookbook__look" v-for='item in main.single.garments'>
           <img class="collection__main__lookbook__look__image"
                :src='item.acf.image.sizes["s-h-medium"]'/>
@@ -21,7 +22,11 @@
       <div class="collection__main__info">
         <p v-html='main.single.acf.info' />
       </div>
-      <div class="collection__main__video"
+      <div v-if='$route.params.section === "campaign"'>
+        campaign
+      </div>
+      <div v-if='$route.params.section === "video"'
+           class="collection__main__video"
            v-for='video in main.single.videos'
            v-html='video.acf.video'>
       </div>

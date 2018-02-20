@@ -15,7 +15,7 @@
         <a href='facebook'>FB</a>
         <a href='instagram'>INSTA</a>
         <ul class="landing__column_left__links">
-          <router-link :to="{name: 'collection',params: { slug: 'xxx'}}">link</router-link>
+          <router-link :to="{name: 'collection',params: { slug: emphasizedCollection, section: 'lookbook'}}">collections</router-link>
         </ul>
         <h3 class="landing__column_left__weather_head">what to wear?</h3>
           <weather />
@@ -36,16 +36,17 @@
           <!-- - -->
           <!-- Collections -->
           <section class="landing__column_middle__sections__collections">
-            <router-link :to="{ name: 'collection', params: {slug: 'xxx'} }"
+            <router-link :to="{ name: 'collection', params: {slug: emphasizedCollection, section: 'lookbook'} }"
                           tag='h2'>
                           collections
                           </router-link>
             <ul>
               <router-link class="landing__column_middle__sections__collections__collection"
-                           v-for='collection in main.collections'
                            tag='li'
+                           v-for='collection in main.collections'
+                           :class="{'landing__column_middle__sections__collections__collection--emphasis': collection.acf.emphasis}"
                            :key='collection.id'
-                           :to="{name: 'collection', params: { slug: collection.slug}}">
+                           :to="{name: 'collection', params: { slug: collection.slug, section: 'lookbook'}}">
                              <span class='landing__column_middle__sections__collections__collection--season'>{{collection.acf.season}}</span>
                              <span class="landing__column_middle__sections__collections__collection--title">{{collection.title.rendered}}
                                <sup v-for='label in collection.acf.labels'>{{label.post_title}}</sup></span>
@@ -166,19 +167,22 @@ export default {
   props: [],
   data() {
     return {
+      emphasizedCollection: 'slug'
     }
   },
   computed: {
     ...mapState(['main'])
   },
-  mounted() {},
   updated: function() {
     this.$nextTick(function() {
-      // Code that will run only after the
-      // entire view has been re-rendered
+      this.emphasizedCollection = this.setSlug()
     })
   },
-  methods: {}
+  methods: {
+    setSlug() {
+      return this.main.collections.filter(c => c.acf.emphasis)[0].slug
+    }
+  }
 }
 </script>
 
@@ -252,6 +256,11 @@ export default {
           display: inline;
           &__collection {
             display: flex;
+
+            &--emphasis {
+                font-weight: bold;
+            }
+
             &--season {
               display: inline-block;
               width: 70px;

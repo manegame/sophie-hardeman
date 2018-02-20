@@ -20,6 +20,10 @@ export default new Router({
     },
     {
       path: '/collection/:slug',
+      redirect: {name: 'collection', params: {section: 'lookbook'}}
+    },
+    {
+      path: '/collection/:slug/:section',
       name: 'collection',
       component: collection
     },

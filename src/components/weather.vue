@@ -18,10 +18,10 @@
       <p v-html='"lo: " + main.weather.main.temp_min'/>
       <p v-html='"hi: " + main.weather.main.temp_max'/>
       <p v-html='"visibility: " + main.weather.visibility'/>
-      <p>
+      <!-- <p>
         wind direction:
       </p>
-      <hr :style='"transform:rotate(" + main.weather.wind.deg + 90 + "deg)"'/>
+      <hr :style='"transform:rotate(" + main.weather.wind.deg + 90 + "deg)"'/> -->
     </div>
   </div>
 </template>

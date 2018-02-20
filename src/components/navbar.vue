@@ -12,21 +12,27 @@
           <router-link class="nav__item"
                        :class='{"nav__item--emphasis": main.single.slug === collection.slug}'
                        tag='li'
-                       :to='{name: "collection", params: {slug: collection.slug}}'>
+                       :to='{name: "collection", params: {slug: collection.slug, section: "lookbook"}}'>
                        <span class='nav__item--ss'>{{collection.acf.season}}</span>
                        <span class='nav__item--tt'>{{collection.title.rendered}}<sup v-for='label in collection.acf.labels'>{{label.post_title}}</sup></span>
                        </router-link>
                        <ul class="nav__item__sub"
                            :class='{"nav__item__sub--show": main.single.slug === collection.slug}'>
-                         <li class="nav__item__sub__item">
-                           lookbook
-                         </li>
-                         <li class="nav__item__sub__item">
-                           video
-                         </li>
-                         <li class="nav__item__sub__item">
-                           campaign
-                         </li>
+                           <router-link tag='li'
+                                        class="nav__item__sub__item"
+                                        :class="{'nav__item__sub__item--active': $route.params.section === 'lookbook'}"
+                                        :to="{ name: 'collection', params: {slug: collection.slug, section: 'lookbook'} }"
+                                        v-html='"lookbook"' />
+                           <router-link tag='li'
+                                        class="nav__item__sub__item"
+                                        :class="{'nav__item__sub__item--active': $route.params.section === 'video'}"
+                                        :to="{ name: 'collection', params: {slug: collection.slug, section: 'video'} }"
+                                        v-html='"video"' />
+                           <router-link tag='li'
+                                        class="nav__item__sub__item"
+                                        :class="{'nav__item__sub__item--active': $route.params.section === 'campaign'}"
+                                        :to="{ name: 'collection', params: {slug: collection.slug, section: 'campaign'} }"
+                                        v-html='"campaign"' />
                        </ul>
         </template>
       </ul>
@@ -82,6 +88,7 @@ export default {
   .nav {
     &__item {
       display: flex;
+      border-bottom: none;
 
       &--emphasis {
         font-weight: bold;
@@ -102,6 +109,12 @@ export default {
 
         &__item {
           padding-left: 80px;
+          border-bottom: none;
+          color: $black;
+
+          &--active {
+            text-decoration: underline;
+          }
         }
 
         &--show {
