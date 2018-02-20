@@ -96,7 +96,7 @@ export default {
     return new Promise((resolve, reject) => {
       Vue.http.get(API_ROOT + 's-h_collection?slug=' + slug + '&field=title,acf,slug').then(
         response => {
-          resolve(response.body)
+          resolve(response.body[0])
         },
         response => {
           reject(response)

@@ -75,6 +75,7 @@ export default {
           this.GET_EVENTS()
           break
         case ('collection'):
+          this.CLEAR_SINGLE_COLLECTION()
           this.GET_SINGLE_COLLECTION(route.params.slug)
           this.GET_COLLECTIONS()
           break
@@ -122,12 +123,15 @@ export default {
   },
   watch: {
     $route(to, from) {
-      this.$_fetchData(to)
-      this.$_setMetaTags()
+      // get stuff when you're coming from nowhere or when to and from are different
+      if (from === undefined || to.params.slug !== from.params.slug) {
+        this.$_fetchData(to)
+        this.$_setMetaTags()
+      }
     },
-    'main.single'() {
+    'main.single.acf'() {
       this.main.single.acf.garments.map(g => this.GET_GARMENT(g.ID))
-      if (this.main.single.acf.videos !== '') this.main.single.acf.videos.map(v => this.GET_VIDEO(v.ID))
+      this.main.single.acf.videos.map(v => this.GET_VIDEO(v.ID))
     }
   }
 }

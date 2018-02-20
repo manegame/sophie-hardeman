@@ -4,6 +4,8 @@ import * as actionTypes from '../actionTypes'
 import * as mutationTypes from '../mutationTypes'
 
 const emptySingle = {
+  title: '',
+  slug: '',
   acf: {},
   garments: [],
   videos: []
@@ -72,9 +74,12 @@ const mutations = {
     console.log('collections fetched')
   },
   [mutationTypes.SET_SINGLE_COLLECTION](state, data) {
-    state.single = data[0]
+    state.single.title = data.title
+    state.single.slug = data.slug
+    state.single.acf = data.acf
     state.single.garments = []
     state.single.videos = []
+    console.log('after single collection (1)')
   },
   [mutationTypes.CLEAR_SINGLE_COLLECTION](state, data) {
     state.single = emptySingle
