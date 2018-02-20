@@ -10,13 +10,12 @@
         </h1>
         <h4 class="landing__column_left__subtitle">
           amsterdam based <br/>
-          fashion designer
+          denim brand
         </h4>
+        <a href='facebook'>FB</a>
+        <a href='instagram'>INSTA</a>
         <ul class="landing__column_left__links">
-          <router-link :to="{
-                          name: 'collection',
-                          params: { slug: 'xxx'}
-                       }">link</router-link>
+          <router-link :to="{name: 'collection',params: { slug: 'xxx'}}">link</router-link>
         </ul>
         <h3 class="landing__column_left__weather_head">what to wear?</h3>
           <weather />

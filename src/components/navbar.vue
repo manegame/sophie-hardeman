@@ -1,0 +1,114 @@
+<template>
+  <div class="navbar">
+    <router-link :to="{ name: 'landing'}"
+                 tag='h1'>
+                 hardeman
+               </router-link>
+    <!-- COLLECTIONS -->
+    <template v-if='$route.name === "collection"'>
+      <p>collections </p>
+      <ul class="nav">
+        <template v-for='collection in main.collections'>
+          <router-link class="nav__item"
+                       :class='{"nav__item--emphasis": main.single.slug === collection.slug}'
+                       tag='li'
+                       :to='{name: "collection", params: {slug: collection.slug}}'>
+                       <span class='nav__item--ss'>{{collection.acf.season}}</span>
+                       <span class='nav__item--tt'>{{collection.title.rendered}}<sup v-for='label in collection.acf.labels'>{{label.post_title}}</sup></span>
+                       </router-link>
+                       <ul class="nav__item__sub"
+                           :class='{"nav__item__sub--show": main.single.slug === collection.slug}'>
+                         <li class="nav__item__sub__item">
+                           lookbook
+                         </li>
+                         <li class="nav__item__sub__item">
+                           video
+                         </li>
+                         <li class="nav__item__sub__item">
+                           campaign
+                         </li>
+                       </ul>
+        </template>
+      </ul>
+    </template>
+    <!-- ABOUT -->
+    <template v-if='$route.name === "about"'>
+      <p>about</p>
+    </template>
+    <!-- SALE -->
+    <template v-if='$route.name === "sale"'>
+      <p>sale</p>
+    </template>
+    <!-- HARDEMAN TV -->
+    <template v-if='$route.name === "hardeman tv"'>
+      <p>hardeman tv</p>
+    </template>
+    <!-- DIARY -->
+    <template v-if='$route.name === "diary"'>
+      <p>diary</p>
+      <ul class="nav">
+        <template v-for='entry in main.diary'>
+          <router-link class="nav__item"
+                       :class='{"nav__item--emphasis": $route.params.slug === entry.slug}'
+                       tag='li'
+                       :to='{name: "diary", params: {slug: entry.slug}}'>
+                       {{entry.title.rendered}} <sup v-for='label in entry.acf.labels'>{{label.post_title}}</sup>
+                       </router-link>
+        </template>
+      </ul>
+    </template>
+  </div>
+</template>
+
+<script>
+import {mapState} from 'vuex'
+export default {
+  name: 'navbar',
+  computed: {
+    ...mapState(['main'])
+  }
+}
+</script>
+
+<style scoped lang='scss'>
+@import '../style/helpers/_mixins.scss';
+@import '../style/helpers/_responsive.scss';
+@import '../style/_variables.scss';
+
+.navbar {
+  grid-template: left;
+  padding-left: 20px;
+
+  .nav {
+    &__item {
+      display: flex;
+
+      &--emphasis {
+        font-weight: bold;
+      }
+
+      &--ss {
+        width: 80px;
+        flex-basis: 80px;
+        flex-shrink: 1;
+      }
+
+      &--tt {
+        flex-basis: 200px;
+        flex-shrink: 2;
+      }
+      &__sub {
+        display: none;
+
+        &__item {
+          padding-left: 80px;
+        }
+
+        &--show {
+          display: block;
+        }
+      }
+    }
+  }
+}
+</style>

@@ -1,3 +1,24 @@
+///
+///
+///
+@mixin single {
+  height: 100%;
+  margin-top: $margin-top;
+  display: grid;
+  position: relative;
+  grid-template: 'left main'
+                 / 3fr 11fr;
+  grid-gap: 40px;
+  overflow: hidden;
+
+  &__main {
+    height: auto;
+    overflow: scroll;
+    @include hide-scroll;
+    padding-top: $topbar-height + 20px;
+  }
+}
+
 /// Helper to clear inner floats
 /// @author Nicolas Gallagher
 /// @link http://nicolasgallagher.com/micro-clearfix-hack/ Micro Clearfix

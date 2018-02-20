@@ -63,23 +63,27 @@ export default {
     },
     $_fetchData(route) {
       // All requests for data from the server originates from this function
-      if (route.name === 'landing') {
-        console.log('landing')
-        this.CLEAR_SINGLE_COLLECTION()
-        this.GET_BANNER()
-        this.GET_COLLECTIONS()
-        this.GET_ABOUT()
-        this.GET_VIDEOS()
-        this.GET_GARMENT_CATEGORIES()
-        this.GET_DIARY()
-        this.GET_EVENTS()
-      }
-      if (route.name === 'collection') {
-        this.GET_SINGLE_COLLECTION(route.params.slug)
-        this.GET_COLLECTIONS()
-      }
-      if (route.name === 'video') {
-        this.GET_VIDEOS()
+      switch (route.name) {
+        case ('landing'):
+          this.CLEAR_SINGLE_COLLECTION()
+          this.GET_BANNER()
+          this.GET_COLLECTIONS()
+          this.GET_ABOUT()
+          this.GET_VIDEOS()
+          this.GET_GARMENT_CATEGORIES()
+          this.GET_DIARY()
+          this.GET_EVENTS()
+          break
+        case ('collection'):
+          this.GET_SINGLE_COLLECTION(route.params.slug)
+          this.GET_COLLECTIONS()
+          break
+        case ('video'):
+          this.GET_VIDEOS()
+          break
+        case ('diary'):
+          this.GET_DIARY()
+          break
       }
     }
   },
@@ -123,7 +127,7 @@ export default {
     },
     'main.single'() {
       this.main.single.acf.garments.map(g => this.GET_GARMENT(g.ID))
-      this.main.single.acf.videos.map(v => this.GET_VIDEO(v.ID))
+      if (this.main.single.acf.videos !== '') this.main.single.acf.videos.map(v => this.GET_VIDEO(v.ID))
     }
   }
 }
