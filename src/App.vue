@@ -1,8 +1,6 @@
 <template>
   <div class='app'>
-    <!-- <keep-alive> -->
-      <router-view id='view'/>
-    <!-- </keep-alive> -->
+    <router-view id='view'/>
     <foot />
   </div>
 </template>
@@ -124,10 +122,10 @@ export default {
   watch: {
     $route(to, from) {
       // get stuff when you're coming from nowhere or when to and from are different
-      if (from === undefined || to.params.slug !== from.params.slug) {
+      // if (from === undefined || to.params.slug !== from.params.slug) {
         this.$_fetchData(to)
         this.$_setMetaTags()
-      }
+      // }
     },
     'main.single.acf'() {
       this.main.single.acf.garments.map(g => this.GET_GARMENT(g.ID))
