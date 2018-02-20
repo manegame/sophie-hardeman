@@ -6,6 +6,7 @@ import * as mutationTypes from '../mutationTypes'
 const emptySingle = {
   title: '',
   slug: '',
+  date: '',
   acf: {},
   garments: [],
   videos: []
@@ -76,6 +77,7 @@ const mutations = {
   [mutationTypes.SET_SINGLE_COLLECTION](state, data) {
     state.single.title = data.title
     state.single.slug = data.slug
+    state.single.modified = data.modified
     state.single.acf = data.acf
     state.single.garments = []
     state.single.videos = []

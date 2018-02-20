@@ -61,6 +61,7 @@ export default {
     }
     &__image {
       width: 60%;
+      height: 75vh;
       max-height: 80%;
       object-fit: contain;
       object-position: top left;
