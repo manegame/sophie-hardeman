@@ -39,15 +39,42 @@
     </template>
     <!-- ABOUT -->
     <template v-if='$route.name === "about"'>
-      <p>about</p>
+      <ul class="nav">
+        <template v-for='page in main.about'>
+          <router-link class="nav__item"
+                       :class='{"nav__item--emphasis": $route.params.slug === page.slug}'
+                       tag='li'
+                       :to='{name: "about", params: {slug: page.slug}}'>
+                       {{page.title.rendered}}<sup v-for='label in page.acf.labels'>{{label.post_title}}</sup>
+                       </router-link>
+        </template>
+      </ul>
     </template>
     <!-- SALE -->
-    <template v-if='$route.name === "sale"'>
-      <p>sale</p>
+    <template v-if='$route.name === "sale" || $route.name === "single sale"'>
+      <ul class="nav">
+        <template v-for='category in main.garment_categories'>
+          <router-link class="nav__item"
+                       :class='{"nav__item--emphasis": $route.params.slug === category.slug}'
+                       tag='li'
+                       :to='{name: "sale", params: {slug: category.slug}}'>
+                       {{category.name}}<sup v-for='label in category.acf.labels'>{{label.post_title}}</sup>
+                       </router-link>
+        </template>
+      </ul>
     </template>
     <!-- HARDEMAN TV -->
     <template v-if='$route.name === "hardeman tv"'>
-      <p>hardeman tv</p>
+      <ul class="nav">
+        <template v-for='video in main.videos'>
+          <router-link class="nav__item"
+                       :class='{"nav__item--emphasis": $route.params.slug === video.slug}'
+                       tag='li'
+                       :to='{name: "hardeman tv", params: {slug: video.slug}}'>
+                       {{video.title.rendered}}<sup v-for='label in video.acf.labels'>{{label.post_title}}</sup>
+                       </router-link>
+        </template>
+      </ul>
     </template>
     <!-- DIARY -->
     <template v-if='$route.name === "diary"'>

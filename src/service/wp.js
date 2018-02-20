@@ -104,6 +104,18 @@ export default {
       )
     })
   },
+  getSingleAbout(slug) {
+    return new Promise((resolve, reject) => {
+      Vue.http.get(API_ROOT + 's-h_about?slug=' + slug + '&field=title,acf,slug').then(
+        response => {
+          resolve(response.body[0])
+        },
+        response => {
+          reject(response)
+        }
+      )
+    })
+  },
   getDiary() {
     return new Promise((resolve, reject) => {
       Vue.http.get(API_ROOT + 's-h_diary?per_page=100').then(

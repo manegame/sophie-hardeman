@@ -42,7 +42,8 @@ export default {
       'GET_BANNER',
       'GET_COLLECTIONS',
       'GET_SINGLE_COLLECTION',
-      'CLEAR_SINGLE_COLLECTION',
+      'GET_SINGLE_ABOUT',
+      'CLEAR_SINGLES',
       'GET_DIARY',
       'GET_EVENTS',
       'GET_ABOUT',
@@ -63,7 +64,7 @@ export default {
       // All requests for data from the server originates from this function
       switch (route.name) {
         case ('landing'):
-          this.CLEAR_SINGLE_COLLECTION()
+          this.CLEAR_SINGLES()
           this.GET_BANNER()
           this.GET_COLLECTIONS()
           this.GET_ABOUT()
@@ -73,11 +74,16 @@ export default {
           this.GET_EVENTS()
           break
         case ('collection'):
-          this.CLEAR_SINGLE_COLLECTION()
+          this.CLEAR_SINGLES()
           this.GET_SINGLE_COLLECTION(route.params.slug)
           this.GET_COLLECTIONS()
           break
-        case ('video'):
+        case ('about'):
+          this.CLEAR_SINGLES()
+          this.GET_ABOUT()
+          this.GET_SINGLE_ABOUT(route.params.slug)
+          break
+        case ('hardeman tv'):
           this.GET_VIDEOS()
           break
         case ('diary'):
@@ -121,11 +127,13 @@ export default {
   },
   watch: {
     $route(to, from) {
-      // get stuff when you're coming from nowhere or when to and from are different
-      // if (from === undefined || to.params.slug !== from.params.slug) {
+      if (to !== undefined) {
         this.$_fetchData(to)
         this.$_setMetaTags()
-      // }
+      } else {
+        this.$_fetchData(from)
+        this.$_setMetaTags()
+      }
     },
     'main.single.acf'() {
       this.main.single.acf.garments.map(g => this.GET_GARMENT(g.ID))

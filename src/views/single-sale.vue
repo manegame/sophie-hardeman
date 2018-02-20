@@ -1,14 +1,11 @@
 <template>
-  <div class='hardeman_tv'>
+  <div class='single_sale'>
     <navbar />
     <topbar />
-    <div class="hardeman_tv__main">
-      <h1 class="hardeman_tv__main__title">
-        hardeman TV
+    <div class="single_sale__main">
+      <h1 class="single_sale__main__title">
+        single sale
       </h1>
-      <div class="hardeman_tv__main__video"
-           v-for='video in main.videos'
-           v-html='video.acf.video' />
     </div>
   </div>
 </template>
@@ -19,7 +16,7 @@ import navbar from '@/components/navbar'
 import topbar from '@/components/topbar'
 
 export default {
-  name: 'hardeman-tv',
+  name: 'single-sale',
   components: {
     navbar,
     topbar
@@ -35,7 +32,7 @@ export default {
 @import '../style/helpers/_responsive.scss';
 @import '../style/_variables.scss';
 
-.hardeman_tv {
+.single_sale {
   @include single;
 
   &__main {

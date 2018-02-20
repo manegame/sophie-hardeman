@@ -4,8 +4,10 @@
     <topbar />
     <div class="about__main">
       <h1 class="about__main__title">
-        About
+        {{main.single_about.title.rendered}}
       </h1>
+      <p v-if='main.single_about.acf.text'
+         v-html='main.single_about.acf.text' />
     </div>
   </div>
 </template>

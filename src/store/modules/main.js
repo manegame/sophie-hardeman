@@ -21,6 +21,7 @@ const state = {
   diary: [],
   events: [],
   about: [],
+  single_about: {},
   videos: [],
   garment_categories: [],
   weather: emptyWeather
@@ -36,8 +37,11 @@ const actions = {
   async [actionTypes.GET_SINGLE_COLLECTION]({commit, state}, slug) {
     commit(mutationTypes.SET_SINGLE_COLLECTION, await api.getSingleCollection(slug))
   },
-  async [actionTypes.CLEAR_SINGLE_COLLECTION]({commit, state}) {
-    commit(mutationTypes.CLEAR_SINGLE_COLLECTION)
+  async [actionTypes.GET_SINGLE_ABOUT]({commit, state}, slug) {
+    commit(mutationTypes.SET_SINGLE_ABOUT, await api.getSingleAbout(slug))
+  },
+  async [actionTypes.CLEAR_SINGLES]({commit, state}) {
+    commit(mutationTypes.CLEAR_SINGLES)
   },
   async [actionTypes.GET_DIARY]({commit, state}) {
     commit(mutationTypes.SET_DIARY, await api.getDiary())
@@ -83,8 +87,12 @@ const mutations = {
     state.single.videos = []
     console.log('after single collection (1)')
   },
-  [mutationTypes.CLEAR_SINGLE_COLLECTION](state, data) {
+  [mutationTypes.SET_SINGLE_ABOUT](state, data) {
+    state.single_about = data
+  },
+  [mutationTypes.CLEAR_SINGLES](state, data) {
     state.single = emptySingle
+    state.single_about = {}
   },
   [mutationTypes.SET_DIARY](state, data) {
     state.diary = data

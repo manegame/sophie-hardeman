@@ -6,6 +6,7 @@ const collection = () => import('@/views/collection')
 const about = () => import('@/views/about')
 const hardemanTV = () => import('@/views/hardeman-tv')
 const sale = () => import('@/views/sale')
+const singleSale = () => import('@/views/single-sale')
 const diary = () => import('@/views/diary')
 
 Vue.use(Router)
@@ -36,6 +37,11 @@ export default new Router({
       path: '/sale/:slug',
       name: 'sale',
       component: sale
+    },
+    {
+      path: '/sale/:slug/:item',
+      name: 'single sale',
+      component: singleSale
     },
     {
       path: '/hardeman-tv/:slug',
