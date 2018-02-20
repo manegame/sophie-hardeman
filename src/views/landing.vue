@@ -18,7 +18,7 @@
                           params: { slug: 'xxx'}
                        }">link</router-link>
         </ul>
-        <h4>what to wear?</h4>
+        <h3 class="landing__column_left__weather_head">what to wear?</h3>
           <weather />
         <h4>where to go?</h4>
           <calendar />
@@ -206,9 +206,12 @@ export default {
     border-right: $border;
     text-align: center;
     padding: 10px 20px 40px;
-    display: flex;
-    flex-flow: column;
-    justify-content: space-between;
+
+    &__weather_head {
+      background: $grey;
+      border-top: $border-light;
+      border-bottom: $border-light;
+    }
   }
 
   &__column_middle {

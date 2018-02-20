@@ -1,4 +1,5 @@
 import api from '../../service/wp'
+import ow from '../../service/open_weather'
 import * as actionTypes from '../actionTypes'
 import * as mutationTypes from '../mutationTypes'
 
@@ -8,6 +9,8 @@ const emptySingle = {
   videos: []
 }
 
+const emptyWeather = {}
+
 const state = {
   single: emptySingle,
   banner: {},
@@ -16,7 +19,8 @@ const state = {
   events: [],
   about: [],
   videos: [],
-  garment_categories: []
+  garment_categories: [],
+  weather: emptyWeather
 }
 
 const actions = {
@@ -52,6 +56,9 @@ const actions = {
   },
   async [actionTypes.GET_VIDEO]({commit, state}, slug) {
     commit(mutationTypes.SET_VIDEO, await api.getVideo(slug))
+  },
+  async [actionTypes.GET_WEATHER]({commit, state}) {
+    commit(mutationTypes.SET_WEATHER, await ow.getWeather())
   }
 }
 
@@ -99,6 +106,14 @@ const mutations = {
   [mutationTypes.SET_VIDEO](state, data) {
     state.single.videos.push(data)
     console.log('videos set')
+  },
+  [mutationTypes.SET_WEATHER](state, data) {
+    if (state.weather === emptyWeather) {
+      state.weather = data
+      console.log('weather set')
+    } else {
+      console.log('leaving the weather as is')
+    }
   }
 }
 

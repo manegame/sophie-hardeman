@@ -27,6 +27,11 @@ Vue.filter('dotted', (date) => {
   return format(date, 'DD.MM.YYYY')
 })
 
+Vue.filter('temperature', (temp) => {
+  if (temp > 0) return '+' + temp + '°c'
+  else return temp + '°c'
+})
+
 // required by FullCalendar
 window.jQuery = window.$ = require('jquery')
 // import 'fullcalendar/dist/fullcalendar.min.js'
