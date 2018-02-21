@@ -163,5 +163,17 @@ export default {
         }
       )
     })
+  },
+  getStockists() {
+    return new Promise((resolve, reject) => {
+      Vue.http.get(API_ROOT + 'pages/?slug=stockists&field=acf,title,slug').then(
+        response => {
+          resolve(response.body[0])
+        },
+        response => {
+          reject(response)
+        }
+      )
+    })
   }
 }

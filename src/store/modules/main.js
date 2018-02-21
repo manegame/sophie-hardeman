@@ -21,6 +21,7 @@ const state = {
   diary: [],
   events: [],
   about: [],
+  stockists: {},
   single_about: {},
   single_garment: {},
   videos: [],
@@ -50,6 +51,9 @@ const actions = {
   },
   async [actionTypes.GET_EVENTS]({commit, state}) {
     commit(mutationTypes.SET_EVENTS, await api.getEvents())
+  },
+  async [actionTypes.GET_STOCKISTS]({commit, state}) {
+    commit(mutationTypes.SET_STOCKISTS, await api.getStockists())
   },
   async [actionTypes.GET_GARMENT]({commit, state}, slug) {
     commit(mutationTypes.SET_GARMENT, await api.getGarment(slug))
@@ -109,6 +113,10 @@ const mutations = {
   [mutationTypes.SET_EVENTS](state, data) {
     state.events = data
     console.log('events fetched')
+  },
+  [mutationTypes.SET_STOCKISTS](state, data) {
+    state.stockists = data
+    console.log('stockists fetched')
   },
   [mutationTypes.SET_GARMENT](state, data) {
     console.log('params ' + this)

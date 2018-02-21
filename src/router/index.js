@@ -8,6 +8,7 @@ const hardemanTV = () => import('@/views/hardeman-tv')
 const sale = () => import('@/views/sale')
 const singleSale = () => import('@/views/single-sale')
 const diary = () => import('@/views/diary')
+const stockists = () => import('@/views/stockists')
 
 Vue.use(Router)
 
@@ -52,6 +53,11 @@ export default new Router({
       path: '/diary/:slug',
       name: 'diary',
       component: diary
+    },
+    {
+      path: '/stockists',
+      name: 'stockists',
+      component: stockists
     }
   ]
 })

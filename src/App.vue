@@ -47,6 +47,7 @@ export default {
       'CLEAR_SINGLES',
       'GET_DIARY',
       'GET_EVENTS',
+      'GET_STOCKISTS',
       'GET_ABOUT',
       'GET_GARMENT',
       'GET_SINGLE_GARMENT',
@@ -74,7 +75,8 @@ export default {
           this.GET_VIDEOS()
           this.GET_GARMENT_CATEGORIES()
           this.GET_DIARY()
-          this.GET_EVENTS()
+          this.GET_EVENTS(),
+          this.GET_STOCKISTS()
           break
         case ('collection'):
           this.CLEAR_SINGLES()
@@ -101,6 +103,9 @@ export default {
           break
         case ('diary'):
           this.GET_DIARY()
+          break
+        case ('stockists'):
+          this.GET_STOCKISTS()
           break
       }
     }

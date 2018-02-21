@@ -8,7 +8,8 @@
         <h1>
           {{main.single.acf.season}} {{main.single.title.rendered}}
         </h1>
-        <div class="collection__main__lookbook__look" v-for='item in main.single.garments'>
+        <div class="collection__main__lookbook__look"
+             v-for='item in main.single.garments'>
           <img class="collection__main__lookbook__look__image"
                :src='item.acf.image.sizes["s-h-medium"]'/>
           <div class="collection__main__lookbook__look__meta">
@@ -18,17 +19,16 @@
             <del v-else>sale</del>
           </div>
         </div>
-      </div>
-      <div class="collection__main__info">
         <p v-html='main.single.acf.info' />
-      </div>
-      <div v-if='$route.params.section === "campaign"'>
-        campaign
       </div>
       <div v-if='$route.params.section === "video"'
            class="collection__main__video"
            v-for='video in main.single.videos'
            v-html='video.acf.video'>
+      </div>
+      <div v-if='$route.params.section === "campaign"'>
+        <img v-for='item in this.main.single.acf.campaign[0].images'
+             :src='item.image.sizes["s-h-large"]' />
       </div>
     </div>
   </div>

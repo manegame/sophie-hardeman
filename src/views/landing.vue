@@ -107,18 +107,19 @@
               </router-link>
             </ul>
           </section>
+          <!-- - -->
+          <!-- - -->
+          <!-- - -->
+          <!-- Stockists -->
           <section class="landing__column_middle__sections__stockists">
             <h2>stockists</h2>
             <ul>
-              <li>
-                Stocky 1, Amsterdam
-              </li>
-              <li>
-                Stocky 2, Berlino
-              </li>
-              <li>
-                Etc.
-              </li>
+              <router-link tag='li'
+                           v-for='stockist in main.stockists.acf.stockists'
+                           :key='stockist.id'
+                           :to='{name: "stockists"}'>
+                           <span>{{stockist.stockist}}<sup v-for='label in stockist.labels'>{{label.post_title}}</sup></span>
+              </router-link>
             </ul>
           </section>
         </div>
