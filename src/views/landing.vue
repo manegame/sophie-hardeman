@@ -27,8 +27,11 @@
       <!-- - -->
       <!-- MIDDLE -->
       <div class="landing__column_middle">
+        <!-- BANNER -->
         <div class="landing__column_middle__banner">
-          <img :src='main.banner.acf.banner.sizes["s-h-medium"]'/>
+          <a :href="bannerLink">
+            <img :src='main.banner.acf.banner.sizes["s-h-medium"]'/>
+          </a>
         </div>
         <div class="landing__column_middle__sections">
           <!-- - -->
@@ -168,6 +171,7 @@ export default {
   props: [],
   data() {
     return {
+      bannerLink: '',
       emphasizedCollection: 'slug'
     }
   },
@@ -177,11 +181,20 @@ export default {
   updated: function() {
     this.$nextTick(function() {
       this.emphasizedCollection = this.setSlug()
+      this.setBannerLink()
     })
   },
   methods: {
     setSlug() {
       return this.main.collections.filter(c => c.acf.emphasis)[0].slug
+    },
+    setBannerLink() {
+      let url = this.main.banner.acf.link
+      // let collection = /s-h_collection/
+      let vid = /s-h_videos/
+      if (vid.test(url)) {
+        this.bannerLink = url.replace(vid, 'hardeman-tv')
+      }
     }
   }
 }

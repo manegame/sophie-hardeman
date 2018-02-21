@@ -407,3 +407,25 @@ function my_rest_post_query($args, $request)
     return $args;
 }
 add_filter('rest_post_query', 'my_rest_post_query', 10, 2);
+
+
+// -------
+// -------
+// -------
+// HIDE PREVIEW POST
+global $pagenow;
+if ( 'post.php' == $pagenow || 'post-new.php' == $pagenow ) {
+    add_action( 'admin_head', 'wpse_125800_custom_publish_box' );
+    function wpse_125800_custom_publish_box() {
+        if( !is_admin() )
+            return;
+
+        $style = '';
+        $style .= '<style type="text/css">';
+        $style .= '#edit-slug-box, #minor-publishing-actions, #visibility, .num-revisions, .curtime';
+        $style .= '{display: none; }';
+        $style .= '</style>';
+
+        echo $style;
+    }
+}

@@ -75,7 +75,7 @@ export default {
           this.GET_VIDEOS()
           this.GET_GARMENT_CATEGORIES()
           this.GET_DIARY()
-          this.GET_EVENTS(),
+          this.GET_EVENTS()
           this.GET_STOCKISTS()
           break
         case ('collection'):

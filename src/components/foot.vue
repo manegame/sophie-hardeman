@@ -40,6 +40,8 @@ export default {
   color: $blue;
   border-top: $border;
   text-align: center;
+  position: absolute;
+  bottom: 0;
 
   &__link {
     font-size: $font-size-s;
