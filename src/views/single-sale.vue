@@ -3,9 +3,8 @@
     <navbar />
     <topbar />
     <div class="single_sale__main">
-      <h1 class="single_sale__main__title">
-        single sale
-      </h1>
+      <h1 class="single_sale__main__title">{{main.single_garment.title.rendered}}</h1>
+      <img :src='main.single_garment.acf.image.sizes["s-h-large"]'/>
     </div>
   </div>
 </template>

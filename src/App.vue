@@ -49,6 +49,7 @@ export default {
       'GET_EVENTS',
       'GET_ABOUT',
       'GET_GARMENT',
+      'GET_SINGLE_GARMENT',
       'GET_GARMENTS',
       'GET_GARMENT_CATEGORIES',
       'GET_VIDEOS',
@@ -90,6 +91,10 @@ export default {
             let cat = this.main.garment_categories.filter(c => { return c.slug === this.$route.params.slug })[0]
             this.GET_GARMENTS(cat.id)
           })
+          break
+        case ('single sale'):
+          this.GET_GARMENT_CATEGORIES()
+          this.GET_SINGLE_GARMENT(route.params.item)
           break
         case ('hardeman tv'):
           this.GET_VIDEOS()

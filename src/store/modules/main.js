@@ -22,6 +22,7 @@ const state = {
   events: [],
   about: [],
   single_about: {},
+  single_garment: {},
   videos: [],
   garments: [],
   garment_categories: [],
@@ -52,6 +53,9 @@ const actions = {
   },
   async [actionTypes.GET_GARMENT]({commit, state}, slug) {
     commit(mutationTypes.SET_GARMENT, await api.getGarment(slug))
+  },
+  async [actionTypes.GET_SINGLE_GARMENT]({commit, state}, slug) {
+    commit(mutationTypes.SET_SINGLE_GARMENT, await api.getSingleGarment(slug))
   },
   async [actionTypes.GET_GARMENTS]({commit, state}, slug) {
     commit(mutationTypes.SET_GARMENTS, await api.getGarments(slug))
@@ -107,7 +111,12 @@ const mutations = {
     console.log('events fetched')
   },
   [mutationTypes.SET_GARMENT](state, data) {
+    console.log('params ' + this)
     state.single.garments.push(data)
+    console.log('garment set')
+  },
+  [mutationTypes.SET_SINGLE_GARMENT](state, data) {
+    state.single_garment = data
     console.log('garment set')
   },
   [mutationTypes.SET_GARMENTS](state, data) {

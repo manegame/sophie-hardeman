@@ -56,9 +56,20 @@ export default {
       )
     })
   },
+  getSingleGarment(slug) {
+    return new Promise((resolve, reject) => {
+      Vue.http.get(API_ROOT + 's-h_garments/?slug=' + slug).then(
+        response => {
+          resolve(response.body[0])
+        },
+        response => {
+          reject(response)
+        }
+      )
+    })
+  },
   getGarments(slug) {
     return new Promise((resolve, reject) => {
-      // http://s-h.manusnijhoff.nl/wp-json/wp/v2/s-h_garments?filter=[s-h_garment_category=jackets]
       Vue.http.get(API_ROOT + 's-h_garments?s-h_garment_category=' + slug).then(
         response => {
           resolve(response.body)

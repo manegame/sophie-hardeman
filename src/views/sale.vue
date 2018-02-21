@@ -3,14 +3,15 @@
     <navbar />
     <topbar />
     <div class="sale__main">
-      <h1 class="sale__main__title">
-        {{$route.params.slug}}
-      </h1>
-      <div class="sale__main__item"
-           v-for='item in main.garments'>
-             <img :src='item.acf.image.sizes["s-h-large"]' />
+      <router-link tag='div'
+                   v-for='item in main.garments'
+                   :key='item.id'
+                   :to="{ name: 'single sale', params: {slug: $route.params.slug, item: item.slug}}"
+                   class="sale__main__item" >
+             <img class="sale__main__item__image"
+                  :src='item.acf.image.sizes["s-h-large"]' />
             {{item.title.rendered}}
-      </div>
+      </router-link>
     </div>
   </div>
 </template>
@@ -41,8 +42,16 @@ export default {
   @include single;
 
   &__main {
-    &__title {
-      color: $black;
+    &__item {
+      width: 400px;
+      height: 400px;
+      border-radius: 20px;
+
+      &__image {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
     }
   }
 }
