@@ -7,34 +7,39 @@
       <div  v-if='$route.params.section === "lookbook"'
             class="collection__main__lookbook">
             <!-- CAROUSEL -->
-            <div class="collection__main__lookbook__carousel"
-                 v-if='main.single.garments.length > 1'>
+            <div class="collection__main__lookbook__carousel">
               <!-- SWIPER -->
-              <div class="swiper-container gallery-top">
-                <div class="swiper-wrapper">
-                  <div class="swiper-slide"
-                       v-for='g in main.single.garments'
-                       :style='"background-image:url("+ g.acf.image.sizes["s-h-large"] +")"' />
+              <template v-if='main.single.garments.length > 1'>
+                <div class="swiper-container gallery-top">
+                  <div class="swiper-wrapper">
+                    <div class="swiper-slide"
+                         v-for='g in main.single.garments'
+                         :style='"background-image:url("+ g.acf.image.sizes["s-h-large"] +")"' />
+                  </div>
+                  <!-- Add Arrows -->
+                  <div class="swiper-button-next swiper-button-white"></div>
+                  <div class="swiper-button-prev swiper-button-white"></div>
                 </div>
-                <!-- Add Arrows -->
-                <div class="swiper-button-next swiper-button-white"></div>
-                <div class="swiper-button-prev swiper-button-white"></div>
-              </div>
-              <div class="swiper-container gallery-thumbs">
-                <div class="swiper-wrapper">
-                  <div class="swiper-slide"
-                       v-for='g in main.single.garments'
-                       :style='"background-image:url("+ g.acf.image.sizes["s-h-small"] +")"' />
+                <div class="swiper-container gallery-thumbs">
+                  <div class="swiper-wrapper">
+                    <div class="swiper-slide"
+                         v-for='g in main.single.garments'
+                         :style='"background-image:url("+ g.acf.image.sizes["s-h-small"] +")"' />
+                  </div>
                 </div>
-              </div>
+              </template>
+              <template v-else>
+                <p>{{msg}}</p>
+              </template>
               <!-- END SWIPER -->
             </div>
             <div class="collection__main__lookbook__info">
               <!-- TEXT -->
-              <h1>
+              <h5 class="collection__main__lookbook__info__title">
                 {{main.single.acf.season}} {{main.single.title.rendered}}
-              </h1>
-              <p v-html='main.single.acf.info' />
+              </h5>
+              <p class="collection__main__lookbook__info__text"
+                 v-html='main.single.acf.info' />
               <p>
                 The following items are for sale:
               </p>
@@ -43,12 +48,14 @@
       <!-- VIDEO -->
       <div v-if='$route.params.section === "video"'
            class="collection__main__video"
-           v-for='video in main.single.videos'
-           v-html='video.acf.video'>
+           v-for='video in main.single.videos'>
+           <div class="video-embed" v-html='video.acf.video'/>
       </div>
+
       <!-- CAMPAIGN -->
       <div v-if='$route.params.section === "campaign"'>
-        <img v-for='item in this.main.single.acf.campaign[0].images'
+        <img class="collection__main__campaign"
+             v-for='item in this.main.single.acf.campaign_images'
              :src='item.image.sizes["s-h-large"]' />
       </div>
     </div>
@@ -112,15 +119,14 @@ export default {
         })
         this.galleryTop.controller.control = this.galleryThumbs
         this.galleryThumbs.controller.control = this.galleryTop
-        console.log('swipers', this)
-        this.galleryTop.on('imagesReady', () => {
-          console.log('now')
-        })
       }
     }
   },
   computed: {
-    ...mapState(['main'])
+    ...mapState(['main']),
+    msg() {
+      return 'no images available'
+    }
   },
   watch: {
     'main.single'() {
@@ -133,6 +139,7 @@ export default {
 <style scoped lang='scss'>
 @import '../style/helpers/_mixins.scss';
 @import '../style/helpers/_responsive.scss';
+@import '../style/helpers/_embed.scss';
 @import '../style/vendor/swiper.css';
 @import '../style/_variables.scss';
 
@@ -141,9 +148,6 @@ export default {
 
   &__main {
     height: calc(100vh - 60px);
-    &__title {
-      color: $black;
-    }
 
     &__lookbook {
       height: 100%;
@@ -175,10 +179,24 @@ export default {
           opacity: 0;
         }
       }
+
+      &__info {
+        padding-left: 20px;
+        &__title,
+        &__text {
+          color: $black;
+          padding-bottom: 20px;
+        }
+      }
     }
 
     &__video {
       padding-top: $margin-top;
+      width: 100%;
+    }
+
+    &__campaign {
+      max-height: 75vh;
     }
   }
 }

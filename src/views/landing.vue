@@ -28,7 +28,8 @@
       <!-- MIDDLE -->
       <div class="landing__column_middle">
         <!-- BANNER -->
-        <div class="landing__column_middle__banner">
+        <div class="landing__column_middle__banner"
+             v-if='main.banner'>
           <a :href="bannerLink">
             <img :src='main.banner.acf.banner.sizes["s-h-medium"]'/>
           </a>
@@ -189,11 +190,13 @@ export default {
       return this.main.collections.filter(c => c.acf.emphasis)[0].slug
     },
     setBannerLink() {
-      let url = this.main.banner.acf.link
-      // let collection = /s-h_collection/
-      let vid = /s-h_videos/
-      if (vid.test(url)) {
-        this.bannerLink = url.replace(vid, 'hardeman-tv')
+      if (this.main.banner !== undefined) {
+        let url = this.main.banner.acf.link
+        // let collection = /s-h_collection/
+        let vid = /s-h_videos/
+        if (vid.test(url)) {
+          this.bannerLink = url.replace(vid, 'hardeman-tv')
+        }
       }
     }
   }

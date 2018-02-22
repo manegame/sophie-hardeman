@@ -145,13 +145,9 @@ export default {
   },
   watch: {
     $route(to, from) {
-      if (to !== undefined) {
-        if (to.params.slug !== from.params.slug) {
-          this.$_fetchData(to)
-          this.$_setMetaTags()
-        }
-      } else {
-        this.$_fetchData(from)
+      if (from.name === 'collection' && to.params.slug === from.params.slug) return false
+      else {
+        this.$_fetchData(to)
         this.$_setMetaTags()
       }
     },
