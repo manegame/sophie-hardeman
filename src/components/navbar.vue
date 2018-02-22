@@ -110,6 +110,7 @@
           <router-link class="nav__item"
                        :class='{"nav__item--emphasis": $route.params.slug === s.slug}'
                        tag='li'
+                       :key='s.id'
                        :to='{name: "stockists", params: {slug: s.slug}}'>
                        {{s.title.rendered}} <sup v-for='label in s.acf.labels'>{{label.post_title}}</sup>
                        </router-link>
@@ -139,13 +140,12 @@ export default {
   padding-left: 20px;
 
   &__title {
-    margin-bottom: 20px;
+    margin-bottom: 6px;
   }
 
   .nav {
     padding-top: 20px;
     &__item {
-      display: flex;
       border-bottom: none;
 
       &--emphasis {
@@ -166,13 +166,13 @@ export default {
         display: none;
 
         &__item {
-          padding-left: 80px;
+          padding-left: 20px;
           border-bottom: none;
           color: $black;
           display: none;
 
           &--show {
-            display: initial;
+            display: block;
           }
 
           &--active {

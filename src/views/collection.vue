@@ -44,17 +44,20 @@
                      <router-link class="collection__main__lookbook__info__for_sale__item"
                                   v-for='c in main.single.acf.items_for_sale'
                                   tag='li'
+                                  :key='c.id'
                                   :to='{name: "sale", params: {slug: c.slug}}'
                                   v-html='c.name' />
                    </ul>
                  </section>
+                 <suggestions class="bottom" />
             </div>
       </div>
       <!-- VIDEO -->
       <div v-if='$route.params.section === "video"'
-           class="collection__main__video"
-           v-for='video in main.single.videos'>
-           <div class="video-embed" v-html='video.acf.video'/>
+           class="collection__main__video">
+        <div v-if='main.single.videos.length > 0'
+             class="video-embed"
+             v-html='embedCode' />
       </div>
       <!-- CAMPAIGN -->
       <div v-if='$route.params.section === "campaign"'>
@@ -65,6 +68,7 @@
                :src='item.image.sizes["s-h-large"]' />
         </template>
         <p v-html='main.single.acf.campaign_description' />
+        <suggestions class="bottom" :not='true' />
       </div>
     </div>
   </div>
@@ -74,13 +78,16 @@
 import {mapState} from 'vuex'
 import navbar from '@/components/navbar'
 import topbar from '@/components/topbar'
+import suggestions from '@/components/suggestions'
+import embed from 'embed-video'
 import Swiper from 'swiper'
 
 export default {
   name: 'collection',
   components: {
     navbar,
-    topbar
+    topbar,
+    suggestions
   },
   data() {
     return {
@@ -133,7 +140,10 @@ export default {
     }
   },
   computed: {
-    ...mapState(['main'])
+    ...mapState(['main']),
+    embedCode() {
+      return embed(this.main.single.videos[0].acf.video)
+    }
   },
   watch: {
     'main.single'() {
@@ -190,11 +200,12 @@ export default {
       }
 
       &__info {
-        width: calc(100% - #{$left-col-width});
-        font-size: $font-size-s;
-        line-height: $line-height-s;
-        padding: 0 20px;
-        float: left;
+        @include right-col;
+
+        .bottom {
+          position: absolute;
+          bottom: 7px;
+        }
 
         &__title,
         &__text {
@@ -207,24 +218,34 @@ export default {
         }
 
         &__for_sale {
-          font-size: $font-size-s;
-          line-height: $line-height-s;
-          list-style-type: disc !important; /* override */
-
-          &__item {
-            list-style-type: disc;
-            font-size: $font-size-s;
-            line-height: $line-height-s;
-            margin-left: 15px;
-            border-bottom: none;
-          }
+          @include small-list;
         }
       }
     }
 
     &__video {
-      padding-top: $margin-top;
-      width: 100%;
+      position: relative;
+      width: calc(100% - 20px);
+      height: auto;
+
+      .video-embed {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        max-width: 100%;
+        margin: 0;
+
+        iframe,
+        object,
+        embed {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100% !important;
+          height: 100%;
+        }
+      }
     }
 
     &__campaign {

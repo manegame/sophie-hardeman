@@ -19,6 +19,34 @@
   }
 }
 
+///
+///
+///
+@mixin right-col {
+  width: calc(100% - #{$left-col-width});
+  font-size: $font-size-s;
+  line-height: $line-height-s;
+  padding: 0 20px;
+  float: left;
+}
+
+///
+///
+///
+@mixin small-list {
+  font-size: $font-size-s;
+  line-height: $line-height-s;
+  list-style-type: disc !important; /* override */
+
+  &__item {
+    list-style-type: disc;
+    font-size: $font-size-s;
+    line-height: $line-height-s;
+    margin-left: 15px;
+    border-bottom: none;
+  }
+}
+
 /// Helper to clear inner floats
 /// @author Nicolas Gallagher
 /// @link http://nicolasgallagher.com/micro-clearfix-hack/ Micro Clearfix

@@ -2,16 +2,18 @@
   <div class='stockists'>
     <navbar />
     <topbar />
-    <div v-if='main.single_stockist'
+    <div v-if='main.single_stockist.acf'
          class="stockists__main">
       <div class="stockists__main__left">
         <img class="stockists__main__left__image"
              :src='main.single_stockist.acf.image.sizes["s-h-medium"]' />
       </div>
-      <h5 class='main__title'>
-        {{main.single_stockist.title.rendered}}
-      </h5>
-      <p v-html='main.single_stockist.acf.description' />
+      <div class="stockists__main__right">
+        <h5 class='stockists__main__right__title'>
+          {{main.single_stockist.title.rendered}}
+        </h5>
+        <p v-html='main.single_stockist.acf.description' />
+      </div>
     </div>
   </div>
 </template>
@@ -55,12 +57,11 @@ export default {
       }
     }
 
-    &__title {
-      color: $black;
-    }
-
-    &__stockist {
-      display: block;
+    &__right {
+      @include right-col;
+      &__title {
+        color: $black;
+      }
     }
   }
 }
