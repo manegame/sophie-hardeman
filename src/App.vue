@@ -1,6 +1,7 @@
 <template>
   <div class='app'>
-    <router-view id='view'/>
+    <router-view id='view'
+                 v-if='ready'/>
     <foot />
   </div>
 </template>
@@ -16,6 +17,7 @@ export default {
   },
   data() {
     return {
+      ready: false,
       cat_id: 6,
       meta: {
         sitename: 'Sophie Hardeman',
@@ -77,35 +79,43 @@ export default {
           this.GET_DIARY()
           this.GET_EVENTS()
           this.GET_STOCKISTS()
+          this.ready = true
           break
         case ('collection'):
           this.CLEAR_SINGLES()
           this.GET_SINGLE_COLLECTION(route.params.slug)
           this.GET_COLLECTIONS()
+          this.ready = true
           break
         case ('about'):
           this.CLEAR_SINGLES()
           this.GET_ABOUT()
           this.GET_SINGLE_ABOUT(route.params.slug)
+          this.ready = true
           break
         case ('sale'):
           this.GET_GARMENT_CATEGORIES().then(() => {
             let cat = this.main.garment_categories.filter(c => { return c.slug === this.$route.params.slug })[0]
             this.GET_GARMENTS(cat.id)
           })
+          this.ready = true
           break
         case ('single sale'):
           this.GET_GARMENT_CATEGORIES()
           this.GET_SINGLE_GARMENT(route.params.item)
+          this.ready = true
           break
         case ('hardeman tv'):
           this.GET_VIDEOS()
+          this.ready = true
           break
         case ('diary'):
           this.GET_DIARY()
+          this.ready = true
           break
         case ('stockists'):
           this.GET_STOCKISTS()
+          this.ready = true
           break
       }
     }
@@ -145,15 +155,17 @@ export default {
   },
   watch: {
     $route(to, from) {
-      if (from.name === 'collection' && to.params.slug === from.params.slug) return false
-      else {
+      if (from.name === 'collection' && to.params.slug === from.params.slug) {
+        this.ready = true
+      } else {
+        this.ready = false
         this.$_fetchData(to)
         this.$_setMetaTags()
       }
     },
     'main.single.acf'() {
-      this.main.single.acf.garments.map(g => this.GET_GARMENT(g.ID))
-      this.main.single.acf.videos.map(v => this.GET_VIDEO(v.ID))
+      if (this.main.single.acf.videos) this.main.single.acf.videos.map(v => this.GET_VIDEO(v.ID))
+      if (this.main.single.acf.garments) this.main.single.acf.garments.map(g => this.GET_GARMENT(g.ID))
     }
   }
 }

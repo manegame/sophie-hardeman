@@ -20,20 +20,26 @@
                        <ul class="nav__item__sub"
                            :class='{"nav__item__sub--show": main.single.slug === collection.slug}'>
                            <router-link tag='li'
-                                        class="nav__item__sub__item"
+                                        class="nav__item__sub__item nav__item__sub__item--show"
                                         :class="{'nav__item__sub__item--active': $route.params.section === 'lookbook'}"
                                         :to="{ name: 'collection', params: {slug: collection.slug, section: 'lookbook'} }"
                                         v-html='"lookbook"' />
                            <router-link tag='li'
-                                        v-if='main.single.videos.length > 0'
+                                        v-if='main.single.videos'
                                         class="nav__item__sub__item"
-                                        :class="{'nav__item__sub__item--active': $route.params.section === 'video'}"
+                                        :class="{
+                                                  'nav__item__sub__item--active': $route.params.section === 'video',
+                                                  'nav__item__sub__item--show': main.single.videos.length > 0
+                                                 }"
                                         :to="{ name: 'collection', params: {slug: collection.slug, section: 'video'} }"
                                         v-html='"video"' />
                            <router-link tag='li'
-                                        v-if='main.single.acf.campaign_images.length > 0'
+                                        v-if='main.single.acf.campaign_images'
                                         class="nav__item__sub__item"
-                                        :class="{'nav__item__sub__item--active': $route.params.section === 'campaign'}"
+                                        :class="{
+                                                  'nav__item__sub__item--active': $route.params.section === 'campaign',
+                                                  'nav__item__sub__item--show': main.single.acf.campaign_description !== ''
+                                                }"
                                         :to="{ name: 'collection', params: {slug: collection.slug, section: 'campaign'} }"
                                         v-html='"campaign"' />
                        </ul>
@@ -149,6 +155,11 @@ export default {
           padding-left: 80px;
           border-bottom: none;
           color: $black;
+          display: none;
+
+          &--show {
+            display: initial;
+          }
 
           &--active {
             text-decoration: underline;

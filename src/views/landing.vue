@@ -14,7 +14,7 @@
         </h4>
         <a href='facebook'>FB</a>
         <a href='instagram'>INSTA</a>
-        <ul class="landing__column_left__links">
+        <ul v-if='main.collections.length > 0' class="landing__column_left__links">
           <router-link :to="{name: 'collection',params: { slug: emphasizedCollection, section: 'lookbook'}}">collections</router-link>
         </ul>
         <h3 class="landing__column_left__weather_head">what to wear?</h3>
@@ -28,10 +28,10 @@
       <!-- MIDDLE -->
       <div class="landing__column_middle">
         <!-- BANNER -->
-        <div class="landing__column_middle__banner"
-             v-if='main.banner'>
+        <div v-if='main.banner.sizes'
+             class="landing__column_middle__banner">
           <a :href="bannerLink">
-            <img :src='main.banner.acf.banner.sizes["s-h-medium"]'/>
+            <img :src='main.banner.sizes["s-h-medium"]'/>
           </a>
         </div>
         <div class="landing__column_middle__sections">
@@ -39,7 +39,8 @@
           <!-- - -->
           <!-- - -->
           <!-- Collections -->
-          <section class="landing__column_middle__sections__collections">
+          <section v-if='emphasizedCollection'
+                   class="landing__column_middle__sections__collections">
             <router-link :to="{ name: 'collection', params: {slug: emphasizedCollection, section: 'lookbook'} }"
                           tag='h2'>
                           collections
@@ -115,7 +116,8 @@
           <!-- - -->
           <!-- - -->
           <!-- Stockists -->
-          <section class="landing__column_middle__sections__stockists">
+          <section v-if='main.stockists.acf'
+                   class="landing__column_middle__sections__stockists">
             <h2>stockists</h2>
             <ul>
               <router-link tag='li'
@@ -172,26 +174,24 @@ export default {
   props: [],
   data() {
     return {
-      bannerLink: '',
-      emphasizedCollection: 'slug'
+      bannerLink: ''
     }
   },
   computed: {
-    ...mapState(['main'])
+    ...mapState(['main']),
+    emphasizedCollection() {
+      if (this.main.collections.length > 0) return this.main.collections.filter(c => c.acf.emphasis)[0].slug
+    }
   },
   updated: function() {
     this.$nextTick(function() {
-      this.emphasizedCollection = this.setSlug()
       this.setBannerLink()
     })
   },
   methods: {
-    setSlug() {
-      return this.main.collections.filter(c => c.acf.emphasis)[0].slug
-    },
     setBannerLink() {
       if (this.main.banner !== undefined) {
-        let url = this.main.banner.acf.link
+        let url = this.main.banner.link
         // let collection = /s-h_collection/
         let vid = /s-h_videos/
         if (vid.test(url)) {

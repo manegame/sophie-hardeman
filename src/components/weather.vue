@@ -1,5 +1,5 @@
 <template>
-  <div class="weather">
+  <div class="weather" v-if='main.weather.weather'>
     <div class="weather__top">
       <div>
         <p v-html='main.weather.name'/>

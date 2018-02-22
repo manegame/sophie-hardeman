@@ -83,7 +83,7 @@ const actions = {
 
 const mutations = {
   [mutationTypes.SET_BANNER](state, data) {
-    state.banner = data[0]
+    state.banner = data
     console.log('banner fetched')
   },
   [mutationTypes.SET_COLLECTIONS](state, data) {

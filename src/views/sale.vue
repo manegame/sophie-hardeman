@@ -10,7 +10,6 @@
                    class="sale__main__item" >
              <img class="sale__main__item__image"
                   :src='item.acf.image.sizes["s-h-large"]' />
-            {{item.title.rendered}}
       </router-link>
     </div>
   </div>

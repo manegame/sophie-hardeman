@@ -51,12 +51,15 @@
            v-for='video in main.single.videos'>
            <div class="video-embed" v-html='video.acf.video'/>
       </div>
-
       <!-- CAMPAIGN -->
       <div v-if='$route.params.section === "campaign"'>
-        <img class="collection__main__campaign"
-             v-for='item in this.main.single.acf.campaign_images'
-             :src='item.image.sizes["s-h-large"]' />
+        <template v-if='main.single.acf'>
+          <img class="collection__main__campaign"
+               v-if='main.single.acf.campaign_images.length > 0'
+               v-for='item in main.single.acf.campaign_images'
+               :src='item.image.sizes["s-h-large"]' />
+        </template>
+        <p v-html='main.single.acf.campaign_description' />
       </div>
     </div>
   </div>
@@ -82,7 +85,9 @@ export default {
   },
   updated() {
     this.$nextTick(() => {
-      this.swipers()
+      if (this.$route.params.section === 'lookbook') {
+        this.swipers()
+      }
     })
   },
   methods: {
@@ -117,8 +122,8 @@ export default {
             }
           }
         })
-        this.galleryTop.controller.control = this.galleryThumbs
-        this.galleryThumbs.controller.control = this.galleryTop
+        this.galleryTop.originalParams.controller.control = this.galleryThumbs
+        this.galleryThumbs.originalParams.controller.control = this.galleryTop
       }
     }
   },
@@ -181,7 +186,7 @@ export default {
       }
 
       &__info {
-        padding-left: 20px;
+        padding: 0 20px;
         &__title,
         &__text {
           color: $black;

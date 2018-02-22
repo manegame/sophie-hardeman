@@ -6,7 +6,8 @@
       <h1 class='main__title'>
         stockists
       </h1>
-      <a v-for='item in main.stockists.acf.stockists'
+      <a class='stockists__main__stockist'
+         v-for='item in main.stockists.acf.stockists'
          :href='item.url'
          v-html='item.stockist'/>
     </div>
@@ -41,6 +42,10 @@ export default {
   &__main {
     &__title {
       color: $black;
+    }
+
+    &__stockist {
+      display: block;
     }
   }
 }
