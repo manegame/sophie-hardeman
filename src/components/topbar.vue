@@ -89,7 +89,9 @@ export default {
 
   &__reply {
     background: $yellow;
-    font-weight: bold;
+    &:hover {
+      font-weight: bold;  
+    }
   }
 
   &__print {
