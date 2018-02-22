@@ -3,9 +3,9 @@
     <navbar />
     <topbar />
     <div class="hardeman_tv__main">
-      <h1 class="hardeman_tv__main__title">
+      <h5 class="hardeman_tv__main__title">
         hardeman TV
-      </h1>
+      </h5>
       <div class="hardeman_tv__main__video"
            v-for='video in main.videos'
            v-html='video.acf.video' />

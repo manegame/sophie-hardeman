@@ -4,7 +4,7 @@
     <topbar />
     <div v-if='main.single_garment.acf'
          class="single_sale__main">
-      <h1 class="single_sale__main__title">{{main.single_garment.title.rendered}}</h1>
+      <h5 class="single_sale__main__title">{{main.single_garment.title.rendered}}</h5>
       <img :src='main.single_garment.acf.image.sizes["s-h-small"]'/>
     </div>
   </div>
@@ -37,6 +37,7 @@ export default {
 
   &__main {
     &__title {
+      margin-bottom: 20px;
       color: $black;
     }
   }

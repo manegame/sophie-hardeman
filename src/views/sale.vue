@@ -41,15 +41,19 @@ export default {
   @include single;
 
   &__main {
+    display: flex;
+    flex-flow: row wrap;
     &__item {
-      width: 400px;
-      height: 400px;
+      width: $left-col-width;
+      height: $left-col-width;
       border-radius: 20px;
+      margin-bottom: 20px;
 
       &__image {
         width: 100%;
         height: 100%;
         object-fit: contain;
+        object-position: top left;
       }
     }
   }
