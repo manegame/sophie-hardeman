@@ -2,14 +2,16 @@
   <div class='stockists'>
     <navbar />
     <topbar />
-    <div class="stockists__main">
-      <h1 class='main__title'>
-        stockists
-      </h1>
-      <a class='stockists__main__stockist'
-         v-for='item in main.stockists.acf.stockists'
-         :href='item.url'
-         v-html='item.stockist'/>
+    <div v-if='main.single_stockist'
+         class="stockists__main">
+      <div class="stockists__main__left">
+        <img class="stockists__main__left__image"
+             :src='main.single_stockist.acf.image.sizes["s-h-medium"]' />
+      </div>
+      <h5 class='main__title'>
+        {{main.single_stockist.title.rendered}}
+      </h5>
+      <p v-html='main.single_stockist.acf.description' />
     </div>
   </div>
 </template>
@@ -40,6 +42,19 @@ export default {
   @include single;
 
   &__main {
+    position: relative;
+    clear: none;
+
+    &__left {
+      width: $left-col-width;
+      float: left;
+
+      &__image {
+        width: 100%;
+        height: auto;
+      }
+    }
+
     &__title {
       color: $black;
     }

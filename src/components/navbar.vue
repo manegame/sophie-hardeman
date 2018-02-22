@@ -102,6 +102,20 @@
         </template>
       </ul>
     </template>
+    <!-- STOCKISTS -->
+    <template v-if='$route.name === "stockists"'>
+      <p>stockists</p>
+      <ul class="nav">
+        <template v-for='s in main.stockists'>
+          <router-link class="nav__item"
+                       :class='{"nav__item--emphasis": $route.params.slug === s.slug}'
+                       tag='li'
+                       :to='{name: "stockists", params: {slug: s.slug}}'>
+                       {{s.title.rendered}} <sup v-for='label in s.acf.labels'>{{label.post_title}}</sup>
+                       </router-link>
+        </template>
+      </ul>
+    </template>
   </div>
 </template>
 

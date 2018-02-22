@@ -1,7 +1,9 @@
 <template>
   <div class="topbar">
     <router-link class="topbar__back"
-                 :to="{ name: 'landing'}"><- back to overview</router-link>
+                 :to="{ name: 'landing'}">
+                  <- back to overview
+    </router-link>
                 <span v-if='$route.name === "collection"' class="topbar__posted">updated {{main.single.modified | dotted}}</span>
                 <a class="topbar__recommend"
                    :href='reccomendLink'>mail to a friend</a>
@@ -51,6 +53,7 @@ export default {
   display: flex;
   align-items: center;
   text-align: left;
+  z-index: 9;
   border-bottom: $border;
   margin-bottom: $margin-top;
   background: $white;
@@ -82,6 +85,11 @@ export default {
     &:hover {
       background: $yellow;
     }
+  }
+
+  &__reply {
+    background: $yellow;
+    font-weight: bold;
   }
 
   &__print {

@@ -20,6 +20,7 @@ add_filter('query_vars', function ($vars) {
 add_action('after_setup_theme', 'image_size_setup');
 function image_size_setup()
 {
+    add_image_size('s-h-tiny', 100);
     add_image_size('s-h-small', 500);
     add_image_size('s-h-medium', 800);
     add_image_size('s-h-large', 1400);
@@ -271,6 +272,22 @@ function about_post_type()
       'labels' => array(
         'name' => __('About'),
         'singular_name' => __('section')
+      ),
+      'public' => true,
+      'show_in_rest' => true,
+      'has_archive' => true,
+    )
+  );
+}
+
+add_action('init', 'stockists_post_type');
+function stockists_post_type()
+{
+    register_post_type('s-h_stockists',
+    array(
+      'labels' => array(
+        'name' => __('Stockists'),
+        'singular_name' => __('Stockist')
       ),
       'public' => true,
       'show_in_rest' => true,

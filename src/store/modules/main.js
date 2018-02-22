@@ -22,6 +22,7 @@ const state = {
   events: [],
   about: [],
   stockists: {},
+  single_stockist: {},
   single_about: {},
   single_garment: {},
   videos: [],
@@ -54,6 +55,9 @@ const actions = {
   },
   async [actionTypes.GET_STOCKISTS]({commit, state}) {
     commit(mutationTypes.SET_STOCKISTS, await api.getStockists())
+  },
+  async [actionTypes.GET_SINGLE_STOCKIST]({commit, state}, slug) {
+    commit(mutationTypes.SET_SINGLE_STOCKIST, await api.getSingleStockist(slug))
   },
   async [actionTypes.GET_GARMENT]({commit, state}, slug) {
     commit(mutationTypes.SET_GARMENT, await api.getGarment(slug))
@@ -101,6 +105,9 @@ const mutations = {
   },
   [mutationTypes.SET_SINGLE_ABOUT](state, data) {
     state.single_about = data
+  },
+  [mutationTypes.SET_SINGLE_STOCKIST](state, data) {
+    state.single_stockist = data
   },
   [mutationTypes.CLEAR_SINGLES](state, data) {
     state.single = emptySingle

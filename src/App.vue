@@ -53,6 +53,7 @@ export default {
       'GET_ABOUT',
       'GET_GARMENT',
       'GET_SINGLE_GARMENT',
+      'GET_SINGLE_STOCKIST',
       'GET_GARMENTS',
       'GET_GARMENT_CATEGORIES',
       'GET_VIDEOS',
@@ -115,6 +116,7 @@ export default {
           break
         case ('stockists'):
           this.GET_STOCKISTS()
+          this.GET_SINGLE_STOCKIST(route.params.slug)
           this.ready = true
           break
       }

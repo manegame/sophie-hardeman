@@ -28,9 +28,6 @@
                   </div>
                 </div>
               </template>
-              <template v-else>
-                <p>{{msg}}</p>
-              </template>
               <!-- END SWIPER -->
             </div>
             <div class="collection__main__lookbook__info">
@@ -40,9 +37,17 @@
               </h5>
               <p class="collection__main__lookbook__info__text"
                  v-html='main.single.acf.info' />
-              <p>
-                The following items are for sale:
-              </p>
+                 <section v-if='main.single.acf.items_for_sale'
+                          class="collection__main__lookbook__info__for_sale">
+                   <p>The following items are for sale:</p>
+                   <ul class="collection__main__lookbook__info__for_sale">
+                     <router-link class="collection__main__lookbook__info__for_sale__item"
+                                  v-for='c in main.single.acf.items_for_sale'
+                                  tag='li'
+                                  :to='{name: "sale", params: {slug: c.slug}}'
+                                  v-html='c.name' />
+                   </ul>
+                 </section>
             </div>
       </div>
       <!-- VIDEO -->
@@ -128,10 +133,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['main']),
-    msg() {
-      return 'no images available'
-    }
+    ...mapState(['main'])
   },
   watch: {
     'main.single'() {
@@ -153,16 +155,18 @@ export default {
 
   &__main {
     height: calc(100vh - 60px);
+    position: relative;
+    clear: none;
 
     &__lookbook {
       height: 100%;
-      display: flex;
+      display: inline-block;
       flex-flow: row nowrap;
 
       &__carousel {
         height: 100%;
-        width: 350px;
-        flex-basis: 800px;
+        width: $left-col-width;
+        float: left;
 
         .swiper-button-next {
           width: 20px;
@@ -186,11 +190,34 @@ export default {
       }
 
       &__info {
+        width: calc(100% - #{$left-col-width});
+        font-size: $font-size-s;
+        line-height: $line-height-s;
         padding: 0 20px;
+        float: left;
+
         &__title,
         &__text {
           color: $black;
           padding-bottom: 20px;
+        }
+
+        &__text {
+          max-width: $left-col-width;
+        }
+
+        &__for_sale {
+          font-size: $font-size-s;
+          line-height: $line-height-s;
+          list-style-type: disc !important; /* override */
+
+          &__item {
+            list-style-type: disc;
+            font-size: $font-size-s;
+            line-height: $line-height-s;
+            margin-left: 15px;
+            border-bottom: none;
+          }
         }
       }
     }
@@ -217,7 +244,7 @@ export default {
   width: 100%;
   height: 100%;
   background-size: cover;
-  background-position: center;
+  background-position: top;
 }
 .gallery-top {
   height: 80%;

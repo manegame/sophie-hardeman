@@ -116,15 +116,15 @@
           <!-- - -->
           <!-- - -->
           <!-- Stockists -->
-          <section v-if='main.stockists.acf'
+          <section v-if='main.stockists'
                    class="landing__column_middle__sections__stockists">
             <h2>stockists</h2>
             <ul>
               <router-link tag='li'
-                           v-for='stockist in main.stockists.acf.stockists'
-                           :key='stockist.id'
-                           :to='{name: "stockists"}'>
-                           <span>{{stockist.stockist}}<sup v-for='label in stockist.labels'>{{label.post_title}}</sup></span>
+                           v-for='s in main.stockists'
+                           :key='s.id'
+                           :to='{name: "stockists", params: {slug: s.slug}}'>
+                           <span>{{s.title.rendered}}<sup v-for='label in s.acf.labels'>{{label.post_title}}</sup></span>
               </router-link>
             </ul>
           </section>

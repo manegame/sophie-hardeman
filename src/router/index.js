@@ -55,7 +55,7 @@ export default new Router({
       component: diary
     },
     {
-      path: '/stockists',
+      path: '/stockists/:slug',
       name: 'stockists',
       component: stockists
     }
