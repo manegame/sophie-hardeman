@@ -19,6 +19,7 @@
     "date-fns": "^1.29.0",
     "prismic-javascript": "^1.5.0-beta.1",
     "raven-js": "^3.20.1",
+    "swiper": "^4.1.6",
     "vue": "^2.5.9",
     "vue-cookie": "^1.1.4",
     "vue-full-calendar": "^2.5.2",

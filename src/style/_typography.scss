@@ -4,6 +4,21 @@
   color: $blue;
 }
 
+a {
+  text-decoration: none;
+  color: $blue;
+
+  &:hover,
+  &:visited {
+    color: $blue;
+    text-decoration: none;
+  }
+
+  &:active {
+    text-decoration: underline;
+  }
+}
+
 h1 {
   font-size: 40px;
   line-height: 44px;
@@ -63,6 +78,17 @@ ul {
     &.naturel {
       border-bottom: 0;
     }
+  }
+}
+
+.router-link,
+.router-link-active,
+.landing__column_middle__sections h2,
+li {
+  cursor: pointer;
+
+  &:active {
+    text-decoration: underline;
   }
 }
 

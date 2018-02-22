@@ -146,8 +146,10 @@ export default {
   watch: {
     $route(to, from) {
       if (to !== undefined) {
-        this.$_fetchData(to)
-        this.$_setMetaTags()
+        if (to.params.slug !== from.params.slug) {
+          this.$_fetchData(to)
+          this.$_setMetaTags()
+        }
       } else {
         this.$_fetchData(from)
         this.$_setMetaTags()
