@@ -4,14 +4,17 @@
 @mixin single {
   height: 100%;
   margin-top: $margin-top;
-  display: grid;
   position: relative;
-  grid-template: 'left main'
-                 / 3fr 11fr;
-  grid-gap: 20px;
+  // display: grid;
+  // grid-template: 'left main'
+  //                / 3fr 11fr;
+  // grid-gap: 20px;
   overflow: hidden;
 
   &__main {
+    width: calc(11/14 * 100%);
+    position: relative;
+    float: left;
     height: auto;
     overflow: scroll;
     @include hide-scroll;

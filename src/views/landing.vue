@@ -4,7 +4,7 @@
       <!-- - -->
       <!-- - -->
       <!-- LEFT -->
-      <div class="landing__column_left">
+      <div class="landing__column_left landing__column">
         <h1 class="landing__column_left__title">
           hardeman
         </h1>
@@ -26,7 +26,7 @@
       <!-- - -->
       <!-- - -->
       <!-- MIDDLE -->
-      <div class="landing__column_middle">
+      <div class="landing__column_middle landing__column">
         <!-- BANNER -->
         <div v-if='main.banner.sizes'
              class="landing__column_middle__banner">
@@ -134,7 +134,7 @@
       <!-- - -->
       <!-- - -->
       <!-- RIGHT -->
-      <div class="landing__column_right">
+      <div class="landing__column_right landing__column">
         <h3 class="landing__column_right__head">
           diary
         </h3>
@@ -210,16 +210,22 @@ export default {
 
 .landing {
   background: $white;
-  display: grid;
   width: $landing-width;
   margin: $margin-top auto 0;
   height: 100%;
-  grid-template: 'left main right'
-                 / 3fr 9fr 2fr;
-  grid-gap: 20px;
+
+  &__column {
+    height: calc(100vh - #{$topbar-height + $margin-top});
+  }
+  // display: grid;
+  // grid-template: 'left main right'
+  //                / 3fr 9fr 2fr;
+  // grid-gap: 20px;
 
   &__column_left {
-    grid-column: 'left';
+    position: relative;
+    float: left;
+    width: calc(3/14 * 100%);
     background: $grey;
     border-top: $border;
     border-left: $border;
@@ -235,7 +241,10 @@ export default {
   }
 
   &__column_middle {
-    grid-area: 'main';
+    width: calc(9/14 * 100%);
+    padding: 0 20px;
+    position: relative;
+    float: left;
     display: flex;
     flex-flow: column;
 
@@ -288,7 +297,9 @@ export default {
   }
 
   &__column_right {
-    grid-area: 'right';
+    position: relative;
+    float: left;
+    width: calc(2/14 * 100%);
     background: $grey;
     border-top: $border;
     border-left: $border;

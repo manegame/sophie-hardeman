@@ -57,9 +57,10 @@ export default {
   border-bottom: $border;
   margin-bottom: $margin-top;
   background: $white;
-  grid-area: main;
+  // grid-area: main;
   position: absolute;
-  width: calc(100% - 20px);
+  width: calc(11/14 * 100% - 20px);
+  right: 20px;
   top: 0;
 
   &__back {
@@ -90,7 +91,7 @@ export default {
   &__reply {
     background: $yellow;
     &:hover {
-      font-weight: bold;  
+      font-weight: bold;
     }
   }
 
