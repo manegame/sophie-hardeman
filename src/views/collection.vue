@@ -9,7 +9,7 @@
             <!-- CAROUSEL -->
             <div class="collection__main__lookbook__carousel">
               <!-- SWIPER -->
-              <template v-if='main.single.garments.length > 1'>
+              <template v-if='main.single.garments.length > 0'>
                 <div class="swiper-container gallery-top">
                   <div class="swiper-wrapper">
                     <div class="swiper-slide"

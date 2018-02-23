@@ -15,7 +15,7 @@
     width: calc(11/14 * 100%);
     position: relative;
     float: left;
-    height: auto;
+    height: 100%;
     overflow: scroll;
     @include hide-scroll;
     padding-top: $topbar-height + 20px;
