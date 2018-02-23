@@ -8,11 +8,13 @@
 
   iframe,
   object,
-  embed {
+  embed,
+  #video,
+  .inner {
     position: absolute;
     top: 0;
     left: 0;
-    width: 200px !important;
+    width: 100%;
     height: 100%;
 
     &:after {

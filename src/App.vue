@@ -53,6 +53,7 @@ export default {
       'GET_ABOUT',
       'GET_GARMENT',
       'GET_SINGLE_GARMENT',
+      'GET_SINGLE_VIDEO',
       'GET_SINGLE_STOCKIST',
       'GET_GARMENTS',
       'GET_GARMENT_CATEGORIES',
@@ -107,7 +108,10 @@ export default {
           this.ready = true
           break
         case ('hardeman tv'):
-          this.GET_VIDEOS()
+          this.GET_VIDEOS().then(() => {
+            let vid = this.main.videos.filter(v => { return v.slug === route.params.slug })[0]
+            this.GET_SINGLE_VIDEO(vid.id)
+          })
           this.ready = true
           break
         case ('diary'):
@@ -186,6 +190,7 @@ export default {
 @import './style/helpers/_mixins.scss';
 @import './style/helpers/_responsive.scss';
 @import './style/helpers/_reset.css';
+@import './style/helpers/_embed.scss';
 @import './style/_variables.scss';
 @import './style/_typography.scss';
 

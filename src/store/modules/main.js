@@ -16,15 +16,16 @@ const emptyWeather = {}
 
 const state = {
   single: emptySingle,
+  single_stockist: {},
+  single_about: {},
+  single_garment: {},
+  single_video: {},
   banner: {},
   collections: [],
   diary: [],
   events: [],
   about: [],
   stockists: {},
-  single_stockist: {},
-  single_about: {},
-  single_garment: {},
   videos: [],
   garments: [],
   garment_categories: [],
@@ -79,6 +80,9 @@ const actions = {
   },
   async [actionTypes.GET_VIDEO]({commit, state}, slug) {
     commit(mutationTypes.SET_VIDEO, await api.getVideo(slug))
+  },
+  async [actionTypes.GET_SINGLE_VIDEO]({commit, state}, slug) {
+    commit(mutationTypes.SET_SINGLE_VIDEO, await api.getVideo(slug))
   },
   async [actionTypes.GET_WEATHER]({commit, state}) {
     commit(mutationTypes.SET_WEATHER, await ow.getWeather())
@@ -140,6 +144,9 @@ const mutations = {
   [mutationTypes.SET_VIDEO](state, data) {
     state.single.videos.push(data)
     console.log('get a video')
+  },
+  [mutationTypes.SET_SINGLE_VIDEO](state, data) {
+    state.single_video = data
   },
   [mutationTypes.SET_WEATHER](state, data) {
     if (state.weather === emptyWeather) {

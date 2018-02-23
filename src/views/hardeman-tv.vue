@@ -3,12 +3,11 @@
     <navbar />
     <topbar />
     <div class="hardeman_tv__main">
-      <h5 class="hardeman_tv__main__title">
-        hardeman TV
-      </h5>
-      <div class="hardeman_tv__main__video"
-           v-for='video in main.videos'
-           v-html='video.acf.video' />
+      <div class="hardeman_tv__main__video">
+        <div v-if='main.single_video.acf'
+             class="video-embed"
+             v-html='embedCode' />
+      </div>
     </div>
   </div>
 </template>
@@ -17,6 +16,7 @@
 import {mapState} from 'vuex'
 import navbar from '@/components/navbar'
 import topbar from '@/components/topbar'
+import embed from 'embed-video'
 
 export default {
   name: 'hardeman-tv',
@@ -25,7 +25,10 @@ export default {
     topbar
   },
   computed: {
-    ...mapState(['main'])
+    ...mapState(['main']),
+    embedCode() {
+      return embed(this.main.single_video.acf.video, {query: {portrait: 0, color: '00f'}, attr: {class: 'inner'}})
+    }
   }
 }
 </script>
@@ -41,6 +44,10 @@ export default {
   &__main {
     &__title {
       color: $black;
+    }
+
+    &__video {
+      width: calc(100% - 20px);
     }
   }
 }

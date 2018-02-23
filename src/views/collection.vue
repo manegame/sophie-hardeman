@@ -142,7 +142,7 @@ export default {
   computed: {
     ...mapState(['main']),
     embedCode() {
-      return embed(this.main.single.videos[0].acf.video)
+      return embed(this.main.single.videos[0].acf.video, {query: {portrait: 0, color: '00f'}, attr: {class: 'inner'}})
     }
   },
   watch: {
@@ -156,7 +156,6 @@ export default {
 <style scoped lang='scss'>
 @import '../style/helpers/_mixins.scss';
 @import '../style/helpers/_responsive.scss';
-@import '../style/helpers/_embed.scss';
 @import '../style/vendor/swiper.css';
 @import '../style/_variables.scss';
 
@@ -230,21 +229,10 @@ export default {
 
       .video-embed {
         position: relative;
-        padding-bottom: 56.25%;
+        width: 100%;
         height: 0;
-        overflow: hidden;
-        max-width: 100%;
-        margin: 0;
-
-        iframe,
-        object,
-        embed {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100% !important;
-          height: 100%;
-        }
+        padding-bottom: 56.25%;
+        background: $blue;
       }
     }
 
@@ -252,6 +240,18 @@ export default {
       max-height: 75vh;
     }
   }
+}
+
+iframe.inner,
+.inner,
+iframe,
+object,
+embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 
