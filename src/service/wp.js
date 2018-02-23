@@ -143,7 +143,7 @@ export default {
   },
   getDiary() {
     return new Promise((resolve, reject) => {
-      Vue.http.get(API_ROOT + 's-h_diary?per_page=100').then(
+      Vue.http.get(API_ROOT + 's-h_diary?per_page=100&filter[orderby]=date&order=asc').then(
         response => {
           resolve(response.body)
         },

@@ -157,12 +157,18 @@ export default {
   },
   watch: {
     $route(to, from) {
-      if (from.name === 'collection' && to.params.slug === from.params.slug) {
-        this.ready = true
-      } else {
-        this.ready = false
-        this.$_fetchData(to)
-        this.$_setMetaTags()
+      switch (to) {
+        case (from.name === 'collection' && to.params.slug === from.params.slug):
+          this.ready = true
+          break
+        case (from.name === 'diary' && to.name === 'diary'):
+          this.ready = true
+          break
+        default:
+          this.ready = false
+          this.$_fetchData(to)
+          this.$_setMetaTags()
+          break
       }
     },
     'main.single.acf'() {
