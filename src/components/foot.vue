@@ -44,6 +44,7 @@ export default {
   bottom: 0;
 
   &__link {
+    margin: 0 10px;
     font-size: $font-size-s;
     line-height: $footer-height;
     font-weight: normal;

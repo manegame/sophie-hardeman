@@ -149,26 +149,31 @@ export default {
     padding-top: 20px;
     &__item {
       border-bottom: none;
+      height: auto;
 
       &--emphasis {
         font-weight: bold;
       }
 
       &--ss {
-        width: 80px;
-        flex-basis: 80px;
-        flex-shrink: 1;
+        display: block;
+        position: relative;
+        float: left;
+        height: 100%;
+        width: 60px;
       }
 
       &--tt {
-        flex-basis: 200px;
-        flex-shrink: 2;
+        display: block;
+        position: relative;
+        float: left;
+        width: calc(100% - 60px);
       }
       &__sub {
         display: none;
 
         &__item {
-          padding-left: 20px;
+          padding-left: 60px;
           border-bottom: none;
           color: $black;
           display: none;

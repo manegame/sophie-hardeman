@@ -9,17 +9,31 @@
           hardeman
         </h1>
         <h4 class="landing__column_left__subtitle">
-          amsterdam based <br/>
-          denim brand
+          <span class="landing__column_left__subtitle__highlight">amsterdam based</span> <br/>
+          <span class="landing__column_left__subtitle__highlight">denim brand</span>
         </h4>
-        <a href='facebook'>FB</a>
-        <a href='instagram'>INSTA</a>
+        <section class="landing__column_left__social">
+          <a class="landing__column_left__social__item socicon-facebook"
+             href='https://www.facebook.com/hardemanonline/'></a>
+          <a class="landing__column_left__social__item socicon-instagram"
+             href='https://www.instagram.com/hardeman_'></a>
+        </section>
         <ul v-if='main.collections.length > 0' class="landing__column_left__links">
-          <router-link :to="{name: 'collection',params: { slug: emphasizedCollection, section: 'lookbook'}}">collections</router-link>
+          <router-link tag='li'
+                       class="landing__column_left__links__item"
+                       :to="{name: 'collection', params: { slug: emphasizedCollection, section: 'lookbook'}}">collections</router-link>
+          <router-link tag='li'
+                       class="landing__column_left__links__item"
+                       :to="{name: 'hardeman tv', params: { slug: 'xxx'}}">hardeman tv</router-link>
+          <router-link tag='li'
+                       class="landing__column_left__links__item"
+                       :to="{name: 'sale', params: { slug: 'xxx', item: 'xxx'}}">for sale</router-link>
+          <router-link tag='li'
+                       class="landing__column_left__links__item"
+                       :to="{name: 'stockist', params: { slug: 'xxx'}}">stockists</router-link>
         </ul>
         <h3 class="landing__column_left__weather_head">what to wear?</h3>
           <weather />
-        <h4>where to go?</h4>
           <calendar />
       </div>
       <!-- - -->
@@ -224,6 +238,7 @@ export default {
     position: relative;
     float: left;
     width: calc(3/14 * 100%);
+    height: 100%;
     background: $grey;
     border-top: $border;
     border-left: $border;
@@ -231,7 +246,37 @@ export default {
     text-align: center;
     padding: 10px 20px 40px;
 
+    &__title {
+      margin-bottom: 20px;
+    }
+
+    &__subtitle {
+      font-weight: normal;
+      margin-bottom: 20px;
+
+      &__highlight {
+        background: $yellow;
+        padding: 2px 20px;
+      }
+    }
+
+    &__social {
+      margin: 0 10px 20px;
+      font-size: 20px;
+    }
+
+    &__links {
+      margin-bottom: 20px;
+
+      &__item {
+        font-size: $font-size-s;
+        line-height: $line-height-s;
+        border-bottom: none;
+      }
+    }
+
     &__weather_head {
+      margin-top: $margin-top * 2;
       background: $grey;
       border-top: $border-light;
       border-bottom: $border-light;
@@ -240,6 +285,7 @@ export default {
 
   &__column_middle {
     width: calc(9/14 * 100%);
+    height: 100%;
     padding: 0 20px;
     position: relative;
     overflow-x: hidden;
@@ -299,6 +345,7 @@ export default {
     position: relative;
     float: left;
     width: calc(2/14 * 100%);
+    height: 100%;
     background: $grey;
     border-top: $border;
     border-left: $border;
@@ -326,6 +373,7 @@ export default {
       line-height: $line-height-s;
 
       &__text {
+        color: $blue;
         padding: $line-height-s / 2 0;
         border-top: $border;
         border-bottom: $border;

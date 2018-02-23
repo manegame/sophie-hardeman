@@ -1,6 +1,9 @@
 <template>
-  <full-calendar :events='events'
-                 :config='config' />
+  <section class="calendar">
+    <h3 class="calendar__head">where to go?</h3>
+    <full-calendar :events='events'
+                   :config='config' />
+  </section>
 </template>
 
 <script>
@@ -27,9 +30,9 @@ export default {
         locale: 'nl',
         defaultView: 'month',
         header: {
-          left: 'title',
+          left: '',
           center: '',
-          right: 'today prev,next'
+          right: ''
         },
         themeSystem: 'standard',
         eventColor: '#378006',
@@ -48,6 +51,20 @@ export default {
 @import '../style/helpers/_mixins.scss';
 @import '../style/helpers/_responsive.scss';
 @import '../style/_variables.scss';
+
+.calendar {
+  position: absolute;
+  width: calc(100% - 40px);
+  height: auto;
+  bottom: 40px;
+
+  &__head {
+    margin-bottom: 4px;
+    background: $grey;
+    border-top: $border-light;
+    border-bottom: none;
+  }
+}
 
 .fc {
   background: $white;

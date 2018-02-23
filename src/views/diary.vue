@@ -61,7 +61,7 @@ export default {
   },
   mounted() {
     let el = document.getElementById(this.$route.params.slug)
-    animatedScrollTo(this.mainContent, el.offsetTop - 30, 300, () => {
+    animatedScrollTo(this.mainContent, el.offsetTop - 34, 300, () => {
       // end scrolling, disable scroll on route update
       this.scrolling = false
       console.log('ending automated scroll', this.scrolling)
@@ -77,7 +77,7 @@ export default {
         // start scrolling, disable scroll on route update
         this.scrolling = true
         console.log('starting automated scroll', this.scrolling)
-        animatedScrollTo(this.mainContent, el.offsetTop - 30, 300, () => {
+        animatedScrollTo(this.mainContent, el.offsetTop - 34, 300, () => {
           // end scrolling, disable scroll on route update
           this.scrolling = false
           console.log('ending automated scroll', this.scrolling)
