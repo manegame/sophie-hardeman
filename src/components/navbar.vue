@@ -136,7 +136,6 @@ export default {
 @import '../style/_variables.scss';
 
 .navbar {
-  // grid-template: left;
   width: calc(3/14 * 100%);
   position: relative;
   float: left;
