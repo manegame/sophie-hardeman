@@ -88,11 +88,9 @@ const actions = {
 const mutations = {
   [mutationTypes.SET_BANNER](state, data) {
     state.banner = data
-    console.log('banner fetched')
   },
   [mutationTypes.SET_COLLECTIONS](state, data) {
     state.collections = data
-    console.log('collections fetched')
   },
   [mutationTypes.SET_SINGLE_COLLECTION](state, data) {
     state.single.title = data.title
@@ -101,7 +99,6 @@ const mutations = {
     state.single.acf = data.acf
     state.single.garments = []
     state.single.videos = []
-    console.log('after single collection (1)')
   },
   [mutationTypes.SET_SINGLE_ABOUT](state, data) {
     state.single_about = data
@@ -115,51 +112,39 @@ const mutations = {
   },
   [mutationTypes.SET_DIARY](state, data) {
     state.diary = data
-    console.log('diary entries fetched')
   },
   [mutationTypes.SET_EVENTS](state, data) {
     state.events = data
-    console.log('events fetched')
   },
   [mutationTypes.SET_STOCKISTS](state, data) {
     state.stockists = data
-    console.log('stockists fetched')
   },
   [mutationTypes.SET_GARMENT](state, data) {
-    console.log('params ' + this)
     state.single.garments.push(data)
-    console.log('garment set')
   },
   [mutationTypes.SET_SINGLE_GARMENT](state, data) {
     state.single_garment = data
-    console.log('garment set')
   },
   [mutationTypes.SET_GARMENTS](state, data) {
     state.garments = data
-    console.log('garments set')
   },
   [mutationTypes.SET_GARMENT_CATEGORIES](state, data) {
     state.garment_categories = data
-    console.log('garments fetched')
   },
   [mutationTypes.SET_ABOUT](state, data) {
     state.about = data
-    console.log('about fetched')
   },
   [mutationTypes.SET_VIDEOS](state, data) {
     state.videos = data
-    console.log('videos fetched')
   },
   [mutationTypes.SET_VIDEO](state, data) {
     state.single.videos.push(data)
-    console.log('videos set')
+    console.log('get a video')
   },
   [mutationTypes.SET_WEATHER](state, data) {
     if (state.weather === emptyWeather) {
       state.weather = data
-      console.log('weather set')
     } else {
-      console.log('leaving the weather as is')
     }
   }
 }

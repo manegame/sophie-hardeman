@@ -157,14 +157,17 @@ export default {
   },
   watch: {
     $route(to, from) {
+      console.log(to.params.slug, from.params.slug)
       switch (to) {
-        case (from.name === 'collection' && to.params.slug === from.params.slug):
+        case (to.name === 'collection' && to.params.slug === from.params.slug):
           this.ready = true
+          console.log('don\'t get data')
           break
         case (from.name === 'diary' && to.name === 'diary'):
           this.ready = true
           break
         default:
+          console.log('collection')
           this.ready = false
           this.$_fetchData(to)
           this.$_setMetaTags()

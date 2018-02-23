@@ -91,11 +91,16 @@ export default {
   },
   data() {
     return {
+      initiated: {
+        top: false,
+        thumb: false
+      },
       galleryTop: '',
       galleryThumbs: ''
     }
   },
   updated() {
+    console.log('updated')
     this.$nextTick(() => {
       if (this.$route.params.section === 'lookbook') {
         this.swipers()
@@ -104,38 +109,33 @@ export default {
   },
   methods: {
     swipers() {
-      if (this.galleryTop === '') {
-        this.galleryTop = new Swiper('.gallery-top', {
-          spaceBetween: 4,
-          preloadImages: true,
-          updateOnImagesReady: true,
-          observer: true,
-          navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev'
-          },
-          on: {
-            init: () => {
-              console.log('INITIALIZED')
-            }
+      this.galleryTop = new Swiper('.gallery-top', {
+        preloadImages: true,
+        updateOnImagesReady: true,
+        spaceBetween: 4,
+        on: {
+          init: () => {
+            console.log('initialized')
           }
-        })
-        this.galleryThumbs = new Swiper('.gallery-thumbs', {
-          spaceBetween: 4,
-          preloadImages: true,
-          updateOnImagesReady: true,
-          centeredSlides: true,
-          slidesPerView: 'auto',
-          touchRatio: 0.2,
-          slideToClickedSlide: true,
-          on: {
-            init: () => {
-              console.log('initialized')
-            }
-          }
-        })
-        this.galleryTop.originalParams.controller.control = this.galleryThumbs
-        this.galleryThumbs.originalParams.controller.control = this.galleryTop
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev'
+        }
+      })
+      this.galleryThumbs = new Swiper('.gallery-thumbs', {
+        preloadImages: true,
+        updateOnImagesReady: true,
+        spaceBetween: 4,
+        centeredSlides: true,
+        slidesPerView: 'auto',
+        touchRatio: 0.2,
+        slideToClickedSlide: true
+      })
+      if (this.galleryTop.controller) {
+        this.galleryTop.controller.control = this.galleryThumbs
+        this.galleryThumbs.controller.control = this.galleryTop
+        this.galleryTop.navigation.update()
       }
     }
   },
@@ -146,8 +146,8 @@ export default {
     }
   },
   watch: {
-    'main.single'() {
-      console.log('watching single state')
+    initiated() {
+      console.log(this.initiated)
     }
   }
 }
@@ -182,7 +182,7 @@ export default {
           width: 20px;
           height: 20px;
           background-size: contain;
-          right: 4px;
+          right: 6px;
           background-image: url('data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93QXJ0Ym9hcmQgMTwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjAgMCAwIDEwMCAxMDAgNTAgMCAwIi8+PC9zdmc+')
         }
 
@@ -190,7 +190,7 @@ export default {
           width: 20px;
           height: 20px;
           background-size: contain;
-          left: 4px;
+          left: 6px;
           background-image: url('data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93QXJ0Ym9hcmQgMSBjb3B5PC90aXRsZT48cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iMTAwIDAgMTAwIDEwMCAwIDUwIDEwMCAwIi8+PC9zdmc+')
         }
 

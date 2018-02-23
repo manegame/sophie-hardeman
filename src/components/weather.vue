@@ -74,7 +74,8 @@ export default {
     }
 
     &__icon {
-      width: 50px;
+      width: 100px;
+      filter: blur(2px);
       height: auto;
     }
   }

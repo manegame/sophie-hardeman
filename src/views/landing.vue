@@ -138,7 +138,7 @@
         <h3 class="landing__column_right__head">
           diary
         </h3>
-        <ul>
+        <ul class="landing__column_right__list">
           <router-link v-for='entry in main.diary'
                        tag='li'
                        class='naturel'
@@ -153,9 +153,11 @@
                        </sup>
            </router-link>
         </ul>
-        <p class="landing__column_right__toe">
-          a personal collection of photographies by sophie hardeman
-        </p>
+        <div class="landing__column_right__toe">
+          <p class="landing__column_right__toe__text">
+            a personal collection of photographs by sophie hardeman
+          </p>
+        </div>
       </div>
     </div>
 </template>
@@ -217,10 +219,6 @@ export default {
   &__column {
     height: calc(100vh - #{$topbar-height + $margin-top});
   }
-  // display: grid;
-  // grid-template: 'left main right'
-  //                / 3fr 9fr 2fr;
-  // grid-gap: 20px;
 
   &__column_left {
     position: relative;
@@ -244,9 +242,10 @@ export default {
     width: calc(9/14 * 100%);
     padding: 0 20px;
     position: relative;
+    overflow-x: hidden;
     float: left;
     display: flex;
-    flex-flow: column;
+    flex-flow: column wrap;
 
     &__banner {
       width: 100%;
@@ -307,16 +306,30 @@ export default {
     text-align: center;
     color: $blue;
     padding: 10px 20px 40px;
-    display: flex;
-    flex-flow: column;
     justify-content: space-between;
 
+    &__list {
+      margin-top: $margin-top;
+      height: calc(100% - 100px);
+      overflow-y: auto;
+      @include hide-scroll;
+    }
+
     &__toe {
+      position: absolute;
+      height: 100px;
+      bottom: 0;
+      left: 20px;
+      background: $grey;
+      width: calc(100% - 40px);
       font-size: $font-size-s;
       line-height: $line-height-s;
-      padding: $line-height-s / 2 0;
-      border-top: $border;
-      border-bottom: $border;
+
+      &__text {
+        padding: $line-height-s / 2 0;
+        border-top: $border;
+        border-bottom: $border;
+      }
     }
   }
 }
