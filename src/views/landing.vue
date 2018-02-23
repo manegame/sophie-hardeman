@@ -261,7 +261,7 @@ export default {
     }
 
     &__social {
-      margin: 0 10px 20px;
+      margin: 0 10px 40px;
       font-size: 20px;
     }
 
@@ -276,7 +276,7 @@ export default {
     }
 
     &__weather_head {
-      margin-top: $margin-top * 2;
+      margin-top: $margin-top * 4;
       background: $grey;
       border-top: $border-light;
       border-bottom: $border-light;

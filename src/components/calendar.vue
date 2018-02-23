@@ -29,13 +29,16 @@ export default {
       config: {
         locale: 'nl',
         defaultView: 'month',
+        fixedWeekCount: true,
         header: {
           left: '',
           center: '',
           right: ''
         },
+        height: 200,
+        contentHeight: 200,
         themeSystem: 'standard',
-        eventColor: '#378006',
+        eventColor: '#0066ff',
         columnHeaderFormat: 'dd'
       }
     }
@@ -47,7 +50,6 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-@import '../style/vendor/fullcalendar.css';
 @import '../style/helpers/_mixins.scss';
 @import '../style/helpers/_responsive.scss';
 @import '../style/_variables.scss';
@@ -55,7 +57,7 @@ export default {
 .calendar {
   position: absolute;
   width: calc(100% - 40px);
-  height: auto;
+  height: 120px;
   bottom: 40px;
 
   &__head {
@@ -63,21 +65,6 @@ export default {
     background: $grey;
     border-top: $border-light;
     border-bottom: none;
-  }
-}
-
-.fc {
-  background: $white;
-
-  .fc-toolbar,
-  .fc-header-toolbar {
-    background: rgb(180, 70, 25);
-  }
-
-  .fc-view-container {
-    table {
-      width: 100%;
-    }
   }
 }
 </style>

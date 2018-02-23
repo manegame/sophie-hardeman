@@ -1,3 +1,8 @@
+/* YO */
+tr {
+  height: 20px !important;
+  padding-bottom: 20px;
+}
 /*!
  * FullCalendar v3.8.2
  * Docs & License: https://fullcalendar.io/
@@ -5,7 +10,9 @@
  */
 .fc {
   direction: ltr;
-  text-align: left; }
+  text-align: left;
+  background: white;
+}
 
 .fc-rtl {
   text-align: right; }
@@ -149,6 +156,7 @@ previous button's border...
 .fc-popover .fc-header {
   /* TODO: be more consistent with fc-head/fc-body */
   padding: 2px 4px; }
+  background: grey;
 
 .fc-popover .fc-header .fc-title {
   margin: 0 2px; }
@@ -830,6 +838,7 @@ NOTE: use percentage font sizes or else old IE chokes
 .fc-view > table {
   /* so dragged elements can be above the view's main element */
   position: relative;
+  width: 100%;
   z-index: 1; }
 
 /* BasicView
@@ -842,7 +851,7 @@ NOTE: use percentage font sizes or else old IE chokes
   /* ensure a space at bottom of cell for user selecting/clicking */ }
 
 .fc-basic-view .fc-body .fc-row {
-  min-height: 4em;
+  min-height: 20px;
   /* ensure that all rows are at least this tall */ }
 
 /* a "rigid" row will take up a constant amount of height because content-skeleton is absolute */
@@ -905,7 +914,7 @@ NOTE: use percentage font sizes or else old IE chokes
   /* so the "more.." popover will be over the time grid */ }
 
 .fc-agenda-view .fc-day-grid .fc-row {
-  min-height: 3em;
+  min-height: 20px;
   /* all-day section will never get shorter than this */ }
 
 .fc-agenda-view .fc-day-grid .fc-row .fc-content-skeleton {

@@ -191,6 +191,7 @@ export default {
 @import './style/helpers/_responsive.scss';
 @import './style/helpers/_reset.css';
 @import './style/helpers/_embed.scss';
+@import './style/vendor/fullcalendar.css';
 @import './style/_variables.scss';
 @import './style/_typography.scss';
 
@@ -208,5 +209,14 @@ export default {
   #view {
     height: calc(100% - #{$margin-top + $footer-height});
   }
+}
+
+.fc-toolbar {
+  display: none;
+}
+
+.fc-widget-content {
+  height: 100%;
+  padding: 0;
 }
 </style>

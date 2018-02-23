@@ -12,8 +12,8 @@
     <div class="weather__bottom">
       <p class="weather__bottom__day">{{weekday}}</p>
       <div class="weather__bottom__temps">
-        <p class="weather__bottom__temps__temp" v-html='"lo: " + main.weather.main.temp_min'/>
-        <p class="weather__bottom__temps__temp" v-html='"hi: " + main.weather.main.temp_max'/><br />
+        <p class="weather__bottom__temps__temp">lo: {{main.weather.main.temp_min | temperature}}</p>
+        <p class="weather__bottom__temps__temp">hi: {{main.weather.main.temp_max | temperature}}</p><br />
       </div>
       <!-- <p>
         wind direction:
