@@ -30,11 +30,12 @@
                        :to="{name: 'sale', params: { slug: 'xxx', item: 'xxx'}}">for sale</router-link>
           <router-link tag='li'
                        class="landing__column_left__links__item"
-                       :to="{name: 'stockist', params: { slug: 'xxx'}}">stockists</router-link>
+                       :to="{name: 'stockists', params: { slug: 'xxx'}}">stockists</router-link>
         </ul>
-        <h3 class="landing__column_left__weather_head">what to wear?</h3>
+        <div class="landing__column_left__toe">
           <weather />
           <calendar />
+        </div>
       </div>
       <!-- - -->
       <!-- - -->
@@ -86,7 +87,9 @@
                            v-for='item in main.about'
                            :key='item.id'
                            :to='{name: "about", params: {slug: item.slug}}'>
-                             <span>{{item.title.rendered}}<sup v-for='label in item.acf.labels'>{{label.post_title}}</sup></span>
+                             <span>{{item.title.rendered}}
+                               <sup v-for='label in item.acf.labels'>{{label.post_title}}</sup>
+                             </span>
                            </router-link>
             </ul>
           </section>
@@ -104,7 +107,9 @@
                            v-for='video in main.videos'
                            :key='video.id'
                            :to='{name: "hardeman tv", params: {slug: video.slug}}'>
-                           <span>{{video.title.rendered}}<sup v-for='label in video.acf.labels'>{{label.post_title}}</sup></span>
+                           <span>{{video.title.rendered}}
+                             <sup v-for='label in video.acf.labels'>{{label.post_title}}</sup>
+                           </span>
               </router-link>
             </ul>
           </section>
@@ -122,7 +127,9 @@
                            v-for='garment in main.garment_categories'
                            :key='garment.id'
                            :to='{name: "sale", params: {slug: garment.slug}}'>
-                           <span>{{garment.name}}<sup v-for='label in garment.acf.labels'>{{label.post_title}}</sup></span>
+                           <span>{{garment.name}}
+                             <sup v-for='label in garment.acf.labels'>{{label.post_title}}</sup>
+                           </span>
               </router-link>
             </ul>
           </section>
@@ -138,7 +145,9 @@
                            v-for='s in main.stockists'
                            :key='s.id'
                            :to='{name: "stockists", params: {slug: s.slug}}'>
-                           <span>{{s.title.rendered}}<sup v-for='label in s.acf.labels'>{{label.post_title}}</sup></span>
+                           <span>{{s.title.rendered}}
+                             <sup v-for='label in s.acf.labels'>{{label.post_title}}</sup>
+                           </span>
               </router-link>
             </ul>
           </section>
@@ -280,6 +289,14 @@ export default {
       background: $grey;
       border-top: $border-light;
       border-bottom: $border-light;
+    }
+
+    &__toe {
+      background: $grey;
+      position: absolute;
+      height: 400px;
+      width: calc(100% - 40px);
+      bottom: 0;
     }
   }
 

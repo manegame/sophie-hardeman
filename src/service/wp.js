@@ -165,6 +165,18 @@ export default {
       )
     })
   },
+  getSingleEvent(slug) {
+    return new Promise((resolve, reject) => {
+      Vue.http.get(API_ROOT + 's-h_events?slug=' + slug + '&field=title,acf,slug').then(
+        response => {
+          resolve(response.body[0])
+        },
+        response => {
+          reject(response)
+        }
+      )
+    })
+  },
   getStockists() {
     return new Promise((resolve, reject) => {
       Vue.http.get(API_ROOT + 's-h_stockists?per_page=50').then(

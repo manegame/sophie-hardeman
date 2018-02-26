@@ -9,6 +9,7 @@ const sale = () => import('@/views/sale')
 const singleSale = () => import('@/views/single-sale')
 const diary = () => import('@/views/diary')
 const stockists = () => import('@/views/stockists')
+const events = () => import('@/views/events')
 
 Vue.use(Router)
 
@@ -55,9 +56,14 @@ export default new Router({
       component: diary
     },
     {
-      path: '/stockists/:slug',
+      path: '/stockist/:slug',
       name: 'stockists',
       component: stockists
+    },
+    {
+      path: '/event/:slug',
+      name: 'events',
+      component: events
     }
   ]
 })

@@ -117,6 +117,10 @@
         </template>
       </ul>
     </template>
+    <!-- EVENTS -->
+    <template v-if='$route.name === "events"'>
+      <p>events</p>
+    </template>
   </div>
 </template>
 

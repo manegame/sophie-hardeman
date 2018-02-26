@@ -18,6 +18,7 @@ const state = {
   single: emptySingle,
   single_stockist: {},
   single_about: {},
+  single_event: {},
   single_garment: {},
   single_video: {},
   banner: {},
@@ -53,6 +54,9 @@ const actions = {
   },
   async [actionTypes.GET_EVENTS]({commit, state}) {
     commit(mutationTypes.SET_EVENTS, await api.getEvents())
+  },
+  async [actionTypes.GET_SINGLE_EVENT]({commit, state}, slug) {
+    commit(mutationTypes.SET_SINGLE_EVENT, await api.getSingleEvent(slug))
   },
   async [actionTypes.GET_STOCKISTS]({commit, state}) {
     commit(mutationTypes.SET_STOCKISTS, await api.getStockists())
@@ -119,6 +123,9 @@ const mutations = {
   },
   [mutationTypes.SET_EVENTS](state, data) {
     state.events = data
+  },
+  [mutationTypes.SET_SINGLE_EVENT](state, data) {
+    state.single_event = data
   },
   [mutationTypes.SET_STOCKISTS](state, data) {
     state.stockists = data

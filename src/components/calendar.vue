@@ -16,35 +16,48 @@ export default {
   },
   data() {
     return {
-      events: [
-        {
-          title: 'a',
-          start: '2018-12-27'
-        },
-        {
-          title: 'bbb',
-          start: '2018-02-27'
-        }
-      ],
+      // events: [],
       config: {
-        locale: 'nl',
-        defaultView: 'month',
-        fixedWeekCount: true,
         header: {
           left: '',
           center: '',
           right: ''
         },
-        height: 200,
-        contentHeight: 200,
+        eventClick: (event) => {
+          this.$router.push({name: 'events', params: {slug: event.slug}})
+        },
+        height: 160,
+        locale: 'nl',
+        views: {
+          'basicFourWeek': {
+            type: 'basic',
+            duration: { weeks: 4 }
+          }
+        },
+        defaultView: 'basicFourWeek',
+        fixedWeekCount: true,
         themeSystem: 'standard',
-        eventColor: '#0066ff',
+        eventColor: '#ff6b00',
+        editable: false,
         columnHeaderFormat: 'dd'
       }
     }
   },
   computed: {
-    ...mapState(['main'])
+    ...mapState(['main']),
+    events() {
+      let a = []
+      this.main.events.map(e => {
+        let item = {
+          title: e.title.rendered,
+          start: e.acf.date[0].start,
+          end: e.acf.date[0].end,
+          slug: e.slug
+        }
+        a.push(item)
+      })
+      return a
+    }
   }
 }
 </script>
@@ -55,10 +68,13 @@ export default {
 @import '../style/_variables.scss';
 
 .calendar {
+  background: $grey;
   position: absolute;
-  width: calc(100% - 40px);
-  height: 120px;
-  bottom: 40px;
+  width: 100%;
+  height: auto;
+  min-height: 160px;
+  bottom: 0;
+  padding-bottom: 40px;
 
   &__head {
     margin-bottom: 4px;

@@ -49,6 +49,7 @@ export default {
       'CLEAR_SINGLES',
       'GET_DIARY',
       'GET_EVENTS',
+      'GET_SINGLE_EVENT',
       'GET_STOCKISTS',
       'GET_ABOUT',
       'GET_GARMENT',
@@ -123,6 +124,11 @@ export default {
           this.GET_SINGLE_STOCKIST(route.params.slug)
           this.ready = true
           break
+        case ('events'):
+          this.GET_EVENTS()
+          this.GET_SINGLE_EVENT(route.params.slug)
+          this.ready = true
+          break
       }
     }
   },
@@ -171,8 +177,8 @@ export default {
           this.ready = true
           break
         default:
-          console.log('collection')
           this.ready = false
+          console.log('getting data', to)
           this.$_fetchData(to)
           this.$_setMetaTags()
           break
@@ -191,9 +197,9 @@ export default {
 @import './style/helpers/_responsive.scss';
 @import './style/helpers/_reset.css';
 @import './style/helpers/_embed.scss';
-@import './style/vendor/fullcalendar.css';
 @import './style/_variables.scss';
 @import './style/_typography.scss';
+@import './style/vendor/fullcalendar.scss';
 
 .app {
   font-family: $sans-serif-stack;
