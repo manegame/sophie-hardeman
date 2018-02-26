@@ -61,14 +61,24 @@
       </div>
       <!-- CAMPAIGN -->
       <div v-if='$route.params.section === "campaign"'>
-        <template v-if='main.single.acf'>
-          <img class="collection__main__campaign"
-               v-if='main.single.acf.campaign_images.length > 0'
-               v-for='item in main.single.acf.campaign_images'
-               :src='item.image.sizes["s-h-large"]' />
-        </template>
-        <p v-html='main.single.acf.campaign_description' />
-        <suggestions class="bottom" :not='true' />
+        <div class="collection__main__campaign">
+          <div class="collection__main__campaign__left">
+            <template v-if='main.single.acf'>
+              <img class="collection__main__campaign__left__image"
+                   v-if='main.single.acf.campaign_images.length > 0'
+                   v-for='item in main.single.acf.campaign_images'
+                   :src='item.image.sizes["s-h-large"]' />
+            </template>
+          </div>
+          <div class="collection__main__campaign__right">
+            <h5 class="collection__main__campaign__right--title">
+              <span v-html='main.single.acf.season' />
+              <span v-html='main.single.title.rendered' />
+            </h5>
+            <p v-html='main.single.acf.campaign_description' />
+            <suggestions class="bottom" :not='true' />
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -239,7 +249,42 @@ export default {
     }
 
     &__campaign {
-      max-height: 75vh;
+      position: relative;
+      height: calc(100vh);
+
+      &__left {
+        position: relative;
+        float: left;
+        width: calc(100% - #{$left-col-width * 1.5});
+
+        &__image {
+          width: 100%;
+          max-height: 75vh;
+          object-fit: contain;
+          object-position: center;
+          margin-bottom: 20px;
+        }
+      }
+
+      &__right {
+        width: $left-col-width;
+        height: calc(100% - #{$footer-height * 2 + $margin-top});
+        display: block;
+        position: fixed;
+        left: calc(100% - #{$left-col-width * 1.5});
+        padding: 0 20px;
+        font-size: $font-size-s;
+        line-height: $line-height-s;
+
+        &--title {
+          margin-bottom: $line-height;
+        }
+
+        .bottom {
+          position: absolute;
+          bottom: $line-height;
+        }
+      }
     }
   }
 }

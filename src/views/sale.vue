@@ -8,8 +8,22 @@
                    :key='item.id'
                    :to="{ name: 'single sale', params: {slug: $route.params.slug, item: item.slug}}"
                    class="sale__main__item" >
+             <span class="sale__main__item__price-tag">
+               400
+             </span>
              <img class="sale__main__item__image"
+                  :class='{"sale__main__item__image--emphasis": item.acf.emphasis}'
                   :src='item.acf.image.sizes["s-h-large"]' />
+             <div class="sale__main__item__meta">
+               <h6>
+                 <span class='sale__main__item__meta__season' v-html='item.acf.season'></span>
+                 <span class="sale__main__item__meta__title">{{item.title.rendered}}</span>
+                 <span class="sale__main__item__meta__price">200</span>
+                 <span class="sale__main__item__meta__brackets">
+                   (amsterdam west)
+                 </span>
+               </h6>
+             </div>
       </router-link>
     </div>
   </div>
@@ -43,17 +57,96 @@ export default {
   &__main {
     display: flex;
     flex-flow: row wrap;
+    justify-content: flex-start;
+
+    &::after {
+      content: "";
+      flex: auto;
+    }
+
     &__item {
       width: $left-col-width;
       height: $left-col-width;
-      border-radius: 20px;
-      margin-bottom: 20px;
+      position: relative;
+      border-radius: 8px;
+      margin-right: 20px;
+      margin-bottom: 30px;
+      border: 1px solid $grey-darker;
+      overflow: hidden;
+      cursor: pointer;
+
+      &__price-tag {
+        z-index: 7;
+        background: $white;
+        position: absolute;
+        left: 0;
+        font-family: $sans-serif-stack;
+        font-size: $font-size;
+        line-height: 100%;
+        color: $orange;
+        padding: 4px 6px;
+        border-radius: 0 0 6px 0;
+        border-bottom: 1px solid $grey-darker;
+        border-right: 1px solid $grey-darker;
+
+        &::after {
+          content: " €"
+        }
+      }
 
       &__image {
+        z-index: 6;
         width: 100%;
-        height: 100%;
+        display: block;
+        height: calc(100% - 60px);
         object-fit: contain;
-        object-position: top left;
+        object-position: top center;
+
+        &--emphasis {
+          display: block;
+          width: 100%;
+          height: calc(100% - 60px);
+          object-fit: cover;
+          object-position: center;
+        }
+      }
+
+      &__meta {
+        border-top: 1px solid $grey-darker;
+        padding: 8px 20px;
+        height: 60px;
+
+        &__season {
+          color: $grey-darker;
+
+          &::before {
+            content: '\2605';
+            margin-right: 4px;
+          }
+        }
+
+        &__title {
+          color: $blue;
+        }
+
+        &__price {
+          font-family: $sans-serif-stack;
+          font-size: $font-size;
+          line-height: 100%;
+          color: $orange;
+          padding: 2px 6px;
+          border-radius: 6px;
+          border: 1px solid $grey-dark;
+
+          &::after {
+            content: " €"
+          }
+        }
+
+        &__brackets {
+          font-family: sans-serif;
+          font-size: $font-size-s;
+        }
       }
     }
   }

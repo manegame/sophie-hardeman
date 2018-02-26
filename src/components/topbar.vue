@@ -1,8 +1,14 @@
 <template>
   <div class="topbar">
-    <router-link class="topbar__back"
+    <router-link v-if='$route.name === "single sale"'
+                 class="topbar__back"
+                 :to="{ name: 'sale', params: {slug: $route.params.slug} }">
+                 <- back to sale
+    </router-link>
+    <router-link v-else
+                 class="topbar__back"
                  :to="{ name: 'landing'}">
-                  <- back to overview
+                 <- back to overview
     </router-link>
                 <span v-if='$route.name === "collection"' class="topbar__posted">updated {{main.single.modified | dotted}}</span>
                 <a class="topbar__recommend"
@@ -77,6 +83,7 @@ export default {
     text-decoration: none;
     background: $white;
     padding: 0 8px;
+    cursor: pointer;
   }
 
   &__recommend,
@@ -99,6 +106,7 @@ export default {
     padding-left: 8px;
     color: $blue;
     text-decoration: underline;
+    cursor: pointer;
   }
 }
 
