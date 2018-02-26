@@ -123,9 +123,6 @@ export default {
         updateOnImagesReady: true,
         spaceBetween: 4,
         on: {
-          init: () => {
-            console.log('initialized')
-          },
           slideChange: () => {
             this.galleryTop.navigation.update()
           }
@@ -139,7 +136,6 @@ export default {
         preloadImages: true,
         updateOnImagesReady: true,
         spaceBetween: 4,
-        centeredSlides: true,
         slidesPerView: 'auto',
         touchRatio: 0.2,
         slideToClickedSlide: true
