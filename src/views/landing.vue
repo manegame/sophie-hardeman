@@ -302,13 +302,12 @@ export default {
 
   &__column_middle {
     width: calc(9/14 * 100%);
+    display: block;
     height: 100%;
     padding: 0 20px;
     position: relative;
-    overflow-x: hidden;
+    overflow: scroll;
     float: left;
-    display: flex;
-    flex-flow: column wrap;
 
     &__banner {
       width: 100%;
@@ -324,24 +323,21 @@ export default {
 
     &__sections {
       width: 100%;
-      height: 0;
-      flex-grow: 1;
-      margin-bottom: $line-height * 2;
-      display: flex;
-      flex-flow: column wrap;
+      column-count: 2;
+      column-gap: 40px;
 
         &__collections,
         &__about,
         &__tv,
         &__shop,
         &__stockists {
-          width: calc(50% - 20px);
+          width: 100%;
           margin-right: 40px;
           margin-bottom: $line-height * 2;
         }
 
         &__collections {
-          display: inline;
+          display: inline-block;
           &__collection {
             display: flex;
 
