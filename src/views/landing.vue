@@ -323,6 +323,7 @@ export default {
     padding: 0 20px;
     position: relative;
     overflow: scroll;
+    @include hide-scroll;
     float: left;
 
     &__banner {
@@ -341,6 +342,7 @@ export default {
       width: 100%;
       column-count: 2;
       column-gap: 40px;
+      @include hide-scroll;
 
         &__collections,
         &__about,
