@@ -100,7 +100,6 @@ export default {
     }
   },
   updated() {
-    console.log('updated')
     this.$nextTick(() => {
       if (this.$route.params.section === 'lookbook') {
         this.swipers()
@@ -116,6 +115,9 @@ export default {
         on: {
           init: () => {
             console.log('initialized')
+          },
+          slideChange: () => {
+            this.galleryTop.navigation.update()
           }
         },
         navigation: {

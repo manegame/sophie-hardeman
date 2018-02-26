@@ -2,7 +2,7 @@
   <div class='events'>
     <navbar />
     <topbar />
-    <div v-if='main.single_event'
+    <div v-if='main.single_event.acf'
          class="events__main">
       <div class="events__main__left">
         <img class="events__main__left__image"
