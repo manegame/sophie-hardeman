@@ -9,7 +9,7 @@
                    :to="{ name: 'single sale', params: {slug: $route.params.slug, item: item.slug}}"
                    class="sale__main__item" >
              <span class="sale__main__item__price-tag">
-               400
+               T.B.A.
              </span>
              <img class="sale__main__item__image"
                   :class='{"sale__main__item__image--emphasis": item.acf.emphasis}'
@@ -18,7 +18,7 @@
                <h6>
                  <span class='sale__main__item__meta__season' v-html='item.acf.season'></span>
                  <span class="sale__main__item__meta__title">{{item.title.rendered}}</span>
-                 <span class="sale__main__item__meta__price">200</span>
+                 <span class="sale__main__item__meta__price">T.B.A.</span>
                  <span class="sale__main__item__meta__brackets">
                    (amsterdam west)
                  </span>

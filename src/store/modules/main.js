@@ -26,14 +26,32 @@ const state = {
   diary: [],
   events: [],
   about: [],
-  stockists: {},
+  stockists: [],
   videos: [],
   garments: [],
   garment_categories: [],
-  weather: emptyWeather
+  weather: emptyWeather,
+  //
+  community: [],
+  impressum: [],
+  single_impressum: [],
+  random_images: {}
 }
 
 const actions = {
+  async [actionTypes.GET_COMMUNITY]({commit, state}) {
+    commit(mutationTypes.SET_COMMUNITY, await api.getCommunity())
+  },
+  async [actionTypes.GET_IMPRESSUM]({commit, state}) {
+    commit(mutationTypes.SET_IMPRESSUM, await api.getImpressum())
+  },
+  async [actionTypes.GET_SINGLE_IMPRESSUM]({commit, state}, slug) {
+    commit(mutationTypes.SET_SINGLE_IMPRESSUM, await api.getSingleImpressum(slug))
+  },
+  async [actionTypes.GET_RANDOM_IMAGES]({commit, state}) {
+    commit(mutationTypes.SET_RANDOM_IMAGES, await api.getRandomImages())
+  },
+  //
   async [actionTypes.GET_BANNER]({commit, state}) {
     commit(mutationTypes.SET_BANNER, await api.getBanner())
   },
@@ -94,6 +112,18 @@ const actions = {
 }
 
 const mutations = {
+  [mutationTypes.SET_SINGLE_IMPRESSUM](state, data) {
+    state.single_impressum = data
+  },
+  [mutationTypes.SET_IMPRESSUM](state, data) {
+    state.impressum = data
+  },
+  [mutationTypes.SET_RANDOM_IMAGES](state, data) {
+    state.random_images = data[0].acf.images
+  },
+  [mutationTypes.SET_COMMUNITY](state, data) {
+    state.community = data
+  },
   [mutationTypes.SET_BANNER](state, data) {
     state.banner = data
   },

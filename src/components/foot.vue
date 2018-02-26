@@ -1,11 +1,13 @@
 <template>
   <div class="foot">
-    <a class="foot__link">©hardeman</a>
-    <a class="foot__link">shipments</a>
-    <a class="foot__link">return</a>
-    <a class="foot__link">terms of use</a>
-    <a class="foot__link">avoid scams and frauds</a>
-    <a class="foot__link">privacy police</a>
+    <template v-if='main.impressum'>
+      <router-link v-for='entry in main.impressum'
+                   tag='a'
+                   class="foot__link"
+                   :key='entry.id'
+                   :to='{name: "impressum", params: {slug: entry.slug}}'
+                   v-html='entry.title.rendered' />
+    </template>
   </div>
 </template>
 

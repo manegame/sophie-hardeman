@@ -20,31 +20,15 @@ add_filter('query_vars', function ($vars) {
 add_action('after_setup_theme', 'image_size_setup');
 function image_size_setup()
 {
-    add_image_size('sophie-small', 200);
-    add_image_size('sophie-medium', 500);
-    add_image_size('sophie-large', 1400);
-
+    add_image_size('s-h-tiny', 200);
+    add_image_size('s-h-xtra-small', 300);
+    add_image_size('s-h-small', 500);
+    add_image_size('s-h-medium', 800);
+    add_image_size('s-h-large', 1400);
+    add_image_size('s-h-xtra-large', 2200);
+    // add_image_size('slide-small', 300, 220, true);
+    // add_image_size('slide-large', 710, 480, true);
 }
-
-
-// -------
-// -------
-// -------
-// ADD CUSTOM POST TYPE
-// function create_post_type() {
-//   register_post_type( 'sophie_collection',
-//     array(
-//       'labels' => array(
-//         'name' => __( 'Collections' ),
-//         'singular_name' => __( 'Collection' )
-//       ),
-//       'public' => true,
-//       'has_archive' => true,
-//     )
-//   );
-// }
-// add_action( 'init', 'create_post_type' );
-
 
 // -------
 // -------
@@ -185,41 +169,198 @@ function image_size_setup()
 // -------
 // -------
 // CUSTOM POST TYPE
-// add_action('init', 'news_post_type');
-// function news_post_type()
-// {
-//     register_post_type('nyhed',
-//     array(
-//       'labels' => array(
-//         'name' => __('Nyheder'),
-//         'singular_name' => __('Nyhed')
-//       ),
-//       'public' => true,
-//       'show_in_rest' => true,
-//       'has_archive' => true,
-//     )
-//   );
-// }
+
+// COLLECTIONS
+add_action('init', 'collection_post_type');
+function collection_post_type()
+{
+    register_post_type('s-h_collection',
+    array(
+      'labels' => array(
+        'name' => __('Collections'),
+        'singular_name' => __('Collection')
+      ),
+      'public' => true,
+      'show_in_rest' => true,
+      'has_archive' => true,
+    )
+  );
+}
+
+// DIARY
+add_action('init', 'diary_post_type');
+function diary_post_type()
+{
+    register_post_type('s-h_diary',
+    array(
+      'labels' => array(
+        'name' => __('Diary'),
+        'singular_name' => __('Entry')
+      ),
+      'public' => true,
+      'show_in_rest' => true,
+      'has_archive' => true,
+    )
+  );
+}
+
+// EVENTS
+add_action('init', 'event_post_type');
+function event_post_type()
+{
+    register_post_type('s-h_events',
+    array(
+      'labels' => array(
+        'name' => __('Events'),
+        'singular_name' => __('Event')
+      ),
+      'public' => true,
+      'show_in_rest' => true,
+      'has_archive' => true,
+    )
+  );
+}
+
+// LABELS
+add_action('init', 'label_post_type');
+function label_post_type()
+{
+    register_post_type('s-h_labels',
+    array(
+      'labels' => array(
+        'name' => __('Labels'),
+        'singular_name' => __('Label')
+      ),
+      'public' => true,
+      'show_in_rest' => true,
+      'has_archive' => true,
+    )
+  );
+}
+
+// GARMENTS
+add_action('init', 'garment_post_type');
+function garment_post_type()
+{
+    register_post_type('s-h_garments',
+    array(
+      'labels' => array(
+        'name' => __('Garments'),
+        'singular_name' => __('Garment')
+      ),
+      'public' => true,
+      'show_in_rest' => true,
+      'has_archive' => true,
+    )
+  );
+}
+
+// VIDEOS
+add_action('init', 'video_post_type');
+function video_post_type()
+{
+    register_post_type('s-h_videos',
+    array(
+      'labels' => array(
+        'name' => __('Hardeman TV'),
+        'singular_name' => __('video')
+      ),
+      'public' => true,
+      'show_in_rest' => true,
+      'has_archive' => true,
+    )
+  );
+}
+
+// ABOUT
+add_action('init', 'about_post_type');
+function about_post_type()
+{
+    register_post_type('s-h_about',
+    array(
+      'labels' => array(
+        'name' => __('About'),
+        'singular_name' => __('section')
+      ),
+      'public' => true,
+      'show_in_rest' => true,
+      'has_archive' => true,
+    )
+  );
+}
+
+// STOCKISTS
+add_action('init', 'stockists_post_type');
+function stockists_post_type()
+{
+    register_post_type('s-h_stockists',
+    array(
+      'labels' => array(
+        'name' => __('Stockists'),
+        'singular_name' => __('Stockist')
+      ),
+      'public' => true,
+      'show_in_rest' => true,
+      'has_archive' => true,
+    )
+  );
+}
+
+// COMMUNITY
+add_action('init', 'community_post_type');
+function community_post_type()
+{
+    register_post_type('s-h_community',
+    array(
+      'labels' => array(
+        'name' => __('Community'),
+        'singular_name' => __('Community')
+      ),
+      'public' => true,
+      'show_in_rest' => true,
+      'has_archive' => true,
+    )
+  );
+}
+
+// MISCELLANEOUS
+add_action('init', 'misc_post_type');
+function misc_post_type()
+{
+    register_post_type('s-h_misc',
+    array(
+      'labels' => array(
+        'name' => __('Impressum'),
+        'singular_name' => __('Item')
+      ),
+      'public' => true,
+      'show_in_rest' => true,
+      'has_archive' => true,
+    )
+  );
+}
+
+
 
 // -------
 // -------
 // -------
 // CUSTOM TAXONOMY
-// add_action('init', 'create_project_tax');
-//
-// function create_project_tax()
-// {
-//     register_taxonomy(
-//         'category',
-//         'project',
-//         array(
-//             'label' => __('Category'),
-//             'rewrite' => array( 'slug' => 'category' ),
-//             'hierarchical' => true,
-//             'show_in_rest' => true
-//         )
-//     );
-// }
+add_action('init', 'create_project_tax');
+
+function create_project_tax()
+{
+    register_taxonomy(
+        's-h_garment_category',
+        's-h_garments',
+        array(
+            'label' => __('Garment category'),
+            'rewrite' => array( 'slug' => 'category' ),
+            'hierarchical' => true,
+            'show_in_rest' => true
+        )
+    );
+}
 
 // -------
 // -------
@@ -230,6 +371,9 @@ function my_toolbars($toolbars)
 {
     $toolbars['Full' ] = array();
     $toolbars['Full' ][1] = array('bold', 'italic', 'link', 'unlink');
+
+    $toolbars['Sophie' ] = array();
+    $toolbars['Sophie' ][1] = array('bold');
 
     // remove the 'Basic' toolbar completely
     unset($toolbars['Basic' ]);
@@ -287,6 +431,23 @@ function my_toolbars($toolbars)
 // add_filter('tiny_mce_before_init', 'my_mce_before_init_insert_formats');
 
 
+// -------
+// -------
+// -------
+// SET ACF IMAGE AS FEATURED IMAGE
+function acf_set_featured_image( $value, $post_id, $field  ){
+
+    if($value != ''){
+	    //Add the value which is the image ID to the _thumbnail_id meta data for the current post
+	    add_post_meta($post_id, '_thumbnail_id', $value);
+    }
+
+    return $value;
+}
+
+// acf/update_value/name={$field_name} - filter for a specific field based on it's name
+add_filter('acf/update_value/name=cursusfoto', 'acf_set_featured_image', 10, 3);
+
 
 // -------
 // -------
@@ -309,3 +470,25 @@ function my_rest_post_query($args, $request)
     return $args;
 }
 add_filter('rest_post_query', 'my_rest_post_query', 10, 2);
+
+
+// -------
+// -------
+// -------
+// HIDE PREVIEW POST
+global $pagenow;
+if ( 'post.php' == $pagenow || 'post-new.php' == $pagenow ) {
+    add_action( 'admin_head', 'wpse_125800_custom_publish_box' );
+    function wpse_125800_custom_publish_box() {
+        if( !is_admin() )
+            return;
+
+        $style = '';
+        $style .= '<style type="text/css">';
+        $style .= '#edit-slug-box, #minor-publishing-actions, #visibility, .num-revisions, .curtime';
+        $style .= '{display: none; }';
+        $style .= '</style>';
+
+        echo $style;
+    }
+}

@@ -10,6 +10,8 @@ const singleSale = () => import('@/views/single-sale')
 const diary = () => import('@/views/diary')
 const stockists = () => import('@/views/stockists')
 const events = () => import('@/views/events')
+const impressum = () => import('@/views/impressum')
+const community = () => import('@/views/community')
 
 Vue.use(Router)
 
@@ -64,6 +66,16 @@ export default new Router({
       path: '/event/:slug',
       name: 'events',
       component: events
+    },
+    {
+      path: '/impressum/:slug',
+      name: 'impressum',
+      component: impressum
+    },
+    {
+      path: '/community/:slug',
+      name: 'community',
+      component: community
     }
   ]
 })

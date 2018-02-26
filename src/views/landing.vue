@@ -31,6 +31,9 @@
           <router-link tag='li'
                        class="landing__column_left__links__item"
                        :to="{name: 'stockists', params: { slug: 'xxx'}}">stockists</router-link>
+          <router-link tag='li'
+                       class="landing__column_left__links__item"
+                       :to="{name: 'community', params: { slug: 'xxx'}}">community</router-link>
         </ul>
         <div class="landing__column_left__toe">
           <weather />
@@ -150,6 +153,19 @@
                            </span>
               </router-link>
             </ul>
+          </section>
+          <!-- - -->
+          <!-- - -->
+          <!-- - -->
+          <!-- Stockists -->
+          <section v-if='main.community.length > 0'
+                   class="landing__column_middle__sections__community">
+            <h2>community</h2>
+            <router-link tag='img'
+                         :to='{name: "community", params: {slug: main.community[0].slug}}'
+                         class="landing__column_middle__sections__community__image"
+                         :src='main.community[0].acf.image.sizes["s-h-medium"]' />
+                         <sup v-for='label in main.community[0].acf.labels'>{{label.post_title}}</sup>
           </section>
         </div>
       </div>
@@ -330,10 +346,19 @@ export default {
         &__about,
         &__tv,
         &__shop,
-        &__stockists {
+        &__stockists,
+        &__community {
+          break-inside: avoid-column;
           width: 100%;
           margin-right: 40px;
           margin-bottom: $line-height * 2;
+        }
+
+        &__community {
+          &__image {
+            width: 100%;
+            cursor: pointer;
+          }
         }
 
         &__collections {

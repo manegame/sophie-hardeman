@@ -33,6 +33,54 @@ export default {
       )
     })
   },
+  getImpressum() {
+    return new Promise((resolve, reject) => {
+      Vue.http.get(API_ROOT + 's-h_misc?per_page=10').then(
+        response => {
+          resolve(response.body)
+        },
+        response => {
+          reject(response)
+        }
+      )
+    })
+  },
+  getRandomImages() {
+    return new Promise((resolve, reject) => {
+      Vue.http.get(API_ROOT + 'pages?slug=random-images&fields=acf').then(
+        response => {
+          resolve(response.body)
+        },
+        response => {
+          reject(response)
+        }
+      )
+    })
+  },
+  getSingleImpressum(slug) {
+    return new Promise((resolve, reject) => {
+      Vue.http.get(API_ROOT + 's-h_misc/?slug=' + slug).then(
+        response => {
+          resolve(response.body[0])
+        },
+        response => {
+          reject(response)
+        }
+      )
+    })
+  },
+  getCommunity() {
+    return new Promise((resolve, reject) => {
+      Vue.http.get(API_ROOT + 's-h_community?per_page=99&filter[orderby]=date&order=desc').then(
+        response => {
+          resolve(response.body)
+        },
+        response => {
+          reject(response)
+        }
+      )
+    })
+  },
   getGarmentCategories() {
     return new Promise((resolve, reject) => {
       Vue.http.get(API_ROOT + 's-h_garment_category').then(

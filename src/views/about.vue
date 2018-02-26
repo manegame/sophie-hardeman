@@ -4,11 +4,13 @@
     <topbar />
     <div class="about__main">
       <div class="about__main__left">
-        <img v-if='main.single_about.acf.profile_pic'
+        <img v-if='$route.params.slug === "bio" && main.single_about.acf'
              class="about__main__left__bio_profile_pic"
              :src='main.single_about.acf.profile_pic.sizes["s-h-small"]' />
+        <randomImage v-else />
       </div>
-      <div class="about__main__right">
+      <div class="about__main__right"
+           v-if='main.single_about.acf'>
         <h5 class="about__main__right__title">
           {{main.single_about.title.rendered}}
         </h5>
@@ -23,12 +25,14 @@
 import {mapState} from 'vuex'
 import navbar from '@/components/navbar'
 import topbar from '@/components/topbar'
+import randomImage from '@/components/random-image'
 
 export default {
   name: 'about',
   components: {
     navbar,
-    topbar
+    topbar,
+    randomImage
   },
   computed: {
     ...mapState(['main'])
@@ -62,6 +66,11 @@ export default {
     }
 
     &__right {
+      position: relative;
+      float: right;
+      width: calc(100% - #{$left-col-width} - 20px);
+      height: 100%;
+      padding: 0 20px;
       margin-right: 20px;
 
       &__title {

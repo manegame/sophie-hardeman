@@ -1,10 +1,11 @@
 <template>
   <div class="weather" v-if='main.weather.weather'>
+    <h3 class="weather__head">what to wear?</h3>
     <div class="weather__top">
       <p class="weather__top__title" v-html='main.weather.name'/>
       <img class="weather__top__icon"
            :src='"http://openweathermap.org/img/w/" + main.weather.weather[0].icon + ".png"' />
-      <div>
+      <div class="weather__top__info">
         <h1 class="weather__top__temp">{{Math.round(main.weather.main.temp) | temperature}}</h1>
         <p class="weather__top__sub" v-html='main.weather.weather[0].description'/>
       </div>
@@ -15,10 +16,6 @@
         <p class="weather__bottom__temps__temp">lo: {{main.weather.main.temp_min | temperature}}</p>
         <p class="weather__bottom__temps__temp">hi: {{main.weather.main.temp_max | temperature}}</p><br />
       </div>
-      <!-- <p>
-        wind direction:
-      </p>
-      <hr :style='"transform:rotate(" + main.weather.wind.deg + 90 + "deg)"'/> -->
     </div>
   </div>
 </template>
@@ -62,6 +59,14 @@ export default {
   text-transform: lowercase;
   padding: 4px 0;
 
+  &__head {
+    text-align: center;
+    margin-bottom: 4px;
+    background: $grey;
+    border-top: $border-light;
+    border-bottom: $border-light;
+  }
+
   &__top {
     border-bottom: $border-light;
     margin-bottom: 4px;
@@ -89,9 +94,14 @@ export default {
 
     &__icon {
       width: 100px;
-      margin-right: 40px;
+      margin-right: 0;
       filter: blur(2px);
       height: auto;
+    }
+
+    &__info {
+      margin-left: 20px;
+      width: 80px;
     }
   }
 
@@ -103,7 +113,7 @@ export default {
 
     &__day {
       color: $blue;
-      width: 140px;
+      width: 120px;
     }
 
     &__temps {

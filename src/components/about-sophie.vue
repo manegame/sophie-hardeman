@@ -2,7 +2,7 @@
   <section>
     <div class="about_sophie">
       <img class="about_sophie__pic"
-           src='http://placehold.it/800x800' />
+           src='../../static/profile.jpg' />
       <div class="about_sophie__text">
         <p class="about_sophie__text--main">
           Sophie Hardeman<br /><br />
@@ -12,9 +12,10 @@
           world wide fashion industry
           organizations.
         </p>
-        <span class="about_sophie__text--button">
+        <a class="about_sophie__text--button"
+           :href='mailSophie'>
           contact seller
-        </span>
+        </a>
       </div>
     </div>
   </section>
@@ -23,9 +24,12 @@
 <script>
 import {mapState} from 'vuex'
 export default {
-  name: 'about sophie',
+  name: 'about-sophie',
   computed: {
-    ...mapState(['main'])
+    ...mapState(['main']),
+    mailSophie() {
+      return 'mailto:sophie@hardemanonline.com?subject=It\'s been a while since we last talked...'
+    }
   }
 }
 </script>
@@ -47,6 +51,7 @@ export default {
     height: 100px;
     margin-left: 20px;
     border-radius: 50%;
+    object-fit: cover;
   }
 
   &__text {

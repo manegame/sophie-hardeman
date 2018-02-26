@@ -59,7 +59,12 @@ export default {
       'GET_GARMENTS',
       'GET_GARMENT_CATEGORIES',
       'GET_VIDEOS',
-      'GET_VIDEO'
+      'GET_VIDEO',
+      //
+      'GET_RANDOM_IMAGES',
+      'GET_COMMUNITY',
+      'GET_IMPRESSUM',
+      'GET_SINGLE_IMPRESSUM'
     ]),
     $_setMetaTags(meta = {}) {
       this.meta.title = meta.title || this.meta.defaults.title
@@ -82,6 +87,7 @@ export default {
           this.GET_DIARY()
           this.GET_EVENTS()
           this.GET_STOCKISTS()
+          this.GET_COMMUNITY()
           this.ready = true
           break
         case ('collection'):
@@ -92,6 +98,7 @@ export default {
           break
         case ('about'):
           this.CLEAR_SINGLES()
+          this.GET_RANDOM_IMAGES()
           this.GET_ABOUT()
           this.GET_SINGLE_ABOUT(route.params.slug)
           this.ready = true
@@ -127,6 +134,15 @@ export default {
         case ('events'):
           this.GET_EVENTS()
           this.GET_SINGLE_EVENT(route.params.slug)
+          this.ready = true
+          break
+        case ('community'):
+          this.GET_COMMUNITY()
+          this.ready = true
+          break
+        case ('impressum'):
+          this.GET_RANDOM_IMAGES()
+          this.GET_SINGLE_IMPRESSUM(route.params.slug)
           this.ready = true
           break
       }
@@ -178,7 +194,11 @@ export default {
           break
         default:
           this.ready = false
-          console.log('getting data', to)
+          console.log('getting data', to, from.name)
+          if (from.name === null) {
+            console.log('coming for the first time')
+            this.GET_IMPRESSUM()
+          }
           this.$_fetchData(to)
           this.$_setMetaTags()
           break

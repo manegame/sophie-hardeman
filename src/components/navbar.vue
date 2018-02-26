@@ -102,6 +102,20 @@
         </template>
       </ul>
     </template>
+    <!-- COMMUNITY -->
+    <template v-if='$route.name === "community"'>
+      <p>community</p>
+      <ul class="nav">
+        <template v-for='entry in main.community'>
+          <router-link class="nav__item"
+                       :class='{"nav__item--emphasis": $route.params.slug === entry.slug}'
+                       tag='li'
+                       :to='{name: "community", params: {slug: entry.slug}}'>
+                       {{entry.title.rendered}} <sup v-for='label in entry.acf.labels'>{{label.post_title}}</sup>
+                       </router-link>
+        </template>
+      </ul>
+    </template>
     <!-- STOCKISTS -->
     <template v-if='$route.name === "stockists"'>
       <p>stockists</p>
@@ -120,6 +134,21 @@
     <!-- EVENTS -->
     <template v-if='$route.name === "events"'>
       <p>events</p>
+      <ul class="nav">
+        <template v-for='e in main.events'>
+          <router-link class="nav__item"
+                       :class='{"nav__item--emphasis": $route.params.slug === e.slug}'
+                       tag='li'
+                       :key='e.id'
+                       :to='{name: "events", params: {slug: e.slug}}'>
+                       {{e.title.rendered}} <sup v-for='label in e.acf.labels'>{{label.post_title}}</sup>
+                       </router-link>
+        </template>
+      </ul>
+    </template>
+    <!-- IMPRESSUM -->
+    <template v-if='$route.name === "impressum"'>
+      <!-- <p>impressum</p> -->
     </template>
   </div>
 </template>
