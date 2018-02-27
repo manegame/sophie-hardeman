@@ -93,6 +93,7 @@ export default {
       )
     })
   },
+  // get single garment by slug name. used in collections
   getGarment(slug) {
     return new Promise((resolve, reject) => {
       Vue.http.get(API_ROOT + 's-h_garments/' + slug).then(
@@ -105,6 +106,7 @@ export default {
       )
     })
   },
+  // get single garment by slug name
   getSingleGarment(slug) {
     return new Promise((resolve, reject) => {
       Vue.http.get(API_ROOT + 's-h_garments/?slug=' + slug).then(
@@ -118,16 +120,31 @@ export default {
     })
   },
   getGarments(slug) {
-    return new Promise((resolve, reject) => {
-      Vue.http.get(API_ROOT + 's-h_garments?s-h_garment_category=' + slug).then(
-        response => {
-          resolve(response.body)
-        },
-        response => {
-          reject(response)
-        }
-      )
-    })
+    if (slug === 'all') {
+      console.log('getting all garments!')
+      return new Promise((resolve, reject) => {
+        Vue.http.get(API_ROOT + 's-h_garments?per_page=99').then(
+          response => {
+            resolve(response.body)
+          },
+          response => {
+            reject(response)
+          }
+        )
+      })
+    } else {
+      console.log('getting some garments')
+      return new Promise((resolve, reject) => {
+        Vue.http.get(API_ROOT + 's-h_garments?s-h_garment_category=' + slug).then(
+          response => {
+            resolve(response.body)
+          },
+          response => {
+            reject(response)
+          }
+        )
+      })
+    }
   },
   getVideo(slug) {
     return new Promise((resolve, reject) => {

@@ -57,7 +57,7 @@ export default {
 .weather {
   text-align: left;
   text-transform: lowercase;
-  padding: 4px 0;
+  padding: 0 0 40px;
 
   &__head {
     text-align: center;

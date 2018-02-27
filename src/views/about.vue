@@ -58,10 +58,7 @@ export default {
       float: left;
 
       &__bio_profile_pic {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        object-fit: cover;
+        width: 100%;
       }
     }
 

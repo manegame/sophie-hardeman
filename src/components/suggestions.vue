@@ -5,11 +5,13 @@
       <ul class="suggestions__links">
         <router-link class="suggestions__links__item"
                      tag='li'
-                     :to='{name: "collection", params: {slug: "xxx"}}'
+                     v-if='main.collections.length > 0'
+                     :to='{name: "collection", params: {slug: main.collections[0].slug}}'
                      v-html='"collections"' />
         <router-link class="suggestions__links__item"
                      tag='li'
-                     :to='{name: "about", params: {slug: "xxx"}}'
+                     v-if='main.about.length > 0'
+                     :to='{name: "about", params: {slug: main.about[0].slug}}'
                      v-html='"about hardeman"' />
         <router-link class="suggestions__links__item"
                      tag='li'
@@ -17,11 +19,12 @@
                      v-html='"hardeman tv"' />
         <router-link class="suggestions__links__item"
                      tag='li'
-                     :to='{name: "sale", params: {slug: "xxx"}}'
+                     :to='{name: "sale", params: {slug: "all"}}'
                      v-html='"for sale"' />
         <router-link class="suggestions__links__item"
                      tag='li'
-                     :to='{name: "stockists", params: {slug: "xxx"}}'
+                     v-if='main.stockists.length > 0'
+                     :to='{name: "stockists", params: {slug: main.stockists[0].slug}}'
                      v-html='"stockists"' />
       </ul>
     </p>

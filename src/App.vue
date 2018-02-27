@@ -60,7 +60,6 @@ export default {
       'GET_GARMENT_CATEGORIES',
       'GET_VIDEOS',
       'GET_VIDEO',
-      //
       'GET_RANDOM_IMAGES',
       'GET_COMMUNITY',
       'GET_IMPRESSUM',
@@ -77,6 +76,18 @@ export default {
     $_fetchData(route) {
       // All requests for data from the server originates from this function
       switch (route.name) {
+        case ('first load'):
+          this.GET_BANNER()
+          this.GET_COLLECTIONS()
+          this.GET_ABOUT()
+          this.GET_VIDEOS()
+          this.GET_GARMENT_CATEGORIES()
+          this.GET_DIARY()
+          this.GET_EVENTS()
+          this.GET_STOCKISTS()
+          this.GET_COMMUNITY()
+          this.ready = true
+          break
         case ('landing'):
           this.CLEAR_SINGLES()
           this.GET_BANNER()
@@ -104,10 +115,15 @@ export default {
           this.ready = true
           break
         case ('sale'):
-          this.GET_GARMENT_CATEGORIES().then(() => {
-            let cat = this.main.garment_categories.filter(c => { return c.slug === this.$route.params.slug })[0]
-            this.GET_GARMENTS(cat.id)
-          })
+          if (route.params.slug === 'all') {
+            this.GET_GARMENT_CATEGORIES()
+            this.GET_GARMENTS(route.params.slug)
+          } else {
+            this.GET_GARMENT_CATEGORIES().then(() => {
+              let cat = this.main.garment_categories.filter(c => { return c.slug === this.$route.params.slug })[0]
+              this.GET_GARMENTS(cat.id)
+            })
+          }
           this.ready = true
           break
         case ('single sale'):
@@ -187,17 +203,14 @@ export default {
       switch (to) {
         case (to.name === 'collection' && to.params.slug === from.params.slug):
           this.ready = true
-          console.log('don\'t get data')
           break
         case (from.name === 'diary' && to.name === 'diary'):
           this.ready = true
           break
         default:
           this.ready = false
-          console.log('getting data', to, from.name)
           if (from.name === null) {
-            console.log('coming for the first time')
-            this.GET_IMPRESSUM()
+            this.$_fetchData('first load')
           }
           this.$_fetchData(to)
           this.$_setMetaTags()

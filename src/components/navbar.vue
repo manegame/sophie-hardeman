@@ -7,7 +7,7 @@
                </router-link>
     <!-- COLLECTIONS -->
     <template v-if='$route.name === "collection"'>
-      <p>collections </p>
+      <p class='navbar__head'>collections </p>
       <ul class="nav">
         <template v-for='collection in main.collections'>
           <router-link class="nav__item"
@@ -48,7 +48,7 @@
     </template>
     <!-- ABOUT -->
     <template v-if='$route.name === "about"'>
-      <p>about </p>
+      <p class='navbar__head'>about </p>
       <ul class="nav">
         <template v-for='page in main.about'>
           <router-link class="nav__item"
@@ -62,8 +62,14 @@
     </template>
     <!-- SALE -->
     <template v-if='$route.name === "sale" || $route.name === "single sale"'>
-      <p>for sale </p>
+      <p class='navbar__head'>for sale </p>
       <ul class="nav">
+        <router-link class="nav__item"
+                     :class='{"nav__item--emphasis": $route.params.slug === "all"}'
+                     tag='li'
+                     :to='{name: "sale", params: {slug: "all"}}'>
+                     all
+                     </router-link>
         <template v-for='category in main.garment_categories'>
           <router-link class="nav__item"
                        :class='{"nav__item--emphasis": $route.params.slug === category.slug}'
@@ -76,7 +82,7 @@
     </template>
     <!-- HARDEMAN TV -->
     <template v-if='$route.name === "hardeman tv"'>
-      <p>hardeman tv </p>
+      <p class='navbar__head'>hardeman tv </p>
       <ul class="nav">
         <template v-for='video in main.videos'>
           <router-link class="nav__item"
@@ -90,7 +96,7 @@
     </template>
     <!-- DIARY -->
     <template v-if='$route.name === "diary"'>
-      <p>diary</p>
+      <p class='navbar__head'>diary</p>
       <ul class="nav">
         <template v-for='entry in main.diary'>
           <router-link class="nav__item"
@@ -104,7 +110,7 @@
     </template>
     <!-- COMMUNITY -->
     <template v-if='$route.name === "community"'>
-      <p>community</p>
+      <p class='navbar__head'>community</p>
       <ul class="nav">
         <template v-for='entry in main.community'>
           <router-link class="nav__item"
@@ -118,7 +124,7 @@
     </template>
     <!-- STOCKISTS -->
     <template v-if='$route.name === "stockists"'>
-      <p>stockists</p>
+      <p class='navbar__head'>stockists</p>
       <ul class="nav">
         <template v-for='s in main.stockists'>
           <router-link class="nav__item"
@@ -133,7 +139,7 @@
     </template>
     <!-- EVENTS -->
     <template v-if='$route.name === "events"'>
-      <p>events</p>
+      <p class='navbar__head'>events</p>
       <ul class="nav">
         <template v-for='e in main.events'>
           <router-link class="nav__item"
@@ -148,7 +154,7 @@
     </template>
     <!-- IMPRESSUM -->
     <template v-if='$route.name === "impressum"'>
-      <!-- <p>impressum</p> -->
+      <!-- <p class='navbar__head'>impressum</p> -->
     </template>
   </div>
 </template>
@@ -174,12 +180,18 @@ export default {
   float: left;
   padding-left: 20px;
 
+  &__head {
+    color: $blue;
+  }
+
   &__title {
     margin-bottom: 6px;
   }
 
   .nav {
     padding-top: 20px;
+    color: $blue;
+
     &__item {
       border-bottom: none;
       height: auto;

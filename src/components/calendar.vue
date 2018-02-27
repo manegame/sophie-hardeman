@@ -69,7 +69,6 @@ export default {
 
 .calendar {
   background: $grey;
-  position: absolute;
   width: 100%;
   height: auto;
   min-height: 160px;

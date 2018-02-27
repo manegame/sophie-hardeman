@@ -14,26 +14,29 @@
         </h4>
         <section class="landing__column_left__social">
           <a class="landing__column_left__social__item socicon-facebook"
-             href='https://www.facebook.com/hardemanonline/'></a>
+             href='https://www.facebook.com/hardemanonline/'
+             target='_blank'></a>
           <a class="landing__column_left__social__item socicon-instagram"
-             href='https://www.instagram.com/hardeman_'></a>
+             href='https://www.instagram.com/hardeman_'
+             target='_blank'></a>
         </section>
-        <ul v-if='main.collections.length > 0' class="landing__column_left__links">
+        <ul class="landing__column_left__links"
+            v-if='main.collections.length > 0 && main.stockists.length > 0 && main.community.length > 0 && main.videos.length > 0'>
           <router-link tag='li'
                        class="landing__column_left__links__item"
                        :to="{name: 'collection', params: { slug: emphasizedCollection, section: 'lookbook'}}">collections</router-link>
           <router-link tag='li'
                        class="landing__column_left__links__item"
-                       :to="{name: 'hardeman tv', params: { slug: 'xxx'}}">hardeman tv</router-link>
+                       :to="{name: 'hardeman tv', params: { slug: main.videos[0].slug}}">hardeman tv</router-link>
           <router-link tag='li'
                        class="landing__column_left__links__item"
-                       :to="{name: 'sale', params: { slug: 'xxx', item: 'xxx'}}">for sale</router-link>
+                       :to="{name: 'sale', params: { slug: 'all' }}">for sale</router-link>
           <router-link tag='li'
                        class="landing__column_left__links__item"
-                       :to="{name: 'stockists', params: { slug: 'xxx'}}">stockists</router-link>
+                       :to="{name: 'stockists', params: { slug: main.stockists[0].slug}}">stockists</router-link>
           <router-link tag='li'
                        class="landing__column_left__links__item"
-                       :to="{name: 'community', params: { slug: 'xxx'}}">community</router-link>
+                       :to="{name: 'community', params: { slug: main.community[0].slug}}">community</router-link>
         </ul>
         <div class="landing__column_left__toe">
           <weather />
@@ -81,7 +84,7 @@
           <!-- - -->
           <!-- About -->
           <section class="landing__column_middle__sections__about">
-            <router-link :to='{name: "about", params: {slug: "xxx"}}'
+            <router-link :to='{name: "about", params: {slug: "bio"}}'
                           tag='h2' >
                           about hardeman
                           </router-link>
@@ -100,8 +103,9 @@
           <!-- - -->
           <!-- - -->
           <!-- Hardeman TV -->
-          <section class="landing__column_middle__sections__tv">
-            <router-link :to='{name: "hardeman tv", params: {slug: "xxx"}}'
+          <section class="landing__column_middle__sections__tv"
+                   v-if='main.videos.length > 0'>
+            <router-link :to='{name: "hardeman tv", params: {slug: main.videos[0].slug}}'
                           tag='h2' >
                           hardeman tv
                           </router-link>
@@ -121,7 +125,7 @@
           <!-- - -->
           <!-- For Sale -->
           <section class="landing__column_middle__sections__shop">
-            <router-link :to='{name: "sale", params: {slug: "xxx"}}'
+            <router-link :to='{name: "sale", params: {slug: "all"}}'
                           tag='h2' >
                           for sale
                           </router-link>
@@ -129,7 +133,7 @@
               <router-link tag='li'
                            v-for='garment in main.garment_categories'
                            :key='garment.id'
-                           :to='{name: "sale", params: {slug: garment.slug}}'>
+                           :to='{name: "sale", params: {slug: "all"}}'>
                            <span>{{garment.name}}
                              <sup v-for='label in garment.acf.labels'>{{label.post_title}}</sup>
                            </span>
@@ -140,9 +144,12 @@
           <!-- - -->
           <!-- - -->
           <!-- Stockists -->
-          <section v-if='main.stockists'
+          <section v-if='main.stockists.length > 0'
                    class="landing__column_middle__sections__stockists">
-            <h2>stockists</h2>
+            <router-link :to='{name: "stockists", params: {slug: main.stockists[0].slug}}'
+                         tag='h2' >
+                         stockists
+            </router-link>
             <ul>
               <router-link tag='li'
                            v-for='s in main.stockists'
@@ -160,7 +167,10 @@
           <!-- Stockists -->
           <section v-if='main.community.length > 0'
                    class="landing__column_middle__sections__community">
-            <h2>community</h2>
+            <router-link :to='{name: "community", params: {slug: main.community[0].slug}}'
+                          tag='h2' >
+                          community
+            </router-link>
             <router-link tag='img'
                          :to='{name: "community", params: {slug: main.community[0].slug}}'
                          class="landing__column_middle__sections__community__image"
@@ -174,9 +184,12 @@
       <!-- - -->
       <!-- RIGHT -->
       <div class="landing__column_right landing__column">
-        <h3 class="landing__column_right__head">
-          diary
-        </h3>
+        <router-link v-if='main.diary.length > 0'
+                     class="landing__column_right__head"
+                     :to='{name: "diary", params: {slug: main.diary[0].slug}}'
+                     tag='h3' >
+                     diary
+        </router-link>
         <ul class="landing__column_right__list">
           <router-link v-for='entry in main.diary'
                        tag='li'
@@ -310,7 +323,7 @@ export default {
     &__toe {
       background: $grey;
       position: absolute;
-      height: 400px;
+      height: auto;
       width: calc(100% - 40px);
       bottom: 0;
     }
@@ -394,6 +407,10 @@ export default {
     color: $blue;
     padding: 10px 20px 40px;
     justify-content: space-between;
+
+    &__head {
+      cursor: pointer;
+    }
 
     &__list {
       margin-top: $margin-top;

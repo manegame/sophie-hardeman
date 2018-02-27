@@ -3,28 +3,56 @@
     <navbar />
     <topbar />
     <div class="sale__main">
-      <router-link tag='div'
-                   v-for='item in main.garments'
-                   :key='item.id'
-                   :to="{ name: 'single sale', params: {slug: $route.params.slug, item: item.slug}}"
-                   class="sale__main__item" >
-             <span class="sale__main__item__price-tag">
-               T.B.A.
-             </span>
-             <img class="sale__main__item__image"
-                  :class='{"sale__main__item__image--emphasis": item.acf.emphasis}'
-                  :src='item.acf.image.sizes["s-h-large"]' />
-             <div class="sale__main__item__meta">
-               <h6>
-                 <span class='sale__main__item__meta__season' v-html='item.acf.season'></span>
-                 <span class="sale__main__item__meta__title">{{item.title.rendered}}</span>
-                 <span class="sale__main__item__meta__price">T.B.A.</span>
-                 <span class="sale__main__item__meta__brackets">
-                   (amsterdam west)
-                 </span>
-               </h6>
-             </div>
-      </router-link>
+      <template v-if='$route.params.slug === "all"'>
+        <!-- ALL GARMENTS -->
+        <router-link tag='div'
+                     v-for='item in main.garments'
+                     :key='item.id'
+                     :to="{ name: 'single sale', params: {slug: $route.params.slug, item: item.slug}}"
+                     class="sale__main__item" >
+               <span class="sale__main__item__price-tag">
+                 T.B.A.
+               </span>
+               <img class="sale__main__item__image"
+                    :class='{"sale__main__item__image--emphasis": item.acf.emphasis}'
+                    :src='item.acf.image.sizes["s-h-large"]' />
+               <div class="sale__main__item__meta">
+                 <h6>
+                   <span class='sale__main__item__meta__season' v-html='item.acf.season'></span>
+                   <span class="sale__main__item__meta__title">{{item.title.rendered}}</span>
+                   <span class="sale__main__item__meta__price">T.B.A.</span>
+                   <span class="sale__main__item__meta__brackets">
+                     (amsterdam west)
+                   </span>
+                 </h6>
+               </div>
+        </router-link>
+      </template>
+      <!-- SINGLE -->
+      <template v-else>
+        <router-link tag='div'
+                     v-for='item in main.garments'
+                     :key='item.id'
+                     :to="{ name: 'single sale', params: {slug: $route.params.slug, item: item.slug}}"
+                     class="sale__main__item" >
+               <span class="sale__main__item__price-tag">
+                 T.B.A.
+               </span>
+               <img class="sale__main__item__image"
+                    :class='{"sale__main__item__image--emphasis": item.acf.emphasis}'
+                    :src='item.acf.image.sizes["s-h-large"]' />
+               <div class="sale__main__item__meta">
+                 <h6>
+                   <span class='sale__main__item__meta__season' v-html='item.acf.season'></span>
+                   <span class="sale__main__item__meta__title">{{item.title.rendered}}</span>
+                   <span class="sale__main__item__meta__price">T.B.A.</span>
+                   <span class="sale__main__item__meta__brackets">
+                     (amsterdam west)
+                   </span>
+                 </h6>
+               </div>
+        </router-link>
+      </template>
     </div>
   </div>
 </template>
