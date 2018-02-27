@@ -17,8 +17,8 @@
                          :style='"background-image:url("+ g.acf.image.sizes["s-h-large"] +")"' />
                   </div>
                   <!-- Add Arrows -->
-                  <div class="swiper-button-next swiper-button-white"></div>
-                  <div class="swiper-button-prev swiper-button-white"></div>
+                  <div class="swiper-button-next swiper-button-next--top swiper-button-white"></div>
+                  <div class="swiper-button-prev swiper-button-prev--top swiper-button-white"></div>
                 </div>
                 <div class="swiper-container gallery-thumbs">
                   <div class="swiper-wrapper">
@@ -26,6 +26,9 @@
                          v-for='g in main.single.garments'
                          :style='"background-image:url("+ g.acf.image.sizes["s-h-small"] +")"' />
                   </div>
+                  <!-- Add Arrows -->
+                  <div class="swiper-button-next swiper-button-next--thumb swiper-button-white"></div>
+                  <div class="swiper-button-prev swiper-button-prev--thumb swiper-button-white"></div>
                 </div>
               </template>
               <!-- END SWIPER -->
@@ -121,6 +124,7 @@ export default {
       this.galleryTop = new Swiper('.gallery-top', {
         preloadImages: true,
         updateOnImagesReady: true,
+        touchRatio: 0,
         spaceBetween: 4,
         on: {
           slideChange: () => {
@@ -128,8 +132,8 @@ export default {
           }
         },
         navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev'
+          nextEl: '.swiper-button-next--top',
+          prevEl: '.swiper-button-prev--top'
         }
       })
       this.galleryThumbs = new Swiper('.gallery-thumbs', {
@@ -137,13 +141,29 @@ export default {
         updateOnImagesReady: true,
         spaceBetween: 4,
         slidesPerView: 'auto',
-        touchRatio: 0.2,
-        slideToClickedSlide: true
+        touchRatio: 0.4,
+        slideToClickedSlide: true,
+        centeredSlides: false,
+        virtualTranslate: false,
+        slidesOffsetAfter: 350 * 0.75,
+        on: {
+          slideChange: () => {
+            this.galleryThumbs.navigation.update()
+          },
+          reachEnd: () => {
+            console.log('last slide')
+          }
+        },
+        navigation: {
+          nextEl: '.swiper-button-next--thumb',
+          prevEl: '.swiper-button-prev--thumb'
+        }
       })
       if (this.galleryTop.controller) {
         this.galleryTop.controller.control = this.galleryThumbs
         this.galleryThumbs.controller.control = this.galleryTop
         this.galleryTop.navigation.update()
+        this.galleryThumbs.navigation.update()
       }
     }
   },
@@ -311,19 +331,19 @@ embed {
   background-position: top;
 }
 .gallery-top {
-  height: 80%;
+  height: $left-col-width * 1.5;
   width: 100%;
 
   .swiper-slide {
-    background-size: contain;
+    background-size: cover;
     background-color: $white;
     background-repeat: no-repeat;
   }
 }
 .gallery-thumbs {
-  height: 20%;
+  height: 140px;
   box-sizing: border-box;
-  padding: 10px 4px;
+  padding: 10px 0;
 }
 .gallery-thumbs .swiper-slide {
   width: 25%;
