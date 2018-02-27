@@ -123,7 +123,7 @@ export default {
     if (slug === 'all') {
       console.log('getting all garments!')
       return new Promise((resolve, reject) => {
-        Vue.http.get(API_ROOT + 's-h_garments?per_page=99').then(
+        Vue.http.get(API_ROOT + 's-h_garments?per_page=99&filter[orderby]=rand').then(
           response => {
             resolve(response.body)
           },

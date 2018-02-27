@@ -170,7 +170,7 @@ export default {
   computed: {
     ...mapState(['main']),
     embedCode() {
-      return embed(this.main.single.videos[0].acf.video, {query: {portrait: 0, color: '00f'}, attr: {class: 'inner'}})
+      return embed(this.main.single.videos[0].acf.video, {query: {portrait: 0, color: '00f', quality: '1080p'}, attr: {class: 'inner'}})
     }
   },
   watch: {
@@ -343,10 +343,10 @@ embed {
 .gallery-thumbs {
   height: 140px;
   box-sizing: border-box;
-  padding: 10px 0;
+  padding: 4px 0 0;
 }
 .gallery-thumbs .swiper-slide {
-  width: 25%;
+  width: calc(25% - 2px);
   height: 100%;
 }
 .gallery-thumbs .swiper-slide-active {

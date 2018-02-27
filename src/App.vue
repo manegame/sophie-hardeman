@@ -199,7 +199,7 @@ export default {
   },
   watch: {
     $route(to, from) {
-      console.log(to.params.slug, from.params.slug)
+      // console.log(to.params.slug, from.params.slug)
       switch (to) {
         case (to.name === 'collection' && to.params.slug === from.params.slug):
           this.ready = true

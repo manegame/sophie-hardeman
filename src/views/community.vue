@@ -3,9 +3,11 @@
     <navbar />
     <topbar />
     <div class="community__main"
+         id='mainContent'
+         @scroll='checkEls'
          v-if='main.community.length > 0'>
       <template v-for='entry in main.community'>
-        <h1 class="community__main__title"
+        <h1 class="community__main__title scrollItem"
             :id='entry.slug'
             :key='entry.id'
             :ref='entry.id'>
@@ -23,9 +25,11 @@
 import {mapState} from 'vuex'
 import navbar from '@/components/navbar'
 import topbar from '@/components/topbar'
+import dynamicScroll from '@/components/mixins/dynamicScroll'
 
 export default {
   name: 'community',
+  mixins: [dynamicScroll],
   components: {
     navbar,
     topbar
