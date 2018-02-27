@@ -75,6 +75,7 @@ export default {
     },
     $_fetchData(route) {
       // All requests for data from the server originates from this function
+      this.GET_IMPRESSUM()
       switch (route.name) {
         case ('first load'):
           this.GET_BANNER()

@@ -44,7 +44,7 @@ export default {
       // console.log('scroll to called', this.$route.params.slug)
       let el = document.getElementById(this.$route.params.slug)
       // console.log(el)
-      if (el !== null) animatedScrollTo(this.mainContent, el.offsetTop - 34, 1000)
+      if (el !== null) animatedScrollTo(this.mainContent, el.offsetTop - 34, 600)
     }
   },
   beforeDestroy() {
