@@ -180,6 +180,10 @@ export default {
   float: left;
   padding-left: 20px;
 
+  @include screen-size('medium') {
+    width: calc(4/14 * 100%);
+  }
+
   &__head {
     color: $blue;
   }

@@ -19,6 +19,10 @@
     overflow: scroll;
     @include hide-scroll;
     padding-top: $topbar-height + 20px;
+
+    @include screen-size('medium') {
+      width: calc(10/14 * 100%);
+    }
   }
 }
 

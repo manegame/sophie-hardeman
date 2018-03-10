@@ -205,6 +205,10 @@ export default {
         width: $left-col-width;
         float: left;
 
+        @include screen-size('medium') {
+          width: calc(2/3 * 450px);
+        }
+
         .swiper-button-next {
           width: 20px;
           height: 20px;
@@ -332,6 +336,10 @@ embed {
 .gallery-top {
   height: $left-col-width * 1.5;
   width: 100%;
+
+  @include screen-size('medium') {
+    height: 450px;
+  }
 
   .swiper-slide {
     background-size: cover;
