@@ -12,6 +12,8 @@ const stockists = () => import('@/views/stockists')
 const events = () => import('@/views/events')
 const impressum = () => import('@/views/impressum')
 const community = () => import('@/views/community')
+// TESTING
+const shop = () => import('@/views/shop-beta')
 
 Vue.use(Router)
 
@@ -76,6 +78,11 @@ export default new Router({
       path: '/community/:slug',
       name: 'community',
       component: community
+    },
+    {
+      path: '/shop',
+      name: 'shop beta',
+      component: shop
     }
   ]
 })

@@ -67,7 +67,7 @@ export default {
       float: right;
       width: calc(100% - #{$left-col-width} - 20px);
       height: 100%;
-      padding: 0 20px;
+      padding: 0 20px 0 25px;
       margin-right: 20px;
 
       &__title {

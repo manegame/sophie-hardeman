@@ -260,7 +260,6 @@ export default {
         width: 100%;
         height: 0;
         padding-bottom: 56.25%;
-        background: $blue;
       }
     }
 
@@ -288,7 +287,7 @@ export default {
         display: block;
         position: fixed;
         left: calc(100% - #{$left-col-width * 1.5});
-        padding: 0 20px;
+        padding: 0 20px 0 25px;
         font-size: $font-size-s;
         line-height: $line-height-s;
 

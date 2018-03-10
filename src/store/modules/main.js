@@ -1,5 +1,6 @@
 import api from '../../service/wp'
 import ow from '../../service/open_weather'
+import bc from '../../service/bigcartel'
 import * as actionTypes from '../actionTypes'
 import * as mutationTypes from '../mutationTypes'
 
@@ -31,11 +32,14 @@ const state = {
   garments: [],
   garment_categories: [],
   weather: emptyWeather,
-  //
   community: [],
   impressum: [],
   single_impressum: [],
-  random_images: {}
+  random_images: {},
+  big_cartel: {
+    shop: {},
+    products: []
+  }
 }
 
 const actions = {
@@ -108,6 +112,9 @@ const actions = {
   },
   async [actionTypes.GET_WEATHER]({commit, state}) {
     commit(mutationTypes.SET_WEATHER, await ow.getWeather())
+  },
+  async [actionTypes.GET_BIG_CARTEL]({commit, state}) {
+    commit(mutationTypes.SET_BIG_CARTEL, await bc.getProducts())
   }
 }
 
@@ -188,8 +195,10 @@ const mutations = {
   [mutationTypes.SET_WEATHER](state, data) {
     if (state.weather === emptyWeather) {
       state.weather = data
-    } else {
     }
+  },
+  [mutationTypes.SET_BIG_CARTEL](state, data) {
+    state.big_cartel.products = data
   }
 }
 

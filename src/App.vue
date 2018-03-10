@@ -63,7 +63,8 @@ export default {
       'GET_RANDOM_IMAGES',
       'GET_COMMUNITY',
       'GET_IMPRESSUM',
-      'GET_SINGLE_IMPRESSUM'
+      'GET_SINGLE_IMPRESSUM',
+      'GET_BIG_CARTEL'
     ]),
     $_setMetaTags(meta = {}) {
       this.meta.title = meta.title || this.meta.defaults.title
@@ -160,6 +161,10 @@ export default {
         case ('impressum'):
           this.GET_RANDOM_IMAGES()
           this.GET_SINGLE_IMPRESSUM(route.params.slug)
+          this.ready = true
+          break
+        case ('shop beta'):
+          this.GET_BIG_CARTEL()
           this.ready = true
           break
       }
