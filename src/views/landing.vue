@@ -187,6 +187,27 @@
                          :src='main.community[0].acf.image.sizes["s-h-medium"]' />
                          <sup v-for='label in main.community[0].acf.labels'>{{label.post_title}}</sup>
           </section>
+          <!-- - -->
+          <!-- - -->
+          <!-- - -->
+          <!-- Diary -->
+          <section v-if='main.diary.length > 0'
+                   class="landing__column_middle__sections__diary">
+            <router-link :to='{name: "diary", params: {slug: main.diary[0].slug}}'
+                          tag='h2' >
+                          diary
+            </router-link>
+            <ul>
+              <router-link tag='li'
+                           v-for='e in main.diary'
+                           :key='e.id'
+                           :to='{name: "diary", params: {slug: e.slug}}'>
+                           <span>{{e.title.rendered}}
+                             <sup v-for='label in e.acf.labels'>{{label.post_title}}</sup>
+                           </span>
+              </router-link>
+            </ul>
+          </section>
         </div>
       </div>
       <!-- - -->
@@ -278,6 +299,14 @@ export default {
   margin: $margin-top auto 0;
   height: 100%;
 
+  @include screen-size('medium') {
+    width: 800px;
+  }
+
+  @include screen-size('small') {
+    width: 100%;
+  }
+
   &__column {
     height: calc(100vh - #{$topbar-height + $margin-top});
   }
@@ -293,6 +322,15 @@ export default {
     border-right: $border;
     text-align: center;
     padding: 10px 20px 40px;
+    overflow: hidden;
+
+    @include screen-size('medium') {
+      width: calc(4/14 * 100%)
+    }
+
+    @include screen-size('small') {
+      width: 100%;
+    }
 
     &__title {
       margin-bottom: 20px;
@@ -343,16 +381,32 @@ export default {
     width: calc(9/14 * 100%);
     display: block;
     height: 100%;
-    padding: 0 20px;
+    padding: 0 20px 20px;
     position: relative;
     overflow: scroll;
     @include hide-scroll;
     float: left;
 
+    @include screen-size('medium') {
+      width: calc(10/14 * 100%);
+    }
+
+    @include screen-size('small') {
+      width: 100%;
+    }
+
     &__banner {
       width: 100%;
       height: $banner-height;
       margin-bottom: $line-height * 2;
+
+      @include screen-size('medium') {
+        height: 120px;
+      }
+
+      @include screen-size('small') {
+        display: none;
+      }
 
       img {
         object-fit: cover;
@@ -383,6 +437,14 @@ export default {
           &__image {
             width: 100%;
             cursor: pointer;
+          }
+        }
+
+        &__diary {
+          display: none;
+
+          @include screen-size('medium') {
+            display: initial;
           }
         }
 
@@ -417,6 +479,10 @@ export default {
     color: $blue;
     padding: 10px 20px 40px;
     justify-content: space-between;
+
+    @include screen-size('medium') {
+      display: none;
+    }
 
     &__head {
       cursor: pointer;

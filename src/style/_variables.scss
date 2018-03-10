@@ -23,8 +23,8 @@ $margin-top: 20px;
 $footer-height: 40px;
 /* Breakpoints */
 $breakpoints: (
-  'small': (max-width: 900px),
-  'medium': (max-width: 1000px),
+  'small': (max-width: 800px),
+  'medium': (max-width: 1280px),
   'large': (max-width: 1600px),
   'short': (max-height: 700px)
 );
