@@ -145,7 +145,7 @@ export default {
         slideToClickedSlide: true,
         centeredSlides: false,
         virtualTranslate: false,
-        slidesOffsetAfter: 350 * 0.75,
+        slidesOffsetAfter: this.swiperWidth,
         on: {
           slideChange: () => {
             this.galleryThumbs.navigation.update()
@@ -171,6 +171,10 @@ export default {
     ...mapState(['main']),
     embedCode() {
       return embed(this.main.single.videos[0].acf.video, {query: {portrait: 0, color: '00f', quality: '1080p'}, attr: {class: 'inner'}})
+    },
+    swiperWidth() {
+      if (window.innerWidth > 1280) return 350 * 0.75
+      else return 300 * 0.75
     }
   },
   watch: {
@@ -206,7 +210,7 @@ export default {
         float: left;
 
         @include screen-size('medium') {
-          width: calc(2/3 * 450px);
+          width: 300px;
         }
 
         .swiper-button-next {
@@ -351,6 +355,10 @@ embed {
   height: 140px;
   box-sizing: border-box;
   padding: 4px 0 0;
+
+  @include screen-size ('medium') {
+    height: 120px;
+  }
 }
 .gallery-thumbs .swiper-slide {
   width: calc(25% - 2px);

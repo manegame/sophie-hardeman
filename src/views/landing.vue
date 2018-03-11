@@ -4,40 +4,42 @@
       <!-- - -->
       <!-- - -->
       <!-- LEFT -->
-      <div class="landing__column_left landing__column">
-        <h1 class="landing__column_left__title">
-          hardeman
-        </h1>
-        <h4 class="landing__column_left__subtitle">
-          <span class="landing__column_left__subtitle__highlight">amsterdam based</span> <br/>
-          <span class="landing__column_left__subtitle__highlight">denim brand</span>
-        </h4>
-        <section class="landing__column_left__social">
-          <a class="landing__column_left__social__item socicon-facebook"
-             href='https://www.facebook.com/hardemanonline/'
-             target='_blank'></a>
-          <a class="landing__column_left__social__item socicon-instagram"
-             href='https://www.instagram.com/hardeman_'
-             target='_blank'></a>
-        </section>
-        <ul class="landing__column_left__links"
-            v-if='main.collections.length > 0 && main.stockists.length > 0 && main.community.length > 0 && main.videos.length > 0'>
-          <router-link tag='li'
-                       class="landing__column_left__links__item"
-                       :to="{name: 'collection', params: { slug: emphasizedCollection, section: 'lookbook'}}">collections</router-link>
-          <router-link tag='li'
-                       class="landing__column_left__links__item"
-                       :to="{name: 'hardeman tv', params: { slug: main.videos[0].slug}}">hardeman tv</router-link>
-          <router-link tag='li'
-                       class="landing__column_left__links__item"
-                       :to="{name: 'sale', params: { slug: 'all' }}">for sale</router-link>
-          <router-link tag='li'
-                       class="landing__column_left__links__item"
-                       :to="{name: 'stockists', params: { slug: main.stockists[0].slug}}">stockists</router-link>
-          <router-link tag='li'
-                       class="landing__column_left__links__item"
-                       :to="{name: 'community', params: { slug: main.community[0].slug}}">community</router-link>
-        </ul>
+      <div class="landing__column_left landing__column"
+           :class="{'landing__column_left--collapse': collapse}"
+           @click='collapse = !collapse'>
+        <div class="landing__column_left__head">
+          <h1 class="landing__column_left__head__title">hardeman</h1>
+          <h4 class="landing__column_left__head__subtitle">
+            <span class="landing__column_left__head__subtitle__highlight">amsterdam based</span> <br/>
+            <span class="landing__column_left__head__subtitle__highlight">denim brand</span>
+          </h4>
+          <section class="landing__column_left__head__social">
+            <a class="landing__column_left__head__social__item socicon-facebook"
+               href='https://www.facebook.com/hardemanonline/'
+               target='_blank'></a>
+            <a class="landing__column_left__head__social__item socicon-instagram"
+               href='https://www.instagram.com/hardeman_'
+               target='_blank'></a>
+          </section>
+          <ul class="landing__column_left__head__links"
+              v-if='main.collections.length > 0 && main.stockists.length > 0 && main.community.length > 0 && main.videos.length > 0'>
+            <router-link tag='li'
+                         class="landing__column_left__head__links__item"
+                         :to="{name: 'collection', params: { slug: emphasizedCollection, section: 'lookbook'}}">collections</router-link>
+            <router-link tag='li'
+                         class="landing__column_left__head__links__item"
+                         :to="{name: 'hardeman tv', params: { slug: main.videos[0].slug}}">hardeman tv</router-link>
+            <router-link tag='li'
+                         class="landing__column_left__head__links__item"
+                         :to="{name: 'sale', params: { slug: 'all' }}">for sale</router-link>
+            <router-link tag='li'
+                         class="landing__column_left__head__links__item"
+                         :to="{name: 'stockists', params: { slug: main.stockists[0].slug}}">stockists</router-link>
+            <router-link tag='li'
+                         class="landing__column_left__head__links__item"
+                         :to="{name: 'community', params: { slug: main.community[0].slug}}">community</router-link>
+          </ul>
+        </div>
         <div class="landing__column_left__toe">
           <weather />
           <calendar />
@@ -47,7 +49,8 @@
       <!-- - -->
       <!-- - -->
       <!-- MIDDLE -->
-      <div class="landing__column_middle landing__column">
+      <div class="landing__column_middle landing__column"
+           @scroll='handleScroll'>
         <!-- BANNER -->
         <div v-if='main.banner.sizes'
              class="landing__column_middle__banner">
@@ -259,6 +262,7 @@ export default {
   props: [],
   data() {
     return {
+      collapse: false,
       bannerLink: ''
     }
   },
@@ -274,6 +278,12 @@ export default {
     })
   },
   methods: {
+    handleScroll(event) {
+      if (window.innerWidth < 800) {
+        if (event.target.scrollTop > 20) this.collapse = true
+        else this.collapse = false
+      }
+    },
     setBannerLink() {
       if (this.main.banner !== undefined) {
         let url = this.main.banner.link
@@ -304,7 +314,7 @@ export default {
   }
 
   @include screen-size('small') {
-    width: 100%;
+    width: calc(100% - 40px);
   }
 
   &__column {
@@ -321,8 +331,10 @@ export default {
     border-left: $border;
     border-right: $border;
     text-align: center;
-    padding: 10px 20px 40px;
-    overflow: hidden;
+    padding: 10px 20px 0;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
 
     @include screen-size('medium') {
       width: calc(4/14 * 100%)
@@ -330,34 +342,59 @@ export default {
 
     @include screen-size('small') {
       width: 100%;
-    }
+      height: 160px;
+      border: $border;
+      padding: 0 20px;
+      margin-bottom: 0;
+      z-index: 90;
+      overflow: hidden;
+      transition: height 0.25s linear;
+      -moz-transition: height 0.25s linear;
+      -webkit-transition: height 0.25s linear;
 
-    &__title {
-      margin-bottom: 20px;
-    }
-
-    &__subtitle {
-      font-weight: normal;
-      margin-bottom: 20px;
-
-      &__highlight {
-        background: $yellow;
-        padding: 2px 20px;
+      &--collapse {
+        height: 50px;
       }
     }
 
-    &__social {
-      margin: 0 10px 40px;
-      font-size: 20px;
-    }
+    &__head {
+      background: $grey;
 
-    &__links {
-      margin-bottom: 20px;
+      &__title {
+        margin-bottom: 20px;
+      }
 
-      &__item {
-        font-size: $font-size-s;
-        line-height: $line-height-s;
-        border-bottom: none;
+      &__subtitle {
+        font-weight: normal;
+        margin-bottom: 20px;
+
+        &__highlight {
+          background: $yellow;
+          padding: 2px 20px;
+        }
+      }
+
+      &__social {
+        margin: 0 10px 40px;
+        font-size: 20px;
+
+        @include screen-size('small') {
+          margin-bottom: 20px;
+        }
+      }
+
+      &__links {
+        margin-bottom: 20px;
+
+        @include screen-size('small') {
+          display: none;
+        }
+
+        &__item {
+          font-size: $font-size-s;
+          line-height: $line-height-s;
+          border-bottom: none;
+        }
       }
     }
 
@@ -370,10 +407,15 @@ export default {
 
     &__toe {
       background: $grey;
-      position: absolute;
-      height: auto;
-      width: calc(100% - 40px);
-      bottom: 0;
+      overflow-y: scroll;
+
+      @include screen-size('small') {
+        display: none;
+      }
+
+      @include screen-size('short') {
+        display: none;
+      }
     }
   }
 
@@ -393,6 +435,9 @@ export default {
 
     @include screen-size('small') {
       width: 100%;
+      height: calc(100% - 50px); /* subtracting the banner height for full scroll*/
+      overflow: scroll;
+      padding: 40px 10px 60px;
     }
 
     &__banner {
@@ -420,6 +465,11 @@ export default {
       column-count: 2;
       column-gap: 40px;
       @include hide-scroll;
+
+      @include screen-size('small') {
+        column-count: 1;
+        column-gap: 0;
+      }
 
         &__collections,
         &__about,

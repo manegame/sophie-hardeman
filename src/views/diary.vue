@@ -6,15 +6,15 @@
          @scroll='checkEls'
          id='mainContent'>
          <template v-for='entry in main.diary'>
-           <h1 class="diary__main__title scrollItem"
-               :id='entry.slug'
-               :key='entry.id'
-               :ref='entry.id'>
-                 {{entry.title.rendered}}
-           </h1>
            <img class="diary__main__image"
                 v-if='entry.acf.image'
+                :ref='entry.id'
+                :id='entry.slug'
                 :src='entry.acf.image.sizes["s-h-large"]'/>
+           <p class="diary__main__title scrollItem"
+               :key='entry.id'>
+                 {{entry.title.rendered}}
+           </p>
          </template>
     </div>
   </div>

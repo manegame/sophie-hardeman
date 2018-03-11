@@ -69,6 +69,10 @@ export default {
   right: 20px;
   top: 0;
 
+  @include screen-size('medium') {
+    width: calc(10/14 * 100%);
+  }
+
   &__back {
     flex-grow: 10;
     color: $black;

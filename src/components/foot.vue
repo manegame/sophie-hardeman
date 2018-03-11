@@ -44,6 +44,9 @@ export default {
   text-align: center;
   position: absolute;
   bottom: 0;
+  white-space: nowrap;
+  overflow-x: scroll;
+  overflow-y: hidden;
 
   &__link {
     margin: 0 10px;
