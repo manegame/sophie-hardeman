@@ -5,23 +5,26 @@
   height: 100%;
   margin-top: $margin-top;
   position: relative;
-  // display: grid;
-  // grid-template: 'left main'
-  //                / 3fr 11fr;
-  // grid-gap: 20px;
   overflow: hidden;
 
   &__main {
+    $padding-top: $topbar-height + 20px;
+
     width: calc(11/14 * 100%);
     position: relative;
     float: left;
     height: 100%;
     overflow: scroll;
     @include hide-scroll;
-    padding-top: $topbar-height + 20px;
+    padding-top: $padding-top;
 
     @include screen-size('medium') {
       width: calc(10/14 * 100%);
+    }
+
+    @include screen-size('small') {
+      width: 100%;
+      padding: $padding-top 20px;
     }
   }
 }
@@ -35,6 +38,11 @@
   line-height: $line-height-s;
   padding: 0 20px 0 25px;
   float: left;
+
+  @include screen-size('small') {
+    width: 100%;
+    padding: 20px 0 0;
+  }
 }
 
 ///

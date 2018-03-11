@@ -73,6 +73,10 @@ export default {
     width: calc(10/14 * 100%);
   }
 
+  @include screen-size('small') {
+    width: calc(100% - 40px);
+  }
+
   &__back {
     flex-grow: 10;
     color: $black;
@@ -111,6 +115,14 @@ export default {
     color: $blue;
     text-decoration: underline;
     cursor: pointer;
+  }
+
+  &__recommend,
+  &__reply,
+  &__print {
+    @include screen-size('small') {
+      display: none;
+    }
   }
 }
 

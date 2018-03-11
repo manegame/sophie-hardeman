@@ -7,7 +7,8 @@
       <div  v-if='$route.params.section === "lookbook"'
             class="collection__main__lookbook">
             <!-- CAROUSEL -->
-            <div class="collection__main__lookbook__carousel">
+            <div class="collection__main__lookbook__carousel"
+                 id='swiper_container'>
               <!-- SWIPER -->
               <template v-if='main.single.garments.length > 0'>
                 <div class="swiper-container gallery-top">
@@ -173,8 +174,8 @@ export default {
       return embed(this.main.single.videos[0].acf.video, {query: {portrait: 0, color: '00f', quality: '1080p'}, attr: {class: 'inner'}})
     },
     swiperWidth() {
-      if (window.innerWidth > 1280) return 350 * 0.75
-      else return 300 * 0.75
+      let el = document.getElementById('swiper_container')
+      return el.clientWidth * 0.75
     }
   },
   watch: {
@@ -199,10 +200,18 @@ export default {
     position: relative;
     clear: none;
 
+    @include screen-size('small') {
+      overflow-y: scroll;
+    }
+
     &__lookbook {
       height: 100%;
       display: inline-block;
-      flex-flow: row nowrap;
+
+      @include screen-size('small') {
+        height: auto;
+        width: 100%;
+      }
 
       &__carousel {
         height: 100%;
@@ -211,6 +220,10 @@ export default {
 
         @include screen-size('medium') {
           width: 300px;
+        }
+
+        @include screen-size('small') {
+          width: 100%;
         }
 
         .swiper-button-next {
@@ -240,6 +253,10 @@ export default {
         .bottom {
           position: absolute;
           bottom: 7px;
+
+          @include screen-size('small') {
+            position: relative;
+          }
         }
 
         &__title,

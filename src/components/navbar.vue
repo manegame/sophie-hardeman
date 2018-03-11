@@ -184,6 +184,10 @@ export default {
     width: calc(4/14 * 100%);
   }
 
+  @include screen-size('small') {
+    display: none;
+  }
+
   &__head {
     color: $blue;
   }

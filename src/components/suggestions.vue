@@ -63,6 +63,10 @@ export default {
   border: $border-light;
   margin-bottom: 40px;
 
+  @include screen-size('small') {
+    width: 100%;
+  }
+
   &__not {
     @include small-list;
     &__item {
