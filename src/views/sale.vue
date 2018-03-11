@@ -87,6 +87,10 @@ export default {
     flex-flow: row wrap;
     justify-content: flex-start;
 
+    @include screen-size('small') {
+      justify-content: center;
+    }
+
     &::after {
       content: "";
       flex: auto;
@@ -102,6 +106,10 @@ export default {
       border: 1px solid $grey-darker;
       overflow: hidden;
       cursor: pointer;
+
+      @include screen-size('small') {
+        margin-right: 0;
+      }
 
       &__price-tag {
         z-index: 7;

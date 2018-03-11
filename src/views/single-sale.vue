@@ -30,6 +30,9 @@
                   v-html='main.single_garment.acf.details_and_sizing' />
              </template>
            </div>
+           <div class="single_sale__main__left__payment">
+             –– pick a size and payment options ––
+           </div>
          </div>
          <div class="single_sale__main__right">
            <aboutSophie />
@@ -71,8 +74,13 @@ export default {
       margin-bottom: 10px;
       color: $black;
 
+      @include screen-size('small') {
+        width: 100%;
+      }
+
       &--season {
         color: $grey-darker;
+        display: inline;
 
         &::before {
           content: '\2605';
@@ -84,8 +92,14 @@ export default {
 
     &__left {
       position: relative;
+      clear: none;
       float: left;
       width: calc(100% - #{$left-col-width});
+
+      @include screen-size('small') {
+        width: 100%;
+        margin-bottom: 40px;
+      }
 
       &__image {
         width: 100%;
@@ -97,6 +111,7 @@ export default {
 
       &__text {
         width: 50%;
+        float: left;
         font-size: $font-size-s;
         line-height: $line-height-s;
 
@@ -107,6 +122,17 @@ export default {
         &--main {
           margin-bottom: $line-height-s;
         }
+
+        @include screen-size('small') {
+          width: 100%;
+        }
+      }
+
+      &__payment {
+        font-size: $font-size-s;
+        line-height: $line-height-s;
+        width: 50%;
+        float: left;
       }
     }
 
@@ -115,6 +141,12 @@ export default {
       width: $left-col-width;
       position: relative;
       float: right;
+
+      @include screen-size('small') {
+        padding: 0;
+        float: left;
+        width: 100%;
+      }
     }
   }
 }

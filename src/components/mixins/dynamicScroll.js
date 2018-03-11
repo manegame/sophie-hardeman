@@ -11,8 +11,8 @@ export default {
     }
   },
   computed: {
-    mainContent() { return document.getElementById('mainContent') },
-    scrollItems() { return document.querySelectorAll('.scrollItem') }
+    mainContent() { return document.getElementById('mainContent') }
+    // scrollItems() { return document.querySelectorAll('.scrollItem') }
   },
   updated() {
     this.$nextTick(() => {
@@ -23,9 +23,12 @@ export default {
   methods: {
     checkEls() {
       let els = []
-      this.scrollItems.forEach(i => {
+      document.querySelectorAll('.scrollItem').forEach(i => {
         if (this.elementInViewport(i)) els.push(i)
       })
+      // this.scrollItems.forEach(i => {
+      //   if (this.elementInViewport(i)) els.push(i)
+      // })
       this.changeRouteByScroll(els[0])
     },
     elementInViewport(el) {
@@ -44,7 +47,7 @@ export default {
       // console.log('scroll to called', this.$route.params.slug)
       let el = document.getElementById(this.$route.params.slug)
       // console.log(el)
-      if (el !== null) animatedScrollTo(this.mainContent, el.offsetTop - 34, 600)
+      if (el !== null) animatedScrollTo(this.mainContent, el.offsetTop - 40, 600)
     }
   },
   beforeDestroy() {

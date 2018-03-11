@@ -6,13 +6,13 @@
          @scroll='checkEls'
          id='mainContent'>
          <template v-for='entry in main.diary'>
-           <img class="diary__main__image"
+           <img class="diary__main__image scrollItem"
                 v-if='entry.acf.image'
-                :ref='entry.id'
                 :id='entry.slug'
+                :key='entry.id'
+                :ref='entry.id'
                 :src='entry.acf.image.sizes["s-h-large"]'/>
-           <p class="diary__main__title scrollItem"
-               :key='entry.id'>
+           <p class="diary__main__title">
                  {{entry.title.rendered}}
            </p>
          </template>
@@ -52,16 +52,16 @@ export default {
     padding-bottom: 80px;
 
     &__title {
-      font-size: 26px;
-      line-height: 42px;
-      color: $black;
+      font-size: $font-size;
+      line-height: $line-height;
+      color: $blue;
     }
 
     &__image {
       max-height: 75vh;
       width: auto;
       max-width: 100%;
-      margin-bottom: $margin-top;
+      margin-top: $margin-top;
     }
   }
 }

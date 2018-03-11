@@ -57,6 +57,11 @@ export default {
       height: 100%;
       float: left;
 
+      @include screen-size('small') {
+        width: 100%;
+        height: auto;
+      }
+
       &__bio_profile_pic {
         width: 100%;
       }
@@ -69,6 +74,11 @@ export default {
       height: 100%;
       padding: 0 20px 0 25px;
       margin-right: 20px;
+
+      @include screen-size('small') {
+        padding-top: 20px;
+        width: 100%;
+      }
 
       &__title {
         color: $black;

@@ -46,12 +46,21 @@ export default {
   justify-content: flex-start;
   flex-flow: row wrap;
 
+  @include screen-size('small') {
+    padding-top: 20px;
+    width: 100%;
+  }
+
   &__pic {
     width: 100px;
     height: 100px;
     margin-left: 20px;
     border-radius: 50%;
     object-fit: cover;
+
+    @include screen-size('small') {
+      margin: 0;
+    };
   }
 
   &__text {

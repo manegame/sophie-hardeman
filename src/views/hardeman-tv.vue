@@ -48,6 +48,10 @@ export default {
 
     &__video {
       width: calc(100% - 20px);
+
+      @include screen-size('small') {
+        width: 100%;
+      }
     }
   }
 }

@@ -50,6 +50,10 @@ export default {
       width: $left-col-width;
       float: left;
 
+      @include screen-size('small') {
+        width: 100%;
+      }
+
       &__image {
         width: 100%;
         height: auto;
@@ -58,6 +62,7 @@ export default {
 
     &__right {
       @include right-col;
+
       &__title {
         color: $black;
       }

@@ -74,6 +74,10 @@ export default {
       overflow: hidden;
       cursor: pointer;
 
+      @include screen-size('small') {
+        margin-right: 0;
+      }
+
       &__price-tag {
         z-index: 7;
         background: $white;
