@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueResource from 'vue-resource'
 
-const API_ROOT = 'http://api.openweathermap.org/data/2.5/weather'
+const API_ROOT = 'https://api.openweathermap.org/data/2.5/weather'
 const API_KEY = 'c6950d40c0e7f784238f74eacdb29074'
 const AMSTERDAM_ZUIDOOST = '6544881'
 
