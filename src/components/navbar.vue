@@ -100,9 +100,9 @@
       <ul class="nav">
         <template v-for='entry in main.diary'>
           <router-link class="nav__item"
-                       :class='{"nav__item--emphasis": $route.params.slug === entry.slug && $route.params.noSnap === true}'
+                       :class='{"nav__item--emphasis": $route.params.slug === entry.slug && $route.params.noScrollTo === true}'
                        tag='li'
-                       :to='{name: "diary", params: {slug: entry.slug}}'>
+                       :to='{name: "diary", params: {slug: entry.slug, scrollTo: true}}'>
                        {{entry.title.rendered}} <sup v-for='label in entry.acf.labels'>{{label.post_title}}</sup>
                        </router-link>
         </template>

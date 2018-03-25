@@ -1,6 +1,5 @@
 import api from '../../service/wp'
 import ow from '../../service/open_weather'
-import bc from '../../service/bigcartel'
 import * as actionTypes from '../actionTypes'
 import * as mutationTypes from '../mutationTypes'
 
@@ -112,9 +111,6 @@ const actions = {
   },
   async [actionTypes.GET_WEATHER]({commit, state}) {
     commit(mutationTypes.SET_WEATHER, await ow.getWeather())
-  },
-  async [actionTypes.GET_BIG_CARTEL]({commit, state}) {
-    commit(mutationTypes.SET_BIG_CARTEL, await bc.getProducts())
   }
 }
 
@@ -196,9 +192,6 @@ const mutations = {
     if (state.weather === emptyWeather) {
       state.weather = data
     }
-  },
-  [mutationTypes.SET_BIG_CARTEL](state, data) {
-    state.big_cartel.products = data
   }
 }
 

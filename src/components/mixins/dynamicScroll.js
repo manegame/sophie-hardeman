@@ -26,10 +26,7 @@ export default {
       document.querySelectorAll('.scrollItem').forEach(i => {
         if (this.elementInViewport(i)) els.push(i)
       })
-      // this.scrollItems.forEach(i => {
-      //   if (this.elementInViewport(i)) els.push(i)
-      // })
-      this.changeRouteByScroll(els[0])
+      if (els.length > 0) this.changeRouteByScroll(els[0])
     },
     elementInViewport(el) {
       var rect = el.getBoundingClientRect()
@@ -41,7 +38,7 @@ export default {
       )
     },
     changeRouteByScroll(el) {
-      this.$router.push({name: this.$route.name, params: {slug: el.id, noSnap: true}})
+      this.$router.push({name: this.$route.name, params: {slug: el.id, noScrollTo: true}})
     },
     scrollToElement() {
       // console.log('scroll to called', this.$route.params.slug)
@@ -55,11 +52,9 @@ export default {
   },
   watch: {
     $route(to, from) {
-      // console.log('...', to.params.noSnap)
-      if (to.params.noSnap === true) {
-        // console.log('. ')
+      if (to.params.noScrollTo === true) {
+        console.log('. ')
       } else {
-        // console.log('snap!')
         this.scrollToElement()
       }
     }
