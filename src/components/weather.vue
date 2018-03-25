@@ -4,7 +4,7 @@
     <div class="weather__top">
       <p class="weather__top__title" v-html='main.weather.name'/>
       <img class="weather__top__icon"
-           :src='"http://openweathermap.org/img/w/" + main.weather.weather[0].icon + ".png"' />
+           :src='"https://openweathermap.org/img/w/" + main.weather.weather[0].icon + ".png"' />
       <div class="weather__top__info">
         <h1 class="weather__top__temp">{{Math.round(main.weather.main.temp) | temperature}}</h1>
         <p class="weather__top__sub" v-html='main.weather.weather[0].description'/>
