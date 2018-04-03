@@ -10,8 +10,12 @@
                      :key='item.id'
                      :to="{ name: 'single sale', params: {slug: $route.params.slug, item: item.slug}}"
                      class="sale__main__item" >
-               <span class="sale__main__item__price-tag">
-                 T.B.A.
+               <span class="sale__main__item__price-tag" v-if='!item.acf.linked_product'>
+                 Not for sale ;-
+               </span>
+               <span class="sale__main__item__price-tag" v-else>
+                 <!-- get the product by linked id and display price -->
+                 {{productById(item.acf.linked_product[0].ID).price}}
                </span>
                <img class="sale__main__item__image"
                     :class='{"sale__main__item__image--emphasis": item.acf.emphasis}'
@@ -35,8 +39,12 @@
                      :key='item.id'
                      :to="{ name: 'single sale', params: {slug: $route.params.slug, item: item.slug}}"
                      class="sale__main__item" >
-               <span class="sale__main__item__price-tag">
-                 T.B.A.
+               <span class="sale__main__item__price-tag" v-if='!item.acf.linked_product'>
+                 Not for sale ;-
+               </span>
+               <span class="sale__main__item__price-tag" v-else>
+                 <!-- get the product by linked id and display price -->
+                 {{productById(item.acf.linked_product[0].ID).price}}
                </span>
                <img class="sale__main__item__image"
                     :class='{"sale__main__item__image--emphasis": item.acf.emphasis}'
@@ -58,7 +66,7 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import {mapState, mapGetters} from 'vuex'
 import navbar from '@/components/navbar'
 import topbar from '@/components/topbar'
 
@@ -69,7 +77,8 @@ export default {
     topbar
   },
   computed: {
-    ...mapState(['main'])
+    ...mapState(['main']),
+    ...mapGetters(['productById'])
   }
 }
 </script>

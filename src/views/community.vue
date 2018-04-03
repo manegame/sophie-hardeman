@@ -14,6 +14,7 @@
               {{entry.title.rendered}}
         </h1>
         <img class="community__main__image"
+             :key='"img"+entry.id'
              v-if='entry.acf.image'
              :src='entry.acf.image.sizes["s-h-large"]'/>
       </template>

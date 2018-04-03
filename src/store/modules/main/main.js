@@ -1,7 +1,7 @@
-import api from '../../service/wp'
-import ow from '../../service/open_weather'
-import * as actionTypes from '../actionTypes'
-import * as mutationTypes from '../mutationTypes'
+import api from '../../../service/wp'
+import ow from '../../../service/open_weather'
+import * as actionTypes from './actionTypes'
+import * as mutationTypes from './mutationTypes'
 
 const emptySingle = {
   title: '',
