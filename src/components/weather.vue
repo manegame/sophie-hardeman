@@ -90,6 +90,10 @@ export default {
       font-weight: bold;
       font-size: 26px;
       line-height: 26px;
+
+      @include screen-size('medium') {
+        text-align: right;
+      }
     }
 
     &__icon {
@@ -97,11 +101,21 @@ export default {
       margin-right: 0;
       filter: blur(2px);
       height: auto;
+
+      @include screen-size('medium') {
+        width: 100px;
+        margin: 0 auto;
+      }
     }
 
     &__info {
       margin-left: 20px;
       width: 80px;
+
+      @include screen-size('medium') {
+        margin-left: 0;
+        width: 100%;
+      }
     }
   }
 

@@ -4,8 +4,8 @@ import * as actionTypes from './actionTypes'
 import * as mutationTypes from './mutationTypes'
 
 const emptySingle = {
-  product: '',
-  variations: ''
+  product: {},
+  variations: []
 }
 
 const emptyOrder = {
@@ -60,8 +60,11 @@ const actions = {
   async [actionTypes.GET_PRODUCT_CATEGORIES]({commit, state}) {
     commit(mutationTypes.SET_PRODUCT_CATEGORIES, await api.getProductCategories())
   },
-  async [actionTypes.GET_PRODUCT]({commit, state}, slug) {
-    commit(mutationTypes.SET_PRODUCT, await api.getProduct(slug))
+  async [actionTypes.GET_PRODUCT]({commit, state}, id) {
+    commit(mutationTypes.SET_PRODUCT, await api.getProduct(id))
+  },
+  [actionTypes.CLEAR_SINGLE_PRODUCT]({commit, state}) {
+    commit(mutationTypes.CLEAR_SINGLE_PRODUCT)
   },
   async [actionTypes.GET_PRODUCT_VARIATIONS]({commit, state}, id) {
     commit(mutationTypes.SET_PRODUCT_VARIATIONS, await api.getProductVariations(id))
@@ -115,6 +118,13 @@ const mutations = {
   [mutationTypes.SET_PRODUCT](state, data) {
     // sets a single product to the state
     state.singleProduct.product = data
+  },
+  [mutationTypes.CLEAR_SINGLE_PRODUCT](state) {
+    // clear single product
+    console.log('single clear')
+    state.singleProduct.product = {}
+    state.singleProduct.variations = []
+    console.log(state.singleProduct)
   },
   [mutationTypes.SHIPPING_LOADED](state) {
     // executes when all shipping actions have been accounted for

@@ -135,6 +135,7 @@ export default {
             this.GET_PRODUCT_CATEGORIES()
           } else {
             this.GET_GARMENT_CATEGORIES().then(() => {
+              console.log(this.$route.params.slug)
               const cat = this.main.garment_categories.filter(c => { return c.slug === this.$route.params.slug })[0]
               this.GET_GARMENTS(cat.id)
             })
@@ -142,8 +143,27 @@ export default {
           break
         case ('single sale'):
           this.GET_GARMENT_CATEGORIES()
-          this.GET_SINGLE_GARMENT(route.params.item)
+          this.GET_SINGLE_GARMENT(route.params.item).then(() => {
+            if (this.main.single_garment.acf.linked_product) {
+              // console.log('get linked product', this.main.single_garment.acf.linked_product[0].ID)
+              let id = this.main.single_garment.acf.linked_product[0].ID
+              this.GET_PRODUCT(id)
+                .then(this.GET_PRODUCT_VARIATIONS(id))
+            }
+          })
           break
+        case 'checkout':
+        this.GET_PRODUCTS()
+        this.GET_SHIPPING_ZONES()
+          .then(() => {
+            let promises = []
+            this.shop.shipping_zones.forEach((zone) => {
+              promises.push(this.GET_SHIPPING_ZONE_LOCATIONS(zone.id))
+              promises.push(this.GET_SHIPPING_ZONE_METHODS(zone.id))
+            })
+            return Promise.all(promises)
+          }).then(this.SHIPPING_LOADED)
+        break
         case ('hardeman tv'):
           this.GET_VIDEOS().then(() => {
             let vid = this.main.videos.filter(v => { return v.slug === route.params.slug })[0]

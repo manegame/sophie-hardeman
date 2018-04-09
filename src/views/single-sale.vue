@@ -31,7 +31,24 @@
              </template>
            </div>
            <div class="single_sale__main__left__payment">
-             –– pick a size and payment options ––
+            <!-- PRODUCT VARIABLE -->
+            <template v-if='shop.singleProduct.product.attributes'>
+              <div class="single_sale__main__left__payment__form"
+                   v-for='attribute in shop.singleProduct.product.attributes'
+                   :key='attribute.id'>
+                <form v-if='attribute.name !== ""'
+                      @submit.prevent='purchase'>
+                  <select v-model='selected'>
+                    <option disabled value=''>Have your pick</option>
+                    <option v-for='option in attribute.options'
+                            :key='option.id'
+                            :value='option'
+                            v-html='option'/>
+                  </select>
+                  <input type='submit' value='Purchase' />
+                </form>
+              </div>
+            </template>
            </div>
          </div>
          <div class="single_sale__main__right">
@@ -42,7 +59,7 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import {mapState, mapActions, mapGetters} from 'vuex'
 import navbar from '@/components/navbar'
 import topbar from '@/components/topbar'
 import aboutSophie from '@/components/about-sophie'
@@ -54,8 +71,47 @@ export default {
     topbar,
     aboutSophie
   },
+  data() {
+    return {
+      selected: ''
+    }
+  },
   computed: {
-    ...mapState(['main'])
+    ...mapState(['main', 'shop']),
+    ...mapGetters(['productVariationByOption']),
+    variableProduct() {
+      if (this.shop.singleProduct.variations.length > 0) return true
+      else return false
+    }
+  },
+  methods: {
+    ...mapActions([
+      'ADD_TO_CART',
+      'CLEAR_SINGLE_PRODUCT']),
+    addToCart() {
+      if (this.variableProduct === true) {
+        const variation = this.productVariationByOption(this.selected)
+        console.log(variation)
+        this.ADD_TO_CART({
+          product: this.shop.singleProduct.product,
+          variation: variation
+        })
+      } else {
+        console.log('add to cart simple')
+        this.ADD_TO_CART({ product: this.shop.singleProduct.product })
+      }
+    },
+    purchase() {
+      if (this.variableProduct && this.selected !== '') {
+        this.addToCart()
+        this.$router.push({name: 'checkout'})
+      } else {
+        window.alert('please choose an option first')
+      }
+    }
+  },
+  destroyed() {
+    this.CLEAR_SINGLE_PRODUCT()
   }
 }
 </script>
@@ -96,8 +152,8 @@ export default {
       float: left;
       width: calc(100% - #{$left-col-width});
 
-      @include screen-size('small') {
-        width: 100%;
+      @include screen-size('medium') {
+        width: calc(100% - 20px);
         margin-bottom: 40px;
       }
 
@@ -132,7 +188,7 @@ export default {
         font-size: $font-size-s;
         line-height: $line-height-s;
         width: 50%;
-        float: left;
+        float: right;
       }
     }
 

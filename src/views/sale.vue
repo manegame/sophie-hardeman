@@ -24,7 +24,10 @@
                  <h6>
                    <span class='sale__main__item__meta__season' v-html='item.acf.season'></span>
                    <span class="sale__main__item__meta__title">{{item.title.rendered}}</span>
-                   <span class="sale__main__item__meta__price">T.B.A.</span>
+                   <span class="sale__main__item__meta__price"
+                         v-if='!item.acf.linked_product'>T.B.A.</span>
+                   <span class="sale__main__item__meta__price"
+                         v-else>{{productById(item.acf.linked_product[0].ID).price}}</span>
                    <span class="sale__main__item__meta__brackets">
                      (amsterdam west)
                    </span>
@@ -48,12 +51,15 @@
                </span>
                <img class="sale__main__item__image"
                     :class='{"sale__main__item__image--emphasis": item.acf.emphasis}'
-                    :src='item.acf.image.sizes["s-h-large"]' />
+                    :src='item.acf.image.sizes["s-h-medium"]' />
                <div class="sale__main__item__meta">
                  <h6>
                    <span class='sale__main__item__meta__season' v-html='item.acf.season'></span>
                    <span class="sale__main__item__meta__title">{{item.title.rendered}}</span>
-                   <span class="sale__main__item__meta__price">T.B.A.</span>
+                   <span class="sale__main__item__meta__price"
+                         v-if='!item.acf.linked_product'>T.B.A.</span>
+                   <span class="sale__main__item__meta__price"
+                         v-else>{{productById(item.acf.linked_product[0].ID).price}}</span>
                    <span class="sale__main__item__meta__brackets">
                      (amsterdam west)
                    </span>

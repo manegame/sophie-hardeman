@@ -85,16 +85,6 @@
           <!-- - -->
           <!-- - -->
           <!-- - -->
-          <!-- Shop (Beta) -->
-          <section class="landing__column_middle__sections__shop">
-            <router-link :to="{ name: 'shop beta'}"
-                          tag='h2'>
-                          shop <sup>beta</sup>
-                          </router-link>
-          </section>
-          <!-- - -->
-          <!-- - -->
-          <!-- - -->
           <!-- About -->
           <section class="landing__column_middle__sections__about">
             <router-link :to='{name: "about", params: {slug: "bio"}}'
