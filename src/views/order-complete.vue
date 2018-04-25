@@ -46,6 +46,7 @@ export default {
 
     &__left {
       width: $left-col-width;
+      display: block;
       float: left;
 
       @include screen-size('small') {
@@ -60,6 +61,7 @@ export default {
 
     &__right {
       @include right-col;
+      float: right;
 
       &__title {
         color: $black;

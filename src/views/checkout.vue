@@ -151,6 +151,17 @@
           <!-- END FORM -->
         </div>
     </div>
+    <div class="checkout__main" v-else>
+      <div class="checkout__main__left">
+        <randomImage/>
+      </div>
+      <div class="checkout__main__right">
+        It seems there is nothing to check out.<br/>
+        <router-link :to='{name: "landing"}'>
+          Go home
+        </router-link>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -159,11 +170,12 @@ import {mapActions, mapState} from 'vuex'
 import loader from '@/components/base/loader'
 import navbar from '@/components/navbar'
 import topbar from '@/components/topbar'
+import randomImage from '@/components/random-image'
 import checkout from '@/components/shop/mixins/checkout'
 
 export default {
   name: 'checkout',
-  components: { loader, navbar, topbar },
+  components: { loader, navbar, topbar, randomImage },
   mixins: [checkout],
   data() {
     return {
@@ -200,7 +212,9 @@ export default {
 
     &__left {
       width: $left-col-width;
+      min-width: $left-col-width;
       float: left;
+      display: block;
 
       @include screen-size('small') {
         width: 100%;
@@ -214,6 +228,7 @@ export default {
 
     &__right {
       @include right-col;
+      float: right;
 
       &__title {
         color: $black;

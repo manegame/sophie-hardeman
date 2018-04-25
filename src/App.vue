@@ -154,6 +154,7 @@ export default {
           break
         case 'checkout':
           this.GET_PRODUCTS()
+          this.GET_RANDOM_IMAGES()
           this.GET_SHIPPING_ZONES()
             .then(() => {
               let promises = []
@@ -187,6 +188,9 @@ export default {
         case ('impressum'):
           this.GET_RANDOM_IMAGES()
           this.GET_SINGLE_IMPRESSUM(route.params.slug)
+          break
+        case ('order-complete'):
+          // 
           break
       }
     }

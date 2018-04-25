@@ -50,7 +50,6 @@ export default {
   },
   watch: {
     cartTotal(n) {
-      console.log('this', this.setShippingMethod)
       this.setShippingMethod()
     },
     shippingLoaded(n) {
