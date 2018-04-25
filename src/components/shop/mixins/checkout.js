@@ -73,6 +73,7 @@ export default {
           if (this.billing[key] === null) this.missingBilling.push(key)
         }
       })
+      console.log('validate form', this.missingBilling)
       if (this.missingBilling.length === 0) this.billingComplete = true
       else this.billingComplete = false
     },

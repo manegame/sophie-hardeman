@@ -8,6 +8,7 @@
             <div class='checkout__main__left__item'
                  v-for='item in shop.cart'
                  :key='item.data.id'>
+                 <img class='checkout__main__left__item__image' v-if='item.data.acf.image' :src='item.data.acf.image.sizes["s-h-small"]' />
                  <!-- PRICE -->
                   <template v-if='item.data.variation'>
                     {{item.data.product.name}}<span>({{item.data.variation.attributes[0].option}})</span>
@@ -28,7 +29,7 @@
           <form @submit.prevent='pay' @change='validate(); setShippingInfo($event); setShippingZone($event)'>
             <!-- START BILLING -->
             <fieldset id='billing'>
-              <legend>Billing</legend>
+              <legend>Billing Information</legend>
               <input type="text"
                     placeholder='first name'
                     v-model='billing.firstName'/><br />
@@ -137,7 +138,7 @@
             </fieldset>
             <!-- END SHIPPING -->
             <!-- START PAYMENT -->
-            <fieldset id='payment'>
+            <fieldset id='payment' :class='{"incomplete": !billingComplete}'>
               <legend>Payment</legend>
               <card class='stripe-card'
                     :class='{ complete }'
@@ -147,6 +148,9 @@
                 <input class='pay-with-stripe' type='submit' value='Pay with credit card' :disabled='!complete'>
             </fieldset>
             <!-- END PAYMENT -->
+            <!-- MESSAGE TO USER -->
+              <p v-html='msg' />
+            <!-- END MESSAGE TO USER -->
           </form>
           <!-- END FORM -->
         </div>
@@ -203,6 +207,11 @@ export default {
 @import '../style/helpers/_responsive.scss';
 @import '../style/_variables.scss';
 
+.incomplete {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
 .checkout {
   @include single;
 
@@ -220,9 +229,18 @@ export default {
         width: 100%;
       }
 
-      &__image {
-        width: 100%;
-        height: auto;
+      &__item {
+        width: 100%;;
+
+        &__image {
+          width: 100%;
+          max-height: 340px;;
+          object-fit: contain;
+          object-position: left;
+          height: auto;
+          display: block;
+          margin-bottom: $margin-top;
+        }
       }
     }
 

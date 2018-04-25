@@ -94,11 +94,15 @@ export default {
         console.log(variation)
         this.ADD_TO_CART({
           product: this.shop.singleProduct.product,
+          acf: this.main.single_garment.acf,
           variation: variation
         })
       } else {
         console.log('add to cart simple')
-        this.ADD_TO_CART({ product: this.shop.singleProduct.product })
+        this.ADD_TO_CART({ 
+          product: this.shop.singleProduct.product,
+          acf: this.main.single_garment.acf
+        })
       }
     },
     purchase() {
