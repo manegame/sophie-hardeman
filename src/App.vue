@@ -270,10 +270,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   height: 100vh;
   overflow: hidden;
-
-  #view {
-    height: calc(100% - #{$margin-top + $footer-height});
-  }
 }
 
 .fc-toolbar {
