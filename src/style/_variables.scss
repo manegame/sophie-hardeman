@@ -26,7 +26,8 @@ $breakpoints: (
   'small': (max-width: 800px),
   'medium': (max-width: 1280px),
   'large': (max-width: 1600px),
-  'short': (max-height: 700px)
+  'short': (max-height: 700px),
+  'tall': (min-height: 800px)
 );
 
 $landing-width: 1200px;

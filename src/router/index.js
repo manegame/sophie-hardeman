@@ -13,6 +13,7 @@ const events = () => import('@/views/events')
 const impressum = () => import('@/views/impressum')
 const community = () => import('@/views/community')
 const checkout = () => import('@/views/checkout')
+const orderComplete = () => import('@/views/order-complete')
 
 Vue.use(Router)
 
@@ -82,6 +83,11 @@ export default new Router({
       path: '/checkout',
       name: 'checkout',
       component: checkout
+    },
+    {
+      path: '/checkout/complete',
+      name: 'order-complete',
+      component: orderComplete
     }
   ]
 })

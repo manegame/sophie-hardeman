@@ -46,6 +46,7 @@ export default {
   bottom: 0;
   white-space: nowrap;
   overflow: hidden;
+  z-index: 999;
 
   &__link {
     margin: 0 10px;

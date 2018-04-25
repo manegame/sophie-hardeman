@@ -308,7 +308,7 @@ export default {
   }
 
   &__column {
-    height: calc(100vh - #{$topbar-height + $margin-top});
+    height: calc(100vh - #{$topbar-height + $margin-top + $footer-height});
   }
 
   &__column_left {
@@ -324,7 +324,11 @@ export default {
     padding: 10px 20px 0;
     display: flex;
     flex-flow: column nowrap;
-    justify-content: space-between;
+    justify-content: flex-start;
+
+    @include screen-size('tall') {
+      justify-content: space-between;
+    }
 
     @include screen-size('medium') {
       width: calc(4/14 * 100%)
@@ -397,7 +401,7 @@ export default {
 
     &__toe {
       background: $grey;
-      overflow-y: scroll;
+      overflow: hidden;
 
       @include screen-size('small') {
         display: none;
