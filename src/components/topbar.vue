@@ -5,6 +5,11 @@
                  :to="{ name: 'sale', params: {slug: $route.params.slug} }">
                  <- back to sale
     </router-link>
+    <a v-else-if='$route.name === "checkout"'
+                 class="topbar__back"
+                 @click.prevent='goBack'>
+                 <- back to item
+    </a>
     <router-link v-else
                  class="topbar__back"
                  :to="{ name: 'landing'}">
@@ -40,6 +45,9 @@ export default {
     }
   },
   methods: {
+    goBack() {
+      this.$router.go(-1)
+    },
     printPage() {
       window.print()
     }
@@ -82,6 +90,7 @@ export default {
     color: $black;
     font-weight: bold;
     text-decoration: none;
+    cursor: pointer;
   }
 
   &__posted,

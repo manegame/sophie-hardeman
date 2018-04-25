@@ -153,17 +153,17 @@ export default {
           })
           break
         case 'checkout':
-        this.GET_PRODUCTS()
-        this.GET_SHIPPING_ZONES()
-          .then(() => {
-            let promises = []
-            this.shop.shipping_zones.forEach((zone) => {
-              promises.push(this.GET_SHIPPING_ZONE_LOCATIONS(zone.id))
-              promises.push(this.GET_SHIPPING_ZONE_METHODS(zone.id))
-            })
-            return Promise.all(promises)
-          }).then(this.SHIPPING_LOADED)
-        break
+          this.GET_PRODUCTS()
+          this.GET_SHIPPING_ZONES()
+            .then(() => {
+              let promises = []
+              this.shop.shipping_zones.forEach((zone) => {
+                promises.push(this.GET_SHIPPING_ZONE_LOCATIONS(zone.id))
+                promises.push(this.GET_SHIPPING_ZONE_METHODS(zone.id))
+              })
+              return Promise.all(promises)
+            }).then(this.SHIPPING_LOADED)
+          break
         case ('hardeman tv'):
           this.GET_VIDEOS().then(() => {
             let vid = this.main.videos.filter(v => { return v.slug === route.params.slug })[0]

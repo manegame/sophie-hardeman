@@ -40,7 +40,7 @@ export default {
       },
       selectedCountry: 'NL',
       selectedShippingMethod: 'flat_rate',
-      shippingZone: null,
+      shippingZone: [],
       shippingFee: 0
     }
   },
@@ -50,6 +50,7 @@ export default {
   },
   watch: {
     cartTotal(n) {
+      console.log('this', this.setShippingMethod)
       this.setShippingMethod()
     },
     shippingLoaded(n) {
@@ -77,6 +78,7 @@ export default {
       else this.billingComplete = false
     },
     setShippingInfo() {
+      console.log('set shipping info called')
       // only set the billing info to shipping when billing is the same as shipping info
       if (this.sameAsBilling) {
         // if not, set same info as the billing address
@@ -90,6 +92,7 @@ export default {
       }
     },
     setShippingZone(event) {
+      console.log('set shipping zone called')
       // prepare country filtering
       this.selectedCountry = this.shop.countryList.find(c => { return c[1] === this.shipping.country })
       const continentCode = this.selectedCountry[0]
@@ -164,7 +167,6 @@ export default {
         this.PLACE_ORDER(this.shop.order).then(() => {
           if (this.shop.payment.orderResponse.message) {
             this.msg = 'sorry, something went wrong. Please refresh and try again...'
-            return
           } else {
             createToken().then(result => {
               if (result.token) {
