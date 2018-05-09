@@ -189,9 +189,6 @@ export default {
           this.GET_RANDOM_IMAGES()
           this.GET_SINGLE_IMPRESSUM(route.params.slug)
           break
-        case ('order-complete'):
-          // 
-          break
       }
     }
   },

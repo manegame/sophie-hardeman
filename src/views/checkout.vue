@@ -4,27 +4,54 @@
     <topbar />
     <div class="checkout__main"
          v-if='shop.cart.length'>
+         <!-- START LEFT COL -->
          <div class="checkout__main__left">
             <div class='checkout__main__left__item'
                  v-for='item in shop.cart'
                  :key='item.data.id'>
-                 <img class='checkout__main__left__item__image' v-if='item.data.acf.image' :src='item.data.acf.image.sizes["s-h-small"]' />
-                 <!-- PRICE -->
-                  <template v-if='item.data.variation'>
-                    {{item.data.product.name}}<span>({{item.data.variation.attributes[0].option}})</span>
-                    <span>€{{item.data.variation.price}}</span><br>
-                  </template>
-                  <template v-else>
-                    {{item.data.product.name}} <span>€{{item.data.product.price}}</span><br>
-                  </template>
-                  amount: 
-                  <button @click='ADD_TO_CART(item.data)'>+</button>
-                  <span>{{item.quantity}}</span>
-                  <button @click='REMOVE_FROM_CART(item.data)'>-</button>
+                  <span class="checkout__main__left__item__amount">
+                    {{item.quantity}} x
+                    <button v-if='item.quantity === 1' @click='ADD_TO_CART(item.data)'>one more?</button>
+                    <button v-if='item.quantity === 2' @click='ADD_TO_CART(item.data)'>mmmm yeah..</button>
+                    <button v-if='item.quantity === 3' @click='ADD_TO_CART(item.data)'>more!</button>
+                    <button v-if='item.quantity === 4' @click='ADD_TO_CART(item.data)'>more!!!</button>
+                    <button v-if='item.quantity === 5' @click='ADD_TO_CART(item.data)'>please, I'm begging you</button>
+                 </span>
+                 <img class='checkout__main__left__item__image' 
+                      v-if='item.data.acf.image' 
+                      :src='item.data.acf.image.sizes["s-h-small"]' />
+                 <div class="checkout__main__left__item__meta">
+                    <h6>
+                      <span class='checkout__main__left__item__meta__season' v-html='item.data.acf.season'></span>
+                      <template v-if='item.data.variation'>
+                        <span class="checkout__main__left__item__meta__title">{{item.data.product.name}} ({{item.data.variation.attributes[0].option}})</span>
+                        <span class="checkout__main__left__item__meta__price">{{item.data.variation.price}}</span><br>
+                      </template>
+                      <template v-else>
+                        <span class="checkout__main__left__item__meta__title">{{item.data.product.name}}</span>
+                        <span class="checkout__main__left__item__meta__price">{{item.data.product.price}}</span><br>
+                      </template>
+                    </h6>
+                  </div>
             </div>
-            total: €{{cartTotal}}
          </div>
+         <!-- END LEFT COL -->
          <div class="checkout__main__right">
+           <div class="checkout__main__right__totals">
+             <ul class="checkout__main__right__totals__list">
+               <li class="checkout__main__right__totals__list__item naturel" 
+                   v-for='item in shop.cart'
+                   :key='"list" + item.data.id'>
+                  <span v-if='item.data.variation'>
+                    {{item.quantity}} x {{item.data.product.name}} ({{item.data.variation.attributes[0].option}})
+                  </span>
+                  <span v-else>
+                    {{item.quantity}} x {{item.data.product.name}}
+                  </span>
+               </li>
+              </ul>
+              Grand Total: €{{cartTotal}} (VAT incl.)
+           </div>
           <!-- BEGIN FORM -->
           <form @submit.prevent='pay' @change='validate(); setShippingInfo($event); setShippingZone($event)'>
             <!-- START BILLING -->
@@ -66,7 +93,7 @@
             <!-- START SHIPPING -->
             <fieldset id='shipping' v-else>
               <legend>Shipping</legend>
-              <input type="checkbox" v-model='sameAsBilling' /><label>Use the same address</label><br>
+              <input type="checkbox" v-model='sameAsBilling' /><label>Ship to billing address</label><br>
               <template v-if='!sameAsBilling'>
                 <input type="text"
                         placeholder='first name'
@@ -224,22 +251,81 @@ export default {
       min-width: $left-col-width;
       float: left;
       display: block;
+      padding-bottom: $topbar-height * 3;
 
       @include screen-size('small') {
         width: 100%;
       }
 
       &__item {
-        width: 100%;;
+        width: $left-col-width;
+        height: $left-col-width;
+        border-radius: 8px;
+        margin-right: 20px;
+        margin-bottom: 30px;
+        border: 1px solid $grey-darker;
+        overflow: hidden;
+
+        &__amount {
+          background: $white;
+          position: absolute;
+          left: 0;
+          font-family: $sans-serif-stack;
+          font-size: $font-size;
+          line-height: 100%;
+          color: $orange;
+          padding: 4px 6px;
+          border-radius: 6px 0 6px 0;
+          border-bottom: 1px solid $grey-darker;
+          border-right: 1px solid $grey-darker;
+          border-left: 1px solid $grey-darker;
+        }
 
         &__image {
+          z-index: 6;
           width: 100%;
-          max-height: 340px;;
-          object-fit: contain;
-          object-position: left;
-          height: auto;
           display: block;
-          margin-bottom: $margin-top;
+          height: calc(100% - 60px);
+          object-fit: contain;
+          object-position: top center;
+        }
+
+        &__meta {
+          border-top: 1px solid $grey-darker;
+          padding: 8px 20px;
+          height: 60px;
+
+          &__season {
+            color: $grey-darker;
+
+            &::before {
+              content: '\2605';
+              margin-right: 4px;
+            }
+          }
+
+          &__title {
+            color: $blue;
+          }
+
+          &__price {
+            font-family: $sans-serif-stack;
+            font-size: $font-size;
+            line-height: 100%;
+            color: $orange;
+            padding: 2px 6px;
+            border-radius: 6px;
+            border: 1px solid $grey-dark;
+
+            &::after {
+              content: " €"
+            }
+          }
+
+          &__brackets {
+            font-family: sans-serif;
+            font-size: $font-size-s;
+          }
         }
       }
     }
@@ -247,12 +333,41 @@ export default {
     &__right {
       @include right-col;
       float: right;
+      font-size: $font-size;
+      line-height: $line-height;
+
+      &__totals {
+        border: $border;
+        max-width: $left-col-width;
+        padding: 8px 28px;
+        background: $yellow;
+
+        &__list {
+          list-style-type: disc;
+          padding-bottom: 8px;
+          margin-bottom: 8px;
+          border-bottom: $border;
+
+          &__item {
+            color: $black;
+          }
+        }
+      }
 
       &__title {
         color: $black;
       }
     }
   }
+}
+
+#billing,
+#payment,
+#shipping {
+  border: $border;
+  padding: 8px;
+  margin-top: 10px;
+  max-width: $left-col-width * 1.5;
 }
 
 </style>

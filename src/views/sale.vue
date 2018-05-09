@@ -35,7 +35,7 @@
                </div>
         </router-link>
       </template>
-      <!-- SINGLE -->
+      <!-- BY CATEGORY -->
       <template v-else>
         <router-link tag='div'
                      v-for='item in main.garments'

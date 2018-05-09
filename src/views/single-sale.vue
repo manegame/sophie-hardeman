@@ -99,7 +99,7 @@ export default {
         })
       } else {
         console.log('add to cart simple')
-        this.ADD_TO_CART({ 
+        this.ADD_TO_CART({
           product: this.shop.singleProduct.product,
           acf: this.main.single_garment.acf
         })

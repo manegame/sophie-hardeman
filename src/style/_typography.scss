@@ -68,9 +68,6 @@ ul {
   line-height: $line-height;
   font-weight: bold;
   color: $blue;
-  /*
-  list-style-type: none;
-  */
 
   &.duo {
     display: flex;
@@ -97,7 +94,7 @@ ul {
 .router-link,
 .router-link-active,
 .landing__column_middle__sections h2,
-li {
+section > ul > li {
   cursor: pointer;
 
   &:active {
