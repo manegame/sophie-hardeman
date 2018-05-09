@@ -129,3 +129,43 @@ sup {
   top: -3px;
   margin-right: 3px;
 }
+
+form, 
+input {
+  font-family: $sans-serif-stack;
+}
+
+input {
+  border-style: solid;
+  border: $border-light;
+
+  &:focus {
+    outline: none;
+    background: $yellow;
+  }
+}
+
+select {
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+  box-sizing:border-box;
+  height: $line-height;
+
+  &:focus {
+    outline: none;
+    background: $yellow;
+  }
+}
+
+input[type='submit'] { 
+  height: $line-height;
+  cursor: pointer;
+  background-color: $white;
+  border: $border;
+  text-decoration: none;
+  padding: 0 8px;
+
+  &:hover {
+    background-color: $yellow;
+  }
+}

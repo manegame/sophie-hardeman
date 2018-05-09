@@ -1,6 +1,6 @@
 <template>
   <section class="calendar">
-    <router-link tag='h3' :to="{name: 'events', params: {slug: 'xxx'}}" class="calendar__head">where to go?</router-link>
+    <router-link tag='h3' :to="{name: 'events', params: {slug: main.events[0].slug}}" class="calendar__head">where to go?</router-link>
     <full-calendar :events='events'
                    :config='config' />
   </section>

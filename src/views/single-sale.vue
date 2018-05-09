@@ -174,6 +174,7 @@ export default {
         float: left;
         font-size: $font-size-s;
         line-height: $line-height-s;
+        padding-right: 20px;
 
         &--head {
           color: $grey-darker;
@@ -184,7 +185,7 @@ export default {
         }
 
         @include screen-size('small') {
-          width: 100%;
+          width: 66%;
         }
       }
 
@@ -193,6 +194,10 @@ export default {
         line-height: $line-height-s;
         width: 50%;
         float: right;
+
+        @include screen-size('small') {
+          width: 33%;
+        } 
       }
     }
 

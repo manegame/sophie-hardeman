@@ -37,7 +37,8 @@
          </div>
          <!-- END LEFT COL -->
          <div class="checkout__main__right">
-           <div class="checkout__main__right__totals">
+           <fieldset class="checkout__main__right__totals">
+             <legend class="checkout__main__right__totals__legend">My Cart</legend>
              <ul class="checkout__main__right__totals__list">
                <li class="checkout__main__right__totals__list__item naturel" 
                    v-for='item in shop.cart'
@@ -51,7 +52,7 @@
                </li>
               </ul>
               Grand Total: €{{cartTotal}} (VAT incl.)
-           </div>
+           </fieldset>
           <!-- BEGIN FORM -->
           <form @submit.prevent='pay' @change='validate(); setShippingInfo($event); setShippingZone($event)'>
             <!-- START BILLING -->
@@ -165,7 +166,9 @@
             </fieldset>
             <!-- END SHIPPING -->
             <!-- START PAYMENT -->
-            <fieldset id='payment' :class='{"incomplete": !billingComplete}'>
+            <fieldset id='payment' 
+                      :class='{"incomplete": !billingComplete}'
+                      @click='handlePrematurePayment'>
               <legend>Payment</legend>
               <card class='stripe-card'
                     :class='{ complete }'
@@ -223,7 +226,10 @@ export default {
     ...mapActions([
       'ADD_TO_CART',
       'REMOVE_FROM_CART'
-    ])
+    ]),
+    handlePrematurePayment() {
+      alert('please fill in billing information first')
+    }
   }
 }
 </script>
@@ -342,6 +348,10 @@ export default {
         padding: 8px 28px;
         background: $yellow;
 
+        &__legend {
+          margin-left: -20px;
+        }
+
         &__list {
           list-style-type: disc;
           padding-bottom: 8px;
@@ -361,6 +371,29 @@ export default {
   }
 }
 
+form input,
+select {
+  font-size: $font-size-s;
+  line-height: $line-height;
+  margin-bottom: 4px;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 0 4px;
+}
+
+input[type='radio'] {
+  width: auto;
+  padding: 0;
+}
+
+input[placeholder='phone'],
+input[placeholder='email'] {
+  width: calc(50% - 4px);
+}
+
 #billing,
 #payment,
 #shipping {
@@ -368,6 +401,21 @@ export default {
   padding: 8px;
   margin-top: 10px;
   max-width: $left-col-width * 1.5;
+}
+
+.pay-with-stripe {
+  color: $black;
+  margin-top: 8px;
+}
+
+input[type='submit'] {
+  &:disabled {
+    opacity: 0.6;
+
+    &:hover {
+      background-color: $white;
+    }
+  }
 }
 
 </style>
