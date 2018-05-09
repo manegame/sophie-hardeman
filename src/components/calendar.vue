@@ -1,6 +1,6 @@
 <template>
   <section class="calendar">
-    <h3 class="calendar__head">where to go?</h3>
+    <router-link tag='h3' :to="{name: 'events', params: {slug: 'xxx'}}" class="calendar__head">where to go?</router-link>
     <full-calendar :events='events'
                    :config='config' />
   </section>
@@ -16,7 +16,6 @@ export default {
   },
   data() {
     return {
-      // events: [],
       config: {
         header: {
           left: '',

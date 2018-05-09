@@ -458,6 +458,7 @@ export default {
       width: 100%;
       column-count: 2;
       column-gap: 40px;
+      padding-bottom: 80px;
       @include hide-scroll;
 
       @include screen-size('small') {
