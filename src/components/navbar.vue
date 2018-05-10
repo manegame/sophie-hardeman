@@ -151,6 +151,7 @@
                        </router-link>
         </template>
       </ul>
+      <calendar class='navbar__calendar'/>
     </template>
     <!-- IMPRESSUM -->
     <template v-if='$route.name === "impressum"'>
@@ -161,8 +162,13 @@
 
 <script>
 import {mapState} from 'vuex'
+import calendar from '@/components/calendar'
+
 export default {
   name: 'navbar',
+  components: {
+    calendar
+  },
   computed: {
     ...mapState(['main'])
   }
@@ -176,9 +182,10 @@ export default {
 
 .navbar {
   width: calc(3/14 * 100%);
+  height: calc(100% - #{$topbar-height});
   position: relative;
   float: left;
-  padding-left: 20px;
+  padding: 0 20px;
 
   @include screen-size('medium') {
     width: calc(4/14 * 100%);
@@ -196,6 +203,11 @@ export default {
     margin-bottom: 6px;
   }
 
+  &__calendar {
+    position: absolute;
+    bottom: 20px;
+  }
+
   .nav {
     padding-top: 20px;
     color: $blue;
@@ -203,6 +215,7 @@ export default {
     &__item {
       border-bottom: none;
       height: auto;
+      cursor: pointer;
 
       &--emphasis {
         font-weight: bold;

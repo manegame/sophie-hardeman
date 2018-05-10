@@ -384,6 +384,10 @@ export default {
           display: none;
         }
 
+        @include screen-size('short') {
+          display: none;
+        }
+
         &__item {
           font-size: $font-size-s;
           line-height: $line-height-s;
@@ -404,10 +408,6 @@ export default {
       overflow: hidden;
 
       @include screen-size('small') {
-        display: none;
-      }
-
-      @include screen-size('short') {
         display: none;
       }
     }

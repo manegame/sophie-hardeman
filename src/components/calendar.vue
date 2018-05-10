@@ -67,18 +67,29 @@ export default {
 @import '../style/_variables.scss';
 
 .calendar {
-  background: $grey;
   width: 100%;
   height: auto;
   min-height: 160px;
-  bottom: 0;
   padding-bottom: 40px;
+  box-sizing: border-box;
 
   &__head {
-    margin-bottom: 4px;
+    width: 100%;
+    text-align: center;
     background: $grey;
+    padding-bottom: 4px;
     border-top: $border-light;
     border-bottom: none;
+    cursor: pointer;
   }
+}
+
+.navbar__calendar {
+  width: calc(100% - 80px);
+}
+
+.navbar__calendar .calendar__head {
+  border: none;
+  background: initial;
 }
 </style>
