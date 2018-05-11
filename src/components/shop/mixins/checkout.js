@@ -194,13 +194,15 @@ export default {
                   payment_token: result.token.id,
                   payment_method: 'stripe'
                 }
+                console.log('payment data', data)
                 this.PAY_ORDER(data).then(() => {
                   this.msg = this.shop.payment.progress.message
                   if (this.shop.payment.progress.code === 200) {
                     // redirect user
                     this.$router.push({ name: 'order-complete' })
                   } else {
-                    this.msg = 'we could not process your payment. ' + this.shop.payment.progress + ''
+                    console.log(this.shop.payment.progress)
+                    this.msg = 'sorry, we could not process your payment.'
                   }
                 })
               } else {

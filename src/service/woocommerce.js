@@ -124,7 +124,7 @@ export default {
     return new Promise((resolve, reject) => {
       WooCommerce.postAsync('manegame-payment', data).then(
         response => {
-          resolve(response.toJSON())
+          resolve(JSON.parse(response.toJSON().body))
         },
         response => {
           reject(response)
