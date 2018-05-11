@@ -15,7 +15,7 @@
                      v-html='"about hardeman"' />
         <router-link class="suggestions__links__item"
                      tag='li'
-                     :to='{name: "hardeman tv", params: {slug: "xxx"}}'
+                     :to='{name: "hardeman tv", params: {slug: main.videos[0].slug}}'
                      v-html='"hardeman tv"' />
         <router-link class="suggestions__links__item"
                      tag='li'

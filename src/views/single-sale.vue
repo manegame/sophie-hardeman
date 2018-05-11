@@ -32,7 +32,7 @@
            </div>
            <div class="single_sale__main__left__payment">
             <!-- PRODUCT VARIABLE -->
-            <template v-if='shop.singleProduct.product.attributes'>
+            <template v-if='shop.singleProduct.product.attributes.length'>
               <div class="single_sale__main__left__payment__form"
                    v-for='attribute in shop.singleProduct.product.attributes'
                    :key='attribute.id'>
@@ -45,6 +45,14 @@
                             :value='option'
                             v-html='option'/>
                   </select>
+                  <input type='submit' value='Purchase' />
+                </form>
+              </div>
+            </template>
+            <!-- PRODUCT SIMPLE -->
+            <template v-else>
+              <div class="single_sale__main__left__payment__form">
+                <form @submit.prevent='purchase'>
                   <input type='submit' value='Purchase' />
                 </form>
               </div>
@@ -89,6 +97,7 @@ export default {
       'ADD_TO_CART',
       'CLEAR_SINGLE_PRODUCT']),
     addToCart() {
+      console.log('add to cart variable')
       if (this.variableProduct === true) {
         const variation = this.productVariationByOption(this.selected)
         console.log(variation)
@@ -99,6 +108,7 @@ export default {
         })
       } else {
         console.log('add to cart simple')
+        console.log(this.shop.singleProduct.product)
         this.ADD_TO_CART({
           product: this.shop.singleProduct.product,
           acf: this.main.single_garment.acf
@@ -106,11 +116,16 @@ export default {
       }
     },
     purchase() {
-      if (this.variableProduct && this.selected !== '') {
+      if (this.variableProduct) {
+        if (this.selected !== '') {
+          this.addToCart()
+          this.$router.push({name: 'checkout'})
+        } else {
+          window.alert('please choose an option first')
+        }
+      } else {
         this.addToCart()
         this.$router.push({name: 'checkout'})
-      } else {
-        window.alert('please choose an option first')
       }
     }
   },

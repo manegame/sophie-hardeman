@@ -37,22 +37,6 @@
          </div>
          <!-- END LEFT COL -->
          <div class="checkout__main__right">
-           <fieldset class="checkout__main__right__totals">
-             <legend class="checkout__main__right__totals__legend">My Cart</legend>
-             <ul class="checkout__main__right__totals__list">
-               <li class="checkout__main__right__totals__list__item naturel" 
-                   v-for='item in shop.cart'
-                   :key='"list" + item.data.id'>
-                  <span v-if='item.data.variation'>
-                    {{item.quantity}} x {{item.data.product.name}} ({{item.data.variation.attributes[0].option}})
-                  </span>
-                  <span v-else>
-                    {{item.quantity}} x {{item.data.product.name}}
-                  </span>
-               </li>
-              </ul>
-              Grand Total: €{{cartTotal}} (VAT incl.)
-           </fieldset>
           <!-- BEGIN FORM -->
           <form @submit.prevent='pay' @change='validate(); setShippingInfo($event); setShippingZone($event)'>
             <!-- START BILLING -->
@@ -165,6 +149,27 @@
               <!-- END SHIPPING METHODS -->
             </fieldset>
             <!-- END SHIPPING -->
+            <fieldset class="checkout__main__right__totals">
+              <legend class="checkout__main__right__totals__legend">Order</legend>
+              <ul class="checkout__main__right__totals__list">
+                <li class="checkout__main__right__totals__list__item naturel" 
+                    v-for='item in shop.cart'
+                    :key='"list" + item.data.id'>
+                    <span v-if='item.data.variation'>
+                      {{item.quantity}} x {{item.data.product.name}} ({{item.data.variation.attributes[0].option}}): €{{item.data.variation.price}}
+                    </span>
+                    <span v-else>
+                      {{item.quantity}} x {{item.data.product.name}}: €{{item.data.product.price}}
+                    </span>
+                </li>
+              </ul>
+              <ul class="checkout__main__right__totals__list" v-if='shippingTotal !== null'>
+                <li class="checkout__main__right__totals__list__item naturel">
+                  Shipping: €{{shippingTotal}}
+                </li>
+              </ul>
+                Grand Total: €{{cartTotal + shippingTotal}} (VAT incl.)
+            </fieldset>
             <!-- START PAYMENT -->
             <fieldset id='payment' 
                       :class='{"incomplete": !billingComplete}'
@@ -228,7 +233,7 @@ export default {
       'REMOVE_FROM_CART'
     ]),
     handlePrematurePayment() {
-      alert('please fill in billing information first')
+      window.alert('please fill in billing information first')
     }
   }
 }
@@ -384,7 +389,8 @@ select {
   padding: 0 4px;
 }
 
-input[type='radio'] {
+input[type='radio'],
+input[type='checkbox'] {
   width: auto;
   padding: 0;
 }

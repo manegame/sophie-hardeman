@@ -46,7 +46,18 @@ export default {
   },
   computed: {
     ...mapState(['shop']),
-    ...mapGetters({ shippingLoaded: 'shippingLoadedState', cartTotal: 'cartTotal' })
+    ...mapGetters({ shippingLoaded: 'shippingLoadedState', cartTotal: 'cartTotal' }),
+    shippingTotal() {
+      if (this.shop.order.shipping_lines.length) {
+        let total = 0
+        this.shop.order.shipping_lines.map(line => {
+          if (line.total) {
+            total += Number(line.total)
+          }
+        })
+        return total
+      } else return null
+    }
   },
   watch: {
     cartTotal(n) {

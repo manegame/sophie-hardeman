@@ -71,6 +71,7 @@
               <img class="collection__main__campaign__left__image"
                    v-if='main.single.acf.campaign_images.length > 0'
                    v-for='item in main.single.acf.campaign_images'
+                   :key='"img-"+item.id'
                    :src='item.image.sizes["s-h-large"]' />
             </template>
           </div>
@@ -362,6 +363,11 @@ embed {
     height: 450px;
   }
 
+  @include screen-size('small') {
+    height: 450px;
+    width: 300px;
+  }
+
   .swiper-slide {
     background-size: cover;
     background-color: $white;
@@ -375,6 +381,11 @@ embed {
 
   @include screen-size ('medium') {
     height: 120px;
+  }
+
+  @include screen-size('small') {
+    height: 120px;
+    width: 300px;
   }
 }
 .gallery-thumbs .swiper-slide {
