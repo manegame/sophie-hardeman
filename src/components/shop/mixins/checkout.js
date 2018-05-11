@@ -198,9 +198,12 @@ export default {
                   if (this.shop.payment.progress.code === 200) {
                     // redirect user
                     this.$router.push({ name: 'order-complete' })
+                  } else {
+                    this.msg = 'we could not process your payment. ' + this.shop.payment.progress.code + ''
                   }
                 })
               } else {
+                // no token
                 this.msg = 'sorry, something went wrong. Please refresh and try again or email us.'
               }
             })
