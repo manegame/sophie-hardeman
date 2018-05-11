@@ -122,7 +122,7 @@ export default {
   },
   payOrder(data) {
     return new Promise((resolve, reject) => {
-      WooCommerce.postAsync('manegame-payment', data).then(
+      WooCommerce.postAsync('stripe-payment', data).then(
         response => {
           resolve(JSON.parse(response.toJSON().body))
         },
