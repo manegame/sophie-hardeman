@@ -200,7 +200,7 @@ export default {
                     // redirect user
                     this.$router.push({ name: 'order-complete' })
                   } else {
-                    this.msg = 'we could not process your payment. ' + this.shop.payment.progress.code + ''
+                    this.msg = 'we could not process your payment. ' + this.shop.payment.progress + ''
                   }
                 })
               } else {

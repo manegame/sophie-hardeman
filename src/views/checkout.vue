@@ -217,7 +217,7 @@ export default {
   mixins: [checkout],
   data() {
     return {
-      stripeKey: 'pk_test_fg0ori4rYbDDv2EmQqo5eWOo'
+      stripeKey: 'pk_live_cF6ffZbXqoMaxvXr8ZPXI0J9'
     }
   },
   computed: {
