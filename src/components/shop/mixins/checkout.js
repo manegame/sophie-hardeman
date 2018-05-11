@@ -65,7 +65,7 @@ export default {
   },
   watch: {
     selectedShippingMethod() {
-      console.log('changed')
+      this.setShippingMethod()
     },
     cartTotal(n) {
       this.setShippingMethod()
@@ -136,6 +136,7 @@ export default {
       if (event !== undefined && event.srcElement.parentElement.id !== 'shipping_methods') this.setShippingMethod()
     },
     setShippingMethod(event) {
+      console.log('set shipping method', event)
       if (!event) {
         let freeShipping = this.shippingZone.methods.find(method => { return method.method_id === 'free_shipping' })
         if (freeShipping !== undefined) {
