@@ -48,18 +48,25 @@ export default {
     ...mapState(['shop']),
     ...mapGetters({ shippingLoaded: 'shippingLoadedState', cartTotal: 'cartTotal' }),
     shippingTotal() {
-      if (this.shop.order.shipping_lines.length) {
-        let total = 0
-        this.shop.order.shipping_lines.map(line => {
-          if (line.total) {
-            total += Number(line.total)
-          }
-        })
-        return total
-      } else return null
+      if (this.selectedShippingMethod === 'flat_rate') {
+        if (this.shop.order.shipping_lines.length) {
+          let total = 0
+          this.shop.order.shipping_lines.map(line => {
+            if (line.total) {
+              total += Number(line.total)
+            } else {
+              total = 0
+            }
+          })
+          return total
+        } else return null
+      } else return 0
     }
   },
   watch: {
+    selectedShippingMethod() {
+      console.log('changed')
+    },
     cartTotal(n) {
       this.setShippingMethod()
     },

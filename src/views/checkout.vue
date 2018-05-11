@@ -172,8 +172,7 @@
             </fieldset>
             <!-- START PAYMENT -->
             <fieldset id='payment' 
-                      :class='{"incomplete": !billingComplete}'
-                      @click='handlePrematurePayment'>
+                      :class='{"incomplete": !billingComplete}'>
               <legend>Payment</legend>
               <card class='stripe-card'
                     :class='{ complete }'
@@ -231,10 +230,7 @@ export default {
     ...mapActions([
       'ADD_TO_CART',
       'REMOVE_FROM_CART'
-    ]),
-    handlePrematurePayment() {
-      window.alert('please fill in billing information first')
-    }
+    ])
   }
 }
 </script>
