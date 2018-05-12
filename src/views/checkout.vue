@@ -171,7 +171,7 @@
                 Grand Total: €{{cartTotal + shippingTotal}} (VAT incl.)
             </fieldset>
             <!-- START PAYMENT -->
-            <fieldset id='payment' 
+            <!-- <fieldset id='payment' 
                       :class='{"incomplete": !billingComplete}'>
               <legend>Payment</legend>
               <card class='stripe-card'
@@ -180,6 +180,9 @@
                     :options='stripeOptions'
                     @change='complete = $event.complete'/>
                 <input class='pay-with-stripe' type='submit' value='Pay with credit card' :disabled='!complete'>
+            </fieldset> -->
+            <fieldset id='payment'>
+              <input type='submit' value='PRE-ORDER'>
             </fieldset>
             <!-- END PAYMENT -->
             <!-- MESSAGE TO USER -->

@@ -1,5 +1,6 @@
 <template>
   <div class="weather" v-if='main.weather.weather'>
+    <!-- <div class="weather__tip"><img src='https://s-h.manusnijhoff.nl/wp-content/uploads/2018/05/0.png'/></div> -->
     <h3 class="weather__head">what to wear?</h3>
     <div class="weather__top">
       <p class="weather__top__title" v-html='main.weather.name'/>

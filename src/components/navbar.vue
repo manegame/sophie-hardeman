@@ -70,14 +70,14 @@
                      :to='{name: "sale", params: {slug: "all"}}'>
                      all
                      </router-link>
-        <template v-for='category in main.garment_categories'>
+        <!-- <template v-for='category in main.garment_categories'>
           <router-link class="nav__item"
                        :class='{"nav__item--emphasis": $route.params.slug === category.slug}'
                        tag='li'
                        :to='{name: "sale", params: {slug: category.slug}}'>
                        {{category.name}}<sup v-for='label in category.acf.labels'>{{label.post_title}}</sup>
                        </router-link>
-        </template>
+        </template> -->
       </ul>
     </template>
     <!-- HARDEMAN TV -->

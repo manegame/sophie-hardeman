@@ -45,7 +45,7 @@
                             :value='option'
                             v-html='option'/>
                   </select>
-                  <input type='submit' value='Purchase' />
+                  <input type='submit' value='Pre-order' />
                 </form>
               </div>
             </template>
@@ -53,16 +53,16 @@
             <template v-if='main.single_garment.acf["pre-order"]'>                
               <div class="single_sale__main__left__payment__form">
                 Estimated production date: <span>{{Date(main.single_garment.acf["pre-order"]) | dotted}}</span><br><br>
-                <form @submit.prevent='purchase'>
-                  <input type='submit' value='Pre-order' />
-                </form>
+                <!-- <form @submit.prevent='purchase'> -->
+                  <!-- <input type='submit' value='Pre-order' /> -->
+                <!-- </form> -->
               </div>
             </template>
             <!-- PRODUCT SIMPLE -->
             <template v-else>
               <div class="single_sale__main__left__payment__form">
                 <form @submit.prevent='purchase'>
-                  <input type='submit' value='Purchase' />
+                  <input type='submit' value='Pre-order' />
                 </form>
               </div>
             </template>

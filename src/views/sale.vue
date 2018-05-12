@@ -7,13 +7,15 @@
         <!-- ALL GARMENTS -->
         <router-link tag='div'
                      v-for='item in main.garments'
+                     v-if='item.acf.linked_product'
                      :key='item.id'
                      :to="{ name: 'single sale', params: {slug: $route.params.slug, item: item.slug}}"
                      class="sale__main__item" >
-               <span class="sale__main__item__price-tag" v-if='!item.acf.linked_product'>
-                 Not for sale ;-
-               </span>
-               <span class="sale__main__item__price-tag" v-else>
+               <!-- <span class="sale__main__item__price-tag" v-if='!item.acf.linked_product'> -->
+               <!-- <span class="sale__main__item__price-tag"> -->
+                 <!-- Not (yet) for sale ;- -->
+               <!-- </span> -->
+               <span class="sale__main__item__price-tag">
                  <!-- get the product by linked id and display price -->
                  {{productById(item.acf.linked_product[0].ID).price}}
                </span>

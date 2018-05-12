@@ -1,9 +1,9 @@
 import { mapState, mapActions, mapGetters } from 'vuex'
-import { Card, createToken } from 'vue-stripe-elements'
+// import { Card, createToken } from 'vue-stripe-elements'
 
 export default {
   components: {
-    Card
+    // Card
   },
   data() {
     return {
@@ -165,6 +165,54 @@ export default {
         this.SET_SHIPPING(shipMe)
       }
     },
+    // pay() {
+    //   //
+    //   // this payment function does a couple of things.
+    //   // 1. ADD_CUSTOMER INFO pushes the billing and shipping into an order object for the REST API, then
+    //   // 2. PLACE_ORDER sends the order to the REST API, the orderResponse contains the id of the order
+    //   // 3. createToken is a Stripe function which returns a token for payment
+    //   // 4. PAY_ORDER sends the token and the order_id to our custom payment gateway and returns either a success or a failure
+    //   //
+    //   this.ADD_CUSTOMER_INFO({
+    //     billing: this.billing,
+    //     shipping: this.shipping
+    //   }).then(() => {
+    //     this.complete = false
+    //     if (!this.billingComplete) {
+    //       this.msg = 'please fill in the missing fields'
+    //       return
+    //     }
+    //     this.msg = 'hold on, processing payment...'
+    //     this.PLACE_ORDER(this.shop.order).then(() => {
+    //       if (this.shop.payment.orderResponse.message) {
+    //         this.msg = 'sorry, something went wrong. Please refresh and try again...'
+    //       } else {
+    //         createToken().then(result => {
+    //           if (result.token) {
+    //             let data = {
+    //               order_id: this.shop.payment.orderResponse.id,
+    //               payment_token: result.token.id,
+    //               payment_method: 'stripe'
+    //             }
+    //             console.log('payment data', data)
+    //             this.PAY_ORDER(data).then(() => {
+    //               this.msg = this.shop.payment.progress.message
+    //               if (this.shop.payment.progress.code === 200) {
+    //                 // redirect user
+    //                 this.$router.push({ name: 'order-complete' })
+    //               } else if (this.shop.payment.progress.code === 401 || this.shop.payment.progress.code === 405) {
+    //                 this.msg = this.shop.payment.progress.message
+    //               }
+    //             })
+    //           } else {
+    //             // no token
+    //             this.msg = 'sorry, something went wrong. Please refresh and try again or email us.'
+    //           }
+    //         })
+    //       }
+    //     })
+    //   })
+    // }
     pay() {
       //
       // this payment function does a couple of things.
@@ -182,33 +230,12 @@ export default {
           this.msg = 'please fill in the missing fields'
           return
         }
-        this.msg = 'hold on, processing payment...'
+        this.msg = 'hold on, processing...'
         this.PLACE_ORDER(this.shop.order).then(() => {
           if (this.shop.payment.orderResponse.message) {
             this.msg = 'sorry, something went wrong. Please refresh and try again...'
           } else {
-            createToken().then(result => {
-              if (result.token) {
-                let data = {
-                  order_id: this.shop.payment.orderResponse.id,
-                  payment_token: result.token.id,
-                  payment_method: 'stripe'
-                }
-                console.log('payment data', data)
-                this.PAY_ORDER(data).then(() => {
-                  this.msg = this.shop.payment.progress.message
-                  if (this.shop.payment.progress.code === 200) {
-                    // redirect user
-                    this.$router.push({ name: 'order-complete' })
-                  } else if (this.shop.payment.progress.code === 401 || this.shop.payment.progress.code === 405) {
-                    this.msg = this.shop.payment.progress.message
-                  }
-                })
-              } else {
-                // no token
-                this.msg = 'sorry, something went wrong. Please refresh and try again or email us.'
-              }
-            })
+            this.$router.push({ name: 'order-complete' })
           }
         })
       })

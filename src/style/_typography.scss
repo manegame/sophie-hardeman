@@ -169,3 +169,8 @@ input[type='submit'] {
     background-color: $yellow;
   }
 }
+
+.landing__column_right__list li,
+.nav__item__sub__item {
+  cursor: pointer;
+}
