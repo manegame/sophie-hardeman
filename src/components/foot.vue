@@ -1,6 +1,10 @@
 <template>
-  <div class="foot">
+  <div class="foot"
+       :class='{"foot--expanded": expanded}'>
     <template v-if='main.impressum'>
+      <a class="foot__link" 
+         v-if='mobile'
+         @click.prevent='toggleHeight'>Impressum</a>
       <router-link v-for='entry in main.impressum'
                    tag='a'
                    class="foot__link"
@@ -15,18 +19,22 @@
 import {mapState} from 'vuex'
 export default {
   name: 'foot',
-  props: [],
+  data() {
+    return {
+      expanded: false
+    }
+  },
   computed: {
-    ...mapState(['main'])
+    ...mapState(['main']),
+    mobile() {
+      if (window.innerWidth < 800) return true
+    }
   },
-  mounted() {},
-  updated: function() {
-    this.$nextTick(function() {
-      // Code that will run only after the
-      // entire view has been re-rendered
-    })
-  },
-  methods: {}
+  methods: {
+    toggleHeight() {
+      this.expanded = !this.expanded
+    }
+  }
 }
 </script>
 
@@ -37,7 +45,7 @@ export default {
 
 .foot {
   width: 100%;
-  height: $footer-height;
+  max-height: $footer-height;
   background: $grey;
   color: $blue;
   border-top: $border;
@@ -47,12 +55,28 @@ export default {
   white-space: nowrap;
   overflow: hidden;
   z-index: 999;
+  transition: all .3s ease-out;
+  -webkit-transition: all .3s ease-out;
+
+  &--expanded {
+    max-height: 1000px;
+  }
 
   &__link {
     margin: 0 10px;
     font-size: $font-size-s;
     line-height: $footer-height;
     font-weight: normal;
+    cursor: pointer;
+  }
+
+  @include screen-size('small') {
+    white-space: initial;
+    overflow-y: scroll;
+
+    &__link {
+      display: block;
+    }
   }
 }
 </style>
