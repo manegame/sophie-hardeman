@@ -183,7 +183,7 @@
             </fieldset>
             <!-- END PAYMENT -->
             <!-- MESSAGE TO USER -->
-              <p v-html='msg' />
+            <p id='message' v-html='msg' />
             <!-- END MESSAGE TO USER -->
           </form>
           <!-- END FORM -->
@@ -262,6 +262,11 @@ export default {
 
       @include screen-size('small') {
         width: 100%;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 0;
       }
 
       &__item {
@@ -272,6 +277,7 @@ export default {
         margin-bottom: 30px;
         border: 1px solid $grey-darker;
         overflow: hidden;
+        position: relative;
 
         &__amount {
           background: $white;
@@ -285,7 +291,6 @@ export default {
           border-radius: 6px 0 6px 0;
           border-bottom: 1px solid $grey-darker;
           border-right: 1px solid $grey-darker;
-          border-left: 1px solid $grey-darker;
         }
 
         &__image {
@@ -342,10 +347,16 @@ export default {
       float: right;
       font-size: $font-size;
       line-height: $line-height;
+      padding-bottom: 80px;
+
+      @include screen-size('small') {
+        padding-bottom: 80px;
+      }
 
       &__totals {
         border: $border;
         max-width: $left-col-width;
+        margin-top: 10px;
         padding: 8px 28px;
         background: $yellow;
 
@@ -400,9 +411,22 @@ input[placeholder='email'] {
 #payment,
 #shipping {
   border: $border;
-  padding: 8px;
-  margin-top: 10px;
   max-width: $left-col-width * 1.5;
+  padding: 8px;
+
+  &:first-child {
+    margin-top: -10px;
+  }
+}
+
+#payment,
+#shipping,
+#message {
+  margin-top: 10px;
+}
+
+#message {
+  color: $orange;
 }
 
 .pay-with-stripe {
