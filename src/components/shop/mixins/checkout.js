@@ -200,9 +200,8 @@ export default {
                   if (this.shop.payment.progress.code === 200) {
                     // redirect user
                     this.$router.push({ name: 'order-complete' })
-                  } else {
-                    console.log(this.shop.payment.progress)
-                    this.msg = 'sorry, we could not process your payment.'
+                  } else if (this.shop.payment.progress.code === 401 || this.shop.payment.progress.code === 405) {
+                    this.msg = this.shop.payment.progress.message
                   }
                 })
               } else {
