@@ -1,4 +1,5 @@
 <template>
+  <keep-alive>
     <div class="landing">
       <!-- - -->
       <!-- - -->
@@ -62,6 +63,26 @@
           <!-- - -->
           <!-- - -->
           <!-- - -->
+          <!-- For Sale -->
+          <section class="landing__column_middle__sections__shop">
+            <router-link :to='{name: "sale", params: {slug: "all"}}'
+                          tag='h2' >
+                          for sale
+                          </router-link>
+            <ul class="duo">
+              <router-link tag='li'
+                           v-for='garment in main.garment_categories'
+                           :key='garment.id'
+                           :to='{name: "sale", params: {slug: "all"}}'>
+                           <span>{{garment.name}}
+                             <sup v-for='label in garment.acf.labels'>{{label.post_title}}</sup>
+                           </span>
+              </router-link>
+            </ul>
+          </section>
+          <!-- - -->
+          <!-- - -->
+          <!-- - -->
           <!-- Collections -->
           <section v-if='emphasizedCollection'
                    class="landing__column_middle__sections__collections">
@@ -119,26 +140,6 @@
                            :to='{name: "hardeman tv", params: {slug: video.slug}}'>
                            <span>{{video.title.rendered}}
                              <sup v-for='label in video.acf.labels'>{{label.post_title}}</sup>
-                           </span>
-              </router-link>
-            </ul>
-          </section>
-          <!-- - -->
-          <!-- - -->
-          <!-- - -->
-          <!-- For Sale -->
-          <section class="landing__column_middle__sections__shop">
-            <router-link :to='{name: "sale", params: {slug: "all"}}'
-                          tag='h2' >
-                          for sale
-                          </router-link>
-            <ul class="duo">
-              <router-link tag='li'
-                           v-for='garment in main.garment_categories'
-                           :key='garment.id'
-                           :to='{name: "sale", params: {slug: "all"}}'>
-                           <span>{{garment.name}}
-                             <sup v-for='label in garment.acf.labels'>{{label.post_title}}</sup>
                            </span>
               </router-link>
             </ul>
@@ -236,6 +237,7 @@
         </div>
       </div>
     </div>
+  </keep-alive>
 </template>
 
 <script>
@@ -253,7 +255,7 @@ export default {
   data() {
     return {
       collapse: false,
-      bannerLink: ''
+      bannerLink: '/hardeman-tv/burning-oceans-into-deserts'
     }
   },
   computed: {
