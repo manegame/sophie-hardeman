@@ -255,7 +255,7 @@ export default {
   data() {
     return {
       collapse: false,
-      bannerLink: '/hardeman-tv/burning-oceans-into-deserts'
+      bannerLink: '/hardeman-tv/rouge-66'
     }
   },
   computed: {
