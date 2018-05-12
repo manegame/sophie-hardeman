@@ -101,6 +101,7 @@ export default {
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
+    padding-bottom: 80px;
 
     @include screen-size('small') {
       justify-content: center;

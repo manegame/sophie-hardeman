@@ -545,7 +545,7 @@ export default {
     &__toe {
       position: absolute;
       height: 100px;
-      bottom: 0;
+      bottom: 40px;
       left: 20px;
       background: $grey;
       width: calc(100% - 40px);

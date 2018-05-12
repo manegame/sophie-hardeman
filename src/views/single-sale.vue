@@ -49,6 +49,15 @@
                 </form>
               </div>
             </template>
+            <!-- PRE-ORDER NOTIFICATION -->
+            <template v-if='main.single_garment.acf["pre-order"]'>                
+              <div class="single_sale__main__left__payment__form">
+                Estimated production date: <span>{{Date(main.single_garment.acf["pre-order"]) | dotted}}</span><br><br>
+                <form @submit.prevent='purchase'>
+                  <input type='submit' value='Pre-order' />
+                </form>
+              </div>
+            </template>
             <!-- PRODUCT SIMPLE -->
             <template v-else>
               <div class="single_sale__main__left__payment__form">
@@ -174,6 +183,10 @@ export default {
       @include screen-size('medium') {
         width: calc(100% - 20px);
         margin-bottom: 40px;
+      }
+
+      @include screen-size('small') {
+        width: 100%;
       }
 
       &__image {
