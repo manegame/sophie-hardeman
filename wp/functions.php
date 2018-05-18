@@ -20,6 +20,7 @@ add_filter('query_vars', function ($vars) {
 add_action('after_setup_theme', 'image_size_setup');
 function image_size_setup()
 {
+    add_image_size('s-h-pixel', 10);
     add_image_size('s-h-tiny', 200);
     add_image_size('s-h-xtra-small', 300);
     add_image_size('s-h-small', 500);

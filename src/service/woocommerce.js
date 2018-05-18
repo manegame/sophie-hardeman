@@ -4,7 +4,7 @@ import WooCommerceAPI from 'woocommerce-api'
 
 // config here
 // (TEST DATA)
-const API_ROOT = 'https://s-h.manusnijhoff.nl/'
+const API_ROOT = 'https://cms.hardeman.co/'
 const CONSUMER_KEY = 'ck_875c8473969a782d4b673b8431ee78d22a8a5cfb'
 const CONSUMER_SECRET = 'cs_1e701c425a5dc40244f5a6785de98f5762e36634'
 // endpoints

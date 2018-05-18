@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueResource from 'vue-resource'
 
-const API_ROOT = 'https://s-h.manusnijhoff.nl/wp-json/wp/v2/'
+const API_ROOT = 'https://cms.hardeman.co/wp-json/wp/v2/'
 
 Vue.use(VueResource)
 

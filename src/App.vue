@@ -1,6 +1,8 @@
 <template>
   <div class='app'>
-    <router-view id='view' />
+    <keep-alive>
+      <router-view id='view' />
+    </keep-alive>
     <foot />
   </div>
 </template>

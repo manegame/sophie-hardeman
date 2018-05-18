@@ -32,7 +32,7 @@
            </div>
            <div class="single_sale__main__left__payment">
             <!-- PRODUCT VARIABLE -->
-            <template v-if='shop.singleProduct.product.attributes.length'>
+            <template v-if='shop.singleProduct.variations.length > 0'>
               <div class="single_sale__main__left__payment__form"
                    v-for='attribute in shop.singleProduct.product.attributes'
                    :key='attribute.id'>

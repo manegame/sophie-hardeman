@@ -1,243 +1,241 @@
 <template>
-  <keep-alive>
-    <div class="landing">
-      <!-- - -->
-      <!-- - -->
-      <!-- - -->
-      <!-- LEFT -->
-      <div class="landing__column_left landing__column"
-           :class="{'landing__column_left--collapse': collapse}"
-           @click='collapse = !collapse'>
-        <div class="landing__column_left__head">
-          <h1 class="landing__column_left__head__title">hardeman</h1>
-          <h4 class="landing__column_left__head__subtitle">
-            <span class="landing__column_left__head__subtitle__highlight">amsterdam based</span> <br/>
-            <span class="landing__column_left__head__subtitle__highlight">denim brand</span>
-          </h4>
-          <section class="landing__column_left__head__social">
-            <a class="landing__column_left__head__social__item socicon-facebook"
-               href='https://www.facebook.com/hardemanonline/'
-               target='_blank'></a>
-            <a class="landing__column_left__head__social__item socicon-instagram"
-               href='https://www.instagram.com/hardeman_'
-               target='_blank'></a>
-          </section>
-          <ul class="landing__column_left__head__links"
-              v-if='main.collections.length > 0 && main.stockists.length > 0 && main.community.length > 0 && main.videos.length > 0'>
-            <router-link tag='li'
-                         class="landing__column_left__head__links__item"
-                         :to="{name: 'collection', params: { slug: emphasizedCollection, section: 'lookbook'}}">collections</router-link>
-            <router-link tag='li'
-                         class="landing__column_left__head__links__item"
-                         :to="{name: 'hardeman tv', params: { slug: main.videos[0].slug}}">hardeman tv</router-link>
-            <router-link tag='li'
-                         class="landing__column_left__head__links__item"
-                         :to="{name: 'sale', params: { slug: 'all' }}">for sale</router-link>
-            <router-link tag='li'
-                         class="landing__column_left__head__links__item"
-                         :to="{name: 'stockists', params: { slug: main.stockists[0].slug}}">stockists</router-link>
-            <router-link tag='li'
-                         class="landing__column_left__head__links__item"
-                         :to="{name: 'community', params: { slug: main.community[0].slug}}">community</router-link>
-          </ul>
-        </div>
-        <div class="landing__column_left__toe">
-          <weather />
-          <calendar />
-        </div>
-      </div>
-      <!-- - -->
-      <!-- - -->
-      <!-- - -->
-      <!-- MIDDLE -->
-      <div class="landing__column_middle landing__column"
-           @scroll='handleScroll'>
-        <!-- BANNER -->
-        <div v-if='main.banner.sizes'
-             class="landing__column_middle__banner">
-          <a :href="bannerLink">
-            <img :src='main.banner.sizes["s-h-medium"]'/>
-          </a>
-        </div>
-        <div class="landing__column_middle__sections">
-          <!-- - -->
-          <!-- - -->
-          <!-- - -->
-          <!-- For Sale -->
-          <section class="landing__column_middle__sections__shop">
-            <router-link :to='{name: "sale", params: {slug: "all"}}'
-                          tag='h2' >
-                          for sale
-                          </router-link>
-            <ul class="duo">
-              <router-link tag='li'
-                           v-for='garment in main.garment_categories'
-                           :key='garment.id'
-                           :to='{name: "sale", params: {slug: "all"}}'>
-                           <span>{{garment.name}}
-                             <sup v-for='label in garment.acf.labels'>{{label.post_title}}</sup>
-                           </span>
-              </router-link>
-            </ul>
-          </section>
-          <!-- - -->
-          <!-- - -->
-          <!-- - -->
-          <!-- Collections -->
-          <section v-if='emphasizedCollection'
-                   class="landing__column_middle__sections__collections">
-            <router-link :to="{ name: 'collection', params: {slug: emphasizedCollection, section: 'lookbook'} }"
-                          tag='h2'>
-                          collections
-                          </router-link>
-            <ul>
-              <router-link class="landing__column_middle__sections__collections__collection"
-                           tag='li'
-                           v-for='collection in main.collections'
-                           :class="{'landing__column_middle__sections__collections__collection--emphasis': collection.acf.emphasis}"
-                           :key='collection.id'
-                           :to="{name: 'collection', params: { slug: collection.slug, section: 'lookbook'}}">
-                             <span class='landing__column_middle__sections__collections__collection--season'>{{collection.acf.season}}</span>
-                             <span class="landing__column_middle__sections__collections__collection--title">{{collection.title.rendered}}
-                               <sup v-for='label in collection.acf.labels'>{{label.post_title}}</sup></span>
-                          </router-link>
-            </ul>
-          </section>
-          <!-- - -->
-          <!-- - -->
-          <!-- - -->
-          <!-- About -->
-          <section class="landing__column_middle__sections__about">
-            <router-link :to='{name: "about", params: {slug: "bio"}}'
-                          tag='h2' >
-                          about hardeman
-                          </router-link>
-            <ul class="duo">
-              <router-link tag='li'
-                           v-for='item in main.about'
-                           :key='item.id'
-                           :to='{name: "about", params: {slug: item.slug}}'>
-                             <span>{{item.title.rendered}}
-                               <sup v-for='label in item.acf.labels'>{{label.post_title}}</sup>
-                             </span>
-                           </router-link>
-            </ul>
-          </section>
-          <!-- - -->
-          <!-- - -->
-          <!-- - -->
-          <!-- Hardeman TV -->
-          <section class="landing__column_middle__sections__tv"
-                   v-if='main.videos.length > 0'>
-            <router-link :to='{name: "hardeman tv", params: {slug: main.videos[0].slug}}'
-                          tag='h2' >
-                          hardeman tv
-                          </router-link>
-            <ul>
-              <router-link tag='li'
-                           v-for='video in main.videos'
-                           :key='video.id'
-                           :to='{name: "hardeman tv", params: {slug: video.slug}}'>
-                           <span>{{video.title.rendered}}
-                             <sup v-for='label in video.acf.labels'>{{label.post_title}}</sup>
-                           </span>
-              </router-link>
-            </ul>
-          </section>
-          <!-- - -->
-          <!-- - -->
-          <!-- - -->
-          <!-- Stockists -->
-          <section v-if='main.stockists.length > 0'
-                   class="landing__column_middle__sections__stockists">
-            <router-link :to='{name: "stockists", params: {slug: main.stockists[0].slug}}'
-                         tag='h2' >
-                         stockists
-            </router-link>
-            <ul>
-              <router-link tag='li'
-                           v-for='s in main.stockists'
-                           :key='s.id'
-                           :to='{name: "stockists", params: {slug: s.slug}}'>
-                           <span>{{s.title.rendered}}
-                             <sup v-for='label in s.acf.labels'>{{label.post_title}}</sup>
-                           </span>
-              </router-link>
-            </ul>
-          </section>
-          <!-- - -->
-          <!-- - -->
-          <!-- - -->
-          <!-- Stockists -->
-          <section v-if='main.community.length > 0'
-                   class="landing__column_middle__sections__community">
-            <router-link :to='{name: "community", params: {slug: main.community[0].slug}}'
-                          tag='h2' >
-                          community
-            </router-link>
-            <router-link tag='img'
-                         :to='{name: "community", params: {slug: main.community[0].slug}}'
-                         class="landing__column_middle__sections__community__image"
-                         :src='main.community[0].acf.image.sizes["s-h-medium"]' />
-                         <sup v-for='label in main.community[0].acf.labels'>{{label.post_title}}</sup>
-          </section>
-          <!-- - -->
-          <!-- - -->
-          <!-- - -->
-          <!-- Diary -->
-          <section v-if='main.diary.length > 0'
-                   class="landing__column_middle__sections__diary">
-            <router-link :to='{name: "diary", params: {slug: main.diary[0].slug}}'
-                          tag='h2' >
-                          diary
-            </router-link>
-            <ul>
-              <router-link tag='li'
-                           v-for='e in main.diary'
-                           :key='e.id'
-                           :to='{name: "diary", params: {slug: e.slug}}'>
-                           <span>{{e.title.rendered}}
-                             <sup v-for='label in e.acf.labels'>{{label.post_title}}</sup>
-                           </span>
-              </router-link>
-            </ul>
-          </section>
-        </div>
-      </div>
-      <!-- - -->
-      <!-- - -->
-      <!-- - -->
-      <!-- RIGHT -->
-      <div class="landing__column_right landing__column">
-        <router-link v-if='main.diary.length > 0'
-                     class="landing__column_right__head"
-                     :to='{name: "diary", params: {slug: main.diary[0].slug}}'
-                     tag='h3' >
-                     diary
-        </router-link>
-        <ul class="landing__column_right__list">
-          <router-link v-for='entry in main.diary'
-                       tag='li'
-                       class='naturel'
-                       :key='entry.id'
-                       :to="{
-                         name: 'diary',
-                         params: { slug: entry.slug}
-                       }">
-                       {{entry.title.rendered}}
-                       <sup v-for='label in entry.acf.label'>
-                         {{label.post_title}}
-                       </sup>
-           </router-link>
+  <div class="landing">
+    <!-- - -->
+    <!-- - -->
+    <!-- - -->
+    <!-- LEFT -->
+    <div class="landing__column_left landing__column"
+          :class="{'landing__column_left--collapse': collapse}"
+          @click='collapse = !collapse'>
+      <div class="landing__column_left__head">
+        <h1 class="landing__column_left__head__title">hardeman</h1>
+        <h4 class="landing__column_left__head__subtitle">
+          <span class="landing__column_left__head__subtitle__highlight">amsterdam based</span> <br/>
+          <span class="landing__column_left__head__subtitle__highlight">denim brand</span>
+        </h4>
+        <section class="landing__column_left__head__social">
+          <a class="landing__column_left__head__social__item socicon-facebook"
+              href='https://www.facebook.com/hardemanonline/'
+              target='_blank'></a>
+          <a class="landing__column_left__head__social__item socicon-instagram"
+              href='https://www.instagram.com/hardeman_'
+              target='_blank'></a>
+        </section>
+        <ul class="landing__column_left__head__links"
+            v-if='main.collections.length > 0 && main.stockists.length > 0 && main.community.length > 0 && main.videos.length > 0'>
+          <router-link tag='li'
+                        class="landing__column_left__head__links__item"
+                        :to="{name: 'collection', params: { slug: emphasizedCollection, section: 'lookbook'}}">collections</router-link>
+          <router-link tag='li'
+                        class="landing__column_left__head__links__item"
+                        :to="{name: 'hardeman tv', params: { slug: main.videos[0].slug}}">hardeman tv</router-link>
+          <router-link tag='li'
+                        class="landing__column_left__head__links__item"
+                        :to="{name: 'sale', params: { slug: 'all' }}">for sale</router-link>
+          <router-link tag='li'
+                        class="landing__column_left__head__links__item"
+                        :to="{name: 'stockists', params: { slug: main.stockists[0].slug}}">stockists</router-link>
+          <router-link tag='li'
+                        class="landing__column_left__head__links__item"
+                        :to="{name: 'community', params: { slug: main.community[0].slug}}">community</router-link>
         </ul>
-        <div class="landing__column_right__toe">
-          <p class="landing__column_right__toe__text">
-            a personal collection of photographs by sophie hardeman
-          </p>
-        </div>
+      </div>
+      <div class="landing__column_left__toe">
+        <weather />
+        <calendar />
       </div>
     </div>
-  </keep-alive>
+    <!-- - -->
+    <!-- - -->
+    <!-- - -->
+    <!-- MIDDLE -->
+    <div class="landing__column_middle landing__column"
+          @scroll='handleScroll'>
+      <!-- BANNER -->
+      <div v-if='main.banner.sizes'
+            class="landing__column_middle__banner">
+        <a :href="bannerLink">
+          <img :src='main.banner.sizes["s-h-medium"]'/>
+        </a>
+      </div>
+      <div class="landing__column_middle__sections">
+        <!-- - -->
+        <!-- - -->
+        <!-- - -->
+        <!-- For Sale -->
+        <section class="landing__column_middle__sections__shop">
+          <router-link :to='{name: "sale", params: {slug: "all"}}'
+                        tag='h2' >
+                        for sale
+                        </router-link>
+          <ul class="duo">
+            <router-link tag='li'
+                          v-for='garment in main.garment_categories'
+                          :key='garment.id'
+                          :to='{name: "sale", params: {slug: "all"}}'>
+                          <span>{{garment.name}}
+                            <sup v-for='label in garment.acf.labels'>{{label.post_title}}</sup>
+                          </span>
+            </router-link>
+          </ul>
+        </section>
+        <!-- - -->
+        <!-- - -->
+        <!-- - -->
+        <!-- Collections -->
+        <section v-if='emphasizedCollection'
+                  class="landing__column_middle__sections__collections">
+          <router-link :to="{ name: 'collection', params: {slug: emphasizedCollection, section: 'lookbook'} }"
+                        tag='h2'>
+                        collections
+                        </router-link>
+          <ul>
+            <router-link class="landing__column_middle__sections__collections__collection"
+                          tag='li'
+                          v-for='collection in main.collections'
+                          :class="{'landing__column_middle__sections__collections__collection--emphasis': collection.acf.emphasis}"
+                          :key='collection.id'
+                          :to="{name: 'collection', params: { slug: collection.slug, section: 'lookbook'}}">
+                            <span class='landing__column_middle__sections__collections__collection--season'>{{collection.acf.season}}</span>
+                            <span class="landing__column_middle__sections__collections__collection--title">{{collection.title.rendered}}
+                              <sup v-for='label in collection.acf.labels'>{{label.post_title}}</sup></span>
+                        </router-link>
+          </ul>
+        </section>
+        <!-- - -->
+        <!-- - -->
+        <!-- - -->
+        <!-- About -->
+        <section class="landing__column_middle__sections__about">
+          <router-link :to='{name: "about", params: {slug: "bio"}}'
+                        tag='h2' >
+                        about hardeman
+                        </router-link>
+          <ul class="duo">
+            <router-link tag='li'
+                          v-for='item in main.about'
+                          :key='item.id'
+                          :to='{name: "about", params: {slug: item.slug}}'>
+                            <span>{{item.title.rendered}}
+                              <sup v-for='label in item.acf.labels'>{{label.post_title}}</sup>
+                            </span>
+                          </router-link>
+          </ul>
+        </section>
+        <!-- - -->
+        <!-- - -->
+        <!-- - -->
+        <!-- Hardeman TV -->
+        <section class="landing__column_middle__sections__tv"
+                  v-if='main.videos.length > 0'>
+          <router-link :to='{name: "hardeman tv", params: {slug: main.videos[0].slug}}'
+                        tag='h2' >
+                        hardeman tv
+                        </router-link>
+          <ul>
+            <router-link tag='li'
+                          v-for='video in main.videos'
+                          :key='video.id'
+                          :to='{name: "hardeman tv", params: {slug: video.slug}}'>
+                          <span>{{video.title.rendered}}
+                            <sup v-for='label in video.acf.labels'>{{label.post_title}}</sup>
+                          </span>
+            </router-link>
+          </ul>
+        </section>
+        <!-- - -->
+        <!-- - -->
+        <!-- - -->
+        <!-- Stockists -->
+        <section v-if='main.stockists.length > 0'
+                  class="landing__column_middle__sections__stockists">
+          <router-link :to='{name: "stockists", params: {slug: main.stockists[0].slug}}'
+                        tag='h2' >
+                        stockists
+          </router-link>
+          <ul>
+            <router-link tag='li'
+                          v-for='s in main.stockists'
+                          :key='s.id'
+                          :to='{name: "stockists", params: {slug: s.slug}}'>
+                          <span>{{s.title.rendered}}
+                            <sup v-for='label in s.acf.labels'>{{label.post_title}}</sup>
+                          </span>
+            </router-link>
+          </ul>
+        </section>
+        <!-- - -->
+        <!-- - -->
+        <!-- - -->
+        <!-- Stockists -->
+        <section v-if='main.community.length > 0'
+                  class="landing__column_middle__sections__community">
+          <router-link :to='{name: "community", params: {slug: main.community[0].slug}}'
+                        tag='h2' >
+                        community
+          </router-link>
+          <router-link tag='img'
+                        :to='{name: "community", params: {slug: main.community[0].slug}}'
+                        class="landing__column_middle__sections__community__image"
+                        :src='main.community[0].acf.image.sizes["s-h-medium"]' />
+                        <sup v-for='label in main.community[0].acf.labels'>{{label.post_title}}</sup>
+        </section>
+        <!-- - -->
+        <!-- - -->
+        <!-- - -->
+        <!-- Diary -->
+        <section v-if='main.diary.length > 0'
+                  class="landing__column_middle__sections__diary">
+          <router-link :to='{name: "diary", params: {slug: main.diary[0].slug}}'
+                        tag='h2' >
+                        diary
+          </router-link>
+          <ul>
+            <router-link tag='li'
+                          v-for='e in main.diary'
+                          :key='e.id'
+                          :to='{name: "diary", params: {slug: e.slug}}'>
+                          <span>{{e.title.rendered}}
+                            <sup v-for='label in e.acf.labels'>{{label.post_title}}</sup>
+                          </span>
+            </router-link>
+          </ul>
+        </section>
+      </div>
+    </div>
+    <!-- - -->
+    <!-- - -->
+    <!-- - -->
+    <!-- RIGHT -->
+    <div class="landing__column_right landing__column">
+      <router-link v-if='main.diary.length > 0'
+                    class="landing__column_right__head"
+                    :to='{name: "diary", params: {slug: main.diary[0].slug}}'
+                    tag='h3' >
+                    diary
+      </router-link>
+      <ul class="landing__column_right__list">
+        <router-link v-for='entry in main.diary'
+                      tag='li'
+                      class='naturel'
+                      :key='entry.id'
+                      :to="{
+                        name: 'diary',
+                        params: { slug: entry.slug}
+                      }">
+                      {{entry.title.rendered}}
+                      <sup v-for='label in entry.acf.label'>
+                        {{label.post_title}}
+                      </sup>
+          </router-link>
+      </ul>
+      <div class="landing__column_right__toe">
+        <p class="landing__column_right__toe__text">
+          a personal collection of photographs by sophie hardeman
+        </p>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>

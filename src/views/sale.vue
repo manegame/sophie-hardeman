@@ -6,67 +6,68 @@
       <template v-if='$route.params.slug === "all"'>
         <!-- ALL GARMENTS -->
         <router-link tag='div'
-                     v-for='item in main.garments'
-                     v-if='item.acf.linked_product'
-                     :key='item.id'
-                     :to="{ name: 'single sale', params: {slug: $route.params.slug, item: item.slug}}"
-                     class="sale__main__item" >
-               <!-- <span class="sale__main__item__price-tag" v-if='!item.acf.linked_product'> -->
-               <!-- <span class="sale__main__item__price-tag"> -->
-                 <!-- Not (yet) for sale ;- -->
-               <!-- </span> -->
-               <span class="sale__main__item__price-tag">
-                 <!-- get the product by linked id and display price -->
-                 {{productById(item.acf.linked_product[0].ID).price}}
-               </span>
-               <img class="sale__main__item__image"
+                      v-for='item in main.garments'
+                      v-if='item.acf.linked_product'
+                      :key='item.id'
+                      :to="{ name: 'single sale', params: {slug: $route.params.slug, item: item.slug}}"
+                      class="sale__main__item" >
+              <!-- <span class="sale__main__item__price-tag" v-if='!item.acf.linked_product'> -->
+              <!-- <span class="sale__main__item__price-tag"> -->
+                <!-- Not (yet) for sale ;- -->
+              <!-- </span> -->
+              <span class="sale__main__item__price-tag">
+                <!-- get the product by linked id and display price -->
+                {{productById(item.acf.linked_product[0].ID).price}}
+              </span>
+              <img class="sale__main__item__image"
                     :class='{"sale__main__item__image--emphasis": item.acf.emphasis}'
-                    :src='item.acf.image.sizes["s-h-large"]' />
-               <div class="sale__main__item__meta">
-                 <h6>
-                   <span class='sale__main__item__meta__season' v-html='item.acf.season'></span>
-                   <span class="sale__main__item__meta__title">{{item.title.rendered}}</span>
-                   <span class="sale__main__item__meta__price"
-                         v-if='!item.acf.linked_product'>T.B.A.</span>
-                   <span class="sale__main__item__meta__price"
-                         v-else>{{productById(item.acf.linked_product[0].ID).price}}</span>
-                   <span class="sale__main__item__meta__brackets">
-                     (amsterdam west)
-                   </span>
-                 </h6>
-               </div>
+                    :src='item.acf.image.sizes["s-h-pixel"]'
+                    @load='handleLoaded($event, item)' />
+              <div class="sale__main__item__meta">
+                <h6>
+                  <span class='sale__main__item__meta__season' v-html='item.acf.season'></span>
+                  <span class="sale__main__item__meta__title">{{item.title.rendered}}</span>
+                  <span class="sale__main__item__meta__price"
+                        v-if='!item.acf.linked_product'>T.B.A.</span>
+                  <span class="sale__main__item__meta__price"
+                        v-else>{{productById(item.acf.linked_product[0].ID).price}}</span>
+                  <span class="sale__main__item__meta__brackets">
+                    (amsterdam west)
+                  </span>
+                </h6>
+              </div>
         </router-link>
       </template>
       <!-- BY CATEGORY -->
       <template v-else>
         <router-link tag='div'
-                     v-for='item in main.garments'
-                     :key='item.id'
-                     :to="{ name: 'single sale', params: {slug: $route.params.slug, item: item.slug}}"
-                     class="sale__main__item" >
-               <span class="sale__main__item__price-tag" v-if='!item.acf.linked_product'>
-                 Not for sale ;-
-               </span>
-               <span class="sale__main__item__price-tag" v-else>
-                 <!-- get the product by linked id and display price -->
-                 {{productById(item.acf.linked_product[0].ID).price}}
-               </span>
-               <img class="sale__main__item__image"
+                    v-for='item in main.garments'
+                    :key='item.id'
+                    :to="{ name: 'single sale', params: {slug: $route.params.slug, item: item.slug}}"
+                    class="sale__main__item" >
+              <span class="sale__main__item__price-tag" v-if='!item.acf.linked_product'>
+                Not for sale ;-
+              </span>
+              <span class="sale__main__item__price-tag" v-else>
+                <!-- get the product by linked id and display price -->
+                {{productById(item.acf.linked_product[0].ID).price}}
+              </span>
+              <img class="sale__main__item__image"
                     :class='{"sale__main__item__image--emphasis": item.acf.emphasis}'
-                    :src='item.acf.image.sizes["s-h-medium"]' />
-               <div class="sale__main__item__meta">
-                 <h6>
-                   <span class='sale__main__item__meta__season' v-html='item.acf.season'></span>
-                   <span class="sale__main__item__meta__title">{{item.title.rendered}}</span>
-                   <span class="sale__main__item__meta__price"
-                         v-if='!item.acf.linked_product'>T.B.A.</span>
-                   <span class="sale__main__item__meta__price"
-                         v-else>{{productById(item.acf.linked_product[0].ID).price}}</span>
-                   <span class="sale__main__item__meta__brackets">
-                     (amsterdam west)
-                   </span>
-                 </h6>
-               </div>
+                    :src='item.acf.image.sizes["s-h-pixel"]' />
+              <div class="sale__main__item__meta">
+                <h6>
+                  <span class='sale__main__item__meta__season' v-html='item.acf.season'></span>
+                  <span class="sale__main__item__meta__title">{{item.title.rendered}}</span>
+                  <span class="sale__main__item__meta__price"
+                        v-if='!item.acf.linked_product'>T.B.A.</span>
+                  <span class="sale__main__item__meta__price"
+                        v-else>{{productById(item.acf.linked_product[0].ID).price}}</span>
+                  <span class="sale__main__item__meta__brackets">
+                    (amsterdam west)
+                  </span>
+                </h6>
+              </div>
         </router-link>
       </template>
     </div>
@@ -87,6 +88,11 @@ export default {
   computed: {
     ...mapState(['main']),
     ...mapGetters(['productById'])
+  },
+  methods: {
+    handleLoaded(event, item) {
+      event.currentTarget.src = item.acf.image.sizes['s-h-medium']
+    }
   }
 }
 </script>
