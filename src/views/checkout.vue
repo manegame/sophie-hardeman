@@ -154,7 +154,7 @@
               <ul class="checkout__main__right__totals__list">
                 <li class="checkout__main__right__totals__list__item naturel" 
                     v-for='item in shop.cart'
-                    :key='"list" + item.data.id'>
+                    :key='"list" + item.data.product.id'>
                     <span v-if='item.data.variation'>
                       {{item.quantity}} x {{item.data.product.name}} ({{item.data.variation.attributes[0].option}}): €{{item.data.variation.price}}
                     </span>

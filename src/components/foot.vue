@@ -72,7 +72,7 @@ export default {
 
   @include screen-size('small') {
     white-space: initial;
-    overflow-y: scroll;
+    overflow-y: hidden;
 
     &__link {
       display: block;

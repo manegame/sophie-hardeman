@@ -63,7 +63,8 @@
         <!-- - -->
         <!-- - -->
         <!-- For Sale -->
-        <section class="landing__column_middle__sections__shop">
+        <section  class="landing__column_middle__sections__shop"
+                  v-if='shop.products.length > 0'>
           <router-link :to='{name: "sale", params: {slug: "all"}}'
                         tag='h2' >
                         for sale
@@ -72,9 +73,13 @@
             <router-link tag='li'
                           v-for='garment in main.garment_categories'
                           :key='garment.id'
+                          v-if='categoryPopulated(garment.id)'
                           :to='{name: "sale", params: {slug: "all"}}'>
-                          <span>{{garment.name}}
-                            <sup v-for='label in garment.acf.labels'>{{label.post_title}}</sup>
+                          <span>
+                            <span v-html='garment.name' />
+                            <sup  v-for='label in garment.acf.labels'
+                                  :key='"sale-" + label.id'
+                                  v-html='label.post_title' />
                           </span>
             </router-link>
           </ul>
@@ -98,7 +103,8 @@
                           :to="{name: 'collection', params: { slug: collection.slug, section: 'lookbook'}}">
                             <span class='landing__column_middle__sections__collections__collection--season'>{{collection.acf.season}}</span>
                             <span class="landing__column_middle__sections__collections__collection--title">{{collection.title.rendered}}
-                              <sup v-for='label in collection.acf.labels'>{{label.post_title}}</sup></span>
+                              <sup  v-for='label in collection.acf.labels'
+                                    :key='"collection" + label.ID'>{{label.post_title}}</sup></span>
                         </router-link>
           </ul>
         </section>
@@ -138,7 +144,7 @@
                           :key='video.id'
                           :to='{name: "hardeman tv", params: {slug: video.slug}}'>
                           <span>{{video.title.rendered}}
-                            <sup v-for='label in video.acf.labels'>{{label.post_title}}</sup>
+                            <sup v-for='label in video.acf.labels' :key='label.id'>{{label.post_title}}</sup>
                           </span>
             </router-link>
           </ul>
@@ -158,8 +164,9 @@
                           v-for='s in main.stockists'
                           :key='s.id'
                           :to='{name: "stockists", params: {slug: s.slug}}'>
-                          <span>{{s.title.rendered}}
-                            <sup v-for='label in s.acf.labels'>{{label.post_title}}</sup>
+                          <span>
+                            <span v-html='s.title.rendered'/>
+                            <sup v-for='label in s.acf.labels' :key='label.id'>{{label.post_title}}</sup>
                           </span>
             </router-link>
           </ul>
@@ -257,7 +264,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['main']),
+    ...mapState(['main', 'shop']),
     emphasizedCollection() {
       if (this.main.collections.length > 0) return this.main.collections.filter(c => c.acf.emphasis)[0].slug
     }
@@ -283,6 +290,12 @@ export default {
           this.bannerLink = url.replace(vid, 'hardeman-tv')
         }
       }
+    },
+    categoryPopulated(id) {
+      // check if there are products with this category
+      return this.shop.products.some(product => {
+        return product.acf.garment_category.term_id === id
+      })
     }
   }
 }

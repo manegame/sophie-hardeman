@@ -2,35 +2,30 @@
   <div class='sale'>
     <navbar />
     <topbar />
-    <div class="sale__main">
+    <div  class="sale__main"
+          v-if='this.main.garment_categories.length > 0'>
       <template v-if='$route.params.slug === "all"'>
         <!-- ALL GARMENTS -->
         <router-link tag='div'
-                      v-for='item in main.garments'
-                      v-if='item.acf.linked_product'
+                      v-for='item in shop.products'
                       :key='item.id'
                       :to="{ name: 'single sale', params: {slug: $route.params.slug, item: item.slug}}"
                       class="sale__main__item" >
-              <!-- <span class="sale__main__item__price-tag" v-if='!item.acf.linked_product'> -->
-              <!-- <span class="sale__main__item__price-tag"> -->
-                <!-- Not (yet) for sale ;- -->
-              <!-- </span> -->
               <span class="sale__main__item__price-tag">
                 <!-- get the product by linked id and display price -->
-                {{productById(item.acf.linked_product[0].ID).price}}
+                {{item.price}}
               </span>
-              <img class="sale__main__item__image"
-                    :class='{"sale__main__item__image--emphasis": item.acf.emphasis}'
+              <img  class="sale__main__item__image"
                     :src='item.acf.image.sizes["s-h-pixel"]'
                     @load='handleLoaded($event, item)' />
               <div class="sale__main__item__meta">
                 <h6>
-                  <span class='sale__main__item__meta__season' v-html='item.acf.season'></span>
-                  <span class="sale__main__item__meta__title">{{item.title.rendered}}</span>
-                  <span class="sale__main__item__meta__price"
-                        v-if='!item.acf.linked_product'>T.B.A.</span>
-                  <span class="sale__main__item__meta__price"
-                        v-else>{{productById(item.acf.linked_product[0].ID).price}}</span>
+                  <span class='sale__main__item__meta__season' 
+                        v-html='item.acf.season' />
+                  <span class="sale__main__item__meta__title" 
+                        v-html='item.name' />
+                  <span class="sale__main__item__meta__price" 
+                        v-html='item.price' />
                   <span class="sale__main__item__meta__brackets">
                     (amsterdam west)
                   </span>
@@ -39,30 +34,28 @@
         </router-link>
       </template>
       <!-- BY CATEGORY -->
-      <template v-else>
+      <template v-else >
         <router-link tag='div'
-                    v-for='item in main.garments'
-                    :key='item.id'
-                    :to="{ name: 'single sale', params: {slug: $route.params.slug, item: item.slug}}"
-                    class="sale__main__item" >
-              <span class="sale__main__item__price-tag" v-if='!item.acf.linked_product'>
-                Not for sale ;-
-              </span>
-              <span class="sale__main__item__price-tag" v-else>
+                      v-for='item in shop.products'
+                      v-if='item.acf.garment_category.term_id && item.acf.garment_category.term_id === currentCategory'
+                      :key='item.id'
+                      :to="{ name: 'single sale', params: {slug: $route.params.slug, item: item.slug}}"
+                      class="sale__main__item" >
+              <span class="sale__main__item__price-tag">
                 <!-- get the product by linked id and display price -->
-                {{productById(item.acf.linked_product[0].ID).price}}
+                {{item.price}}
               </span>
-              <img class="sale__main__item__image"
-                    :class='{"sale__main__item__image--emphasis": item.acf.emphasis}'
-                    :src='item.acf.image.sizes["s-h-pixel"]' />
+              <img  class="sale__main__item__image"
+                    :src='item.acf.image.sizes["s-h-pixel"]'
+                    @load='handleLoaded($event, item)' />
               <div class="sale__main__item__meta">
                 <h6>
-                  <span class='sale__main__item__meta__season' v-html='item.acf.season'></span>
-                  <span class="sale__main__item__meta__title">{{item.title.rendered}}</span>
-                  <span class="sale__main__item__meta__price"
-                        v-if='!item.acf.linked_product'>T.B.A.</span>
-                  <span class="sale__main__item__meta__price"
-                        v-else>{{productById(item.acf.linked_product[0].ID).price}}</span>
+                  <span class='sale__main__item__meta__season' 
+                        v-html='item.acf.season' />
+                  <span class="sale__main__item__meta__title" 
+                        v-html='item.name' />
+                  <span class="sale__main__item__meta__price" 
+                        v-html='item.price' />
                   <span class="sale__main__item__meta__brackets">
                     (amsterdam west)
                   </span>
@@ -86,8 +79,15 @@ export default {
     topbar
   },
   computed: {
-    ...mapState(['main']),
-    ...mapGetters(['productById'])
+    ...mapState(['main', 'shop']),
+    ...mapGetters(['productById']),
+    currentCategory() {
+      if (this.$route.name === 'sale') {
+        return this.main.garment_categories.filter(c => {
+          return c.slug === this.$route.params.slug
+        })[0].id
+      } else return 0
+    }
   },
   methods: {
     handleLoaded(event, item) {
@@ -148,6 +148,7 @@ export default {
         border-radius: 0 0 6px 0;
         border-bottom: 1px solid $grey-darker;
         border-right: 1px solid $grey-darker;
+        white-space: nowrap;
 
         &::after {
           content: " €"
@@ -197,6 +198,7 @@ export default {
           padding: 2px 6px;
           border-radius: 6px;
           border: 1px solid $grey-dark;
+          white-space: nowrap;
 
           &::after {
             content: " €"

@@ -31,6 +31,22 @@ function image_size_setup()
     // add_image_size('slide-large', 710, 480, true);
 }
 
+// 
+// 
+// 
+// RE-SHOW PRODUCT IMAGE IN BACKEND AFTER BUG
+
+add_action('admin_head', 'show_image_option');
+
+function show_image_option() {
+  echo '<style>
+  #postimagediv, #screen-meta label[for=postimagediv-hide] {
+    display: block !important;
+  }
+  </style>';
+}
+
+
 // -------
 // -------
 // -------
@@ -246,8 +262,8 @@ function garment_post_type()
     register_post_type('s-h_garments',
     array(
       'labels' => array(
-        'name' => __('Garments'),
-        'singular_name' => __('Garment')
+        'name' => __('Looks'),
+        'singular_name' => __('Look')
       ),
       'public' => true,
       'show_in_rest' => true,

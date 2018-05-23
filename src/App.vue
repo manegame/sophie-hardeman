@@ -96,6 +96,7 @@ export default {
       this.GET_IMPRESSUM()
       switch (route.name) {
         case ('first load'):
+          this.GET_PRODUCTS()
           this.GET_BANNER()
           this.GET_COLLECTIONS()
           this.GET_ABOUT()
@@ -107,6 +108,7 @@ export default {
           this.GET_COMMUNITY()
           break
         case ('landing'):
+          this.GET_PRODUCTS()
           this.CLEAR_SINGLES()
           this.GET_BANNER()
           this.GET_COLLECTIONS()
@@ -130,18 +132,8 @@ export default {
           this.GET_SINGLE_ABOUT(route.params.slug)
           break
         case ('sale'):
-          if (route.params.slug === 'all') {
-            this.GET_GARMENT_CATEGORIES()
-            this.GET_GARMENTS(route.params.slug)
-            this.GET_PRODUCTS()
-            this.GET_PRODUCT_CATEGORIES()
-          } else {
-            this.GET_GARMENT_CATEGORIES().then(() => {
-              console.log(this.$route.params.slug)
-              const cat = this.main.garment_categories.filter(c => { return c.slug === this.$route.params.slug })[0]
-              this.GET_GARMENTS(cat.id)
-            })
-          }
+          this.GET_GARMENT_CATEGORIES()
+          this.GET_PRODUCTS()
           break
         case ('single sale'):
           this.GET_GARMENT_CATEGORIES()
@@ -239,6 +231,8 @@ export default {
           break
         default:
           if (from.name === null) {
+            // load first time
+            console.log('first load')
             this.$_fetchData('first load')
           }
           this.$_fetchData(to)

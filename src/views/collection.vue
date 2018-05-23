@@ -178,11 +178,6 @@ export default {
       let el = document.getElementById('swiper_container')
       return el.clientWidth * 0.75
     }
-  },
-  watch: {
-    initiated() {
-      console.log(this.initiated)
-    }
   }
 }
 </script>

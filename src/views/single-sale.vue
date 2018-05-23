@@ -2,32 +2,20 @@
   <div class='single_sale'>
     <navbar />
     <topbar />
-    <div v-if='main.single_garment.acf'
+    <div v-if='shop.singleProduct.product.id'
          class="single_sale__main">
          <h5 class="single_sale__main__title">
-           <span class="single_sale__main__title--season"
-                 v-html='main.single_garment.acf.season'></span>
-           <span class='single_sale__main__title--title'
-                 v-html='main.single_garment.title.rendered'></span>
+           <span class="single_sale__main__title--season" v-html='shop.singleProduct.product.acf.season' />
+           <span class='single_sale__main__title--title' v-html='shop.singleProduct.product.name' />
          </h5>
          <div class="single_sale__main__left">
            <img class="single_sale__main__left__image"
-                :src='main.single_garment.acf.image.sizes["s-h-small"]'/>
+                :src='shop.singleProduct.product.acf.image.sizes["s-h-small"]'/>
            <div class="single_sale__main__left__text">
-             <template v-if='main.single_garment.acf.description'>
+             <template v-if='shop.singleProduct.product.acf.details'>
                <p class="single_sale__main__left__text--head">Description</p>
                <p class="single_sale__main__left__text--main"
-                  v-html='main.single_garment.acf.description' />
-             </template>
-             <template v-if='main.single_garment.acf.details'>
-               <p class="single_sale__main__left__text--head">Details</p>
-               <p class="single_sale__main__left__text--main"
-                  v-html='main.single_garment.acf.details' />
-             </template>
-             <template v-if='main.single_garment.acf.details_and_sizing'>
-               <p class="single_sale__main__left__text--head">Details & sizing</p>
-               <p class="single_sale__main__left__text--main"
-                  v-html='main.single_garment.acf.details_and_sizing' />
+                  v-html='shop.singleProduct.product.acf.details' />
              </template>
            </div>
            <div class="single_sale__main__left__payment">
@@ -49,16 +37,6 @@
                 </form>
               </div>
             </template>
-            <!-- PRE-ORDER NOTIFICATION -->
-            <template v-if='main.single_garment.acf["pre-order"]'>                
-              <div class="single_sale__main__left__payment__form">
-                Estimated production date: <span>{{Date(main.single_garment.acf["pre-order"]) | dotted}}</span><br><br>
-                <!-- <form @submit.prevent='purchase'> -->
-                  <!-- <input type='submit' value='Pre-order' /> -->
-                <!-- </form> -->
-              </div>
-            </template>
-            <!-- PRODUCT SIMPLE -->
             <template v-else>
               <div class="single_sale__main__left__payment__form">
                 <form @submit.prevent='purchase'>
@@ -76,7 +54,7 @@
 </template>
 
 <script>
-import {mapState, mapActions, mapGetters} from 'vuex'
+import {mapState, mapActions} from 'vuex'
 import navbar from '@/components/navbar'
 import topbar from '@/components/topbar'
 import aboutSophie from '@/components/about-sophie'
@@ -95,7 +73,6 @@ export default {
   },
   computed: {
     ...mapState(['main', 'shop']),
-    ...mapGetters(['productVariationByOption']),
     variableProduct() {
       if (this.shop.singleProduct.variations.length > 0) return true
       else return false

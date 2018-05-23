@@ -70,14 +70,16 @@
                      :to='{name: "sale", params: {slug: "all"}}'>
                      all
                      </router-link>
-        <!-- <template v-for='category in main.garment_categories'>
+        <template v-for='category in main.garment_categories'>
           <router-link class="nav__item"
-                       :class='{"nav__item--emphasis": $route.params.slug === category.slug}'
                        tag='li'
+                       :class='{"nav__item--emphasis": $route.params.slug === category.slug}'
+                       :key='"navcat" + category.id'
+                       v-if='categoryPopulated(category.id)'
                        :to='{name: "sale", params: {slug: category.slug}}'>
                        {{category.name}}<sup v-for='label in category.acf.labels'>{{label.post_title}}</sup>
                        </router-link>
-        </template> -->
+        </template>
       </ul>
     </template>
     <!-- HARDEMAN TV -->
@@ -132,7 +134,7 @@
                        tag='li'
                        :key='s.id'
                        :to='{name: "stockists", params: {slug: s.slug}}'>
-                       {{s.title.rendered}} <sup v-for='label in s.acf.labels'>{{label.post_title}}</sup>
+                       <span v-html='s.title.rendered'/> <sup v-for='label in s.acf.labels'>{{label.post_title}}</sup>
                        </router-link>
         </template>
       </ul>
@@ -170,7 +172,15 @@ export default {
     calendar
   },
   computed: {
-    ...mapState(['main'])
+    ...mapState(['main', 'shop'])
+  },
+  methods: {
+    categoryPopulated(id) {
+      // check if there are products with this category
+      return this.shop.products.some(product => {
+        return product.acf.garment_category.term_id === id
+      })
+    }
   }
 }
 </script>
