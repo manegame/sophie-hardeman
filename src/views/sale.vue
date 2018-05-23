@@ -118,6 +118,10 @@ export default {
     &::after {
       content: "";
       flex: auto;
+
+      @include screen-size('small') {
+        flex: none;
+      }
     }
 
     &__item {

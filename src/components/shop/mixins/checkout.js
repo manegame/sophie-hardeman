@@ -233,7 +233,7 @@ export default {
         this.msg = 'hold on, processing...'
         this.PLACE_ORDER(this.shop.order).then(() => {
           if (this.shop.payment.orderResponse.message) {
-            this.msg = 'sorry, something went wrong. Please refresh and try again...'
+            this.msg = 'Something went wrong. Please try again or contact <a href="mailto:sales@hardeman.co">sales@hardeman.co</a>. Apologies for the inconvenience'
           } else {
             this.$router.push({ name: 'order-complete' })
           }
