@@ -6,11 +6,15 @@
           v-if='this.main.garment_categories.length > 0'>
       <template v-if='$route.params.slug === "all"'>
         <!-- ALL GARMENTS -->
-        <router-link tag='div'
+        <router-link  tag='div'
                       v-for='item in shop.products'
+                      :event='!item.in_stock ? "" : "click"'
                       :key='item.id'
                       :to="{ name: 'single sale', params: {slug: $route.params.slug, item: item.slug}}"
                       class="sale__main__item" >
+              <span v-if='!item.in_stock'
+                    class="sale__main__item__sold_out"
+                    v-html='"sold out"'/>
               <span class="sale__main__item__price-tag">
                 <!-- get the product by linked id and display price -->
                 {{item.price}}
@@ -26,9 +30,9 @@
                         v-html='item.name' />
                   <span class="sale__main__item__meta__price" 
                         v-html='item.price' />
-                  <span class="sale__main__item__meta__brackets">
+                  <!-- <span class="sale__main__item__meta__brackets">
                     (amsterdam west)
-                  </span>
+                  </span> -->
                 </h6>
               </div>
         </router-link>
@@ -38,9 +42,13 @@
         <router-link tag='div'
                       v-for='item in shop.products'
                       v-if='item.acf.garment_category.term_id && item.acf.garment_category.term_id === currentCategory'
+                      :event='!item.in_stock ? "" : "click"'
                       :key='item.id'
                       :to="{ name: 'single sale', params: {slug: $route.params.slug, item: item.slug}}"
                       class="sale__main__item" >
+              <span v-if='!item.in_stock'
+                    class="sale__main__item__sold_out" 
+                    v-html='"sold out"'/>
               <span class="sale__main__item__price-tag">
                 <!-- get the product by linked id and display price -->
                 {{item.price}}
@@ -56,9 +64,9 @@
                         v-html='item.name' />
                   <span class="sale__main__item__meta__price" 
                         v-html='item.price' />
-                  <span class="sale__main__item__meta__brackets">
+                  <!-- <span class="sale__main__item__meta__brackets">
                     (amsterdam west)
-                  </span>
+                  </span> -->
                 </h6>
               </div>
         </router-link>
@@ -157,6 +165,18 @@ export default {
         &::after {
           content: " €"
         }
+      }
+
+      &__sold_out {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        z-index: 8;
+        color: $orange;
+        background: $white;
+        border-bottom: $border;
+        border-top: $border;
+        top: 40%;
       }
 
       &__image {

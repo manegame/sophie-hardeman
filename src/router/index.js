@@ -30,7 +30,7 @@ export default new Router({
       redirect: {name: 'collection', params: {section: 'lookbook'}}
     },
     {
-      path: '/collection/:slug/:section',
+      path: '/s-h_collection/:slug/:section',
       name: 'collection',
       component: collection
     },
