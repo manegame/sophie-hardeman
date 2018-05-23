@@ -2,7 +2,7 @@
   <div class='single_sale'>
     <navbar />
     <topbar />
-    <div v-if='shop.singleProduct.product.id'
+    <div v-if='shop.singleProduct.product.id && imageSource'
          class="single_sale__main">
          <h5 class="single_sale__main__title">
            <span class="single_sale__main__title--season" v-html='shop.singleProduct.product.acf.season' />
@@ -10,7 +10,7 @@
          </h5>
          <div class="single_sale__main__left">
            <img class="single_sale__main__left__image"
-                :src='shop.singleProduct.product.acf.image.sizes["s-h-small"]'/>
+                :src='imageSource'/>
            <div class="single_sale__main__left__text">
              <template v-if='shop.singleProduct.product.acf.details'>
                <p class="single_sale__main__left__text--head">Description</p>
@@ -21,17 +21,15 @@
            <div class="single_sale__main__left__payment">
             <!-- PRODUCT VARIABLE -->
             <template v-if='shop.singleProduct.variations.length > 0'>
-              <div class="single_sale__main__left__payment__form"
-                   v-for='attribute in shop.singleProduct.product.attributes'
-                   :key='attribute.id'>
-                <form v-if='attribute.name !== ""'
-                      @submit.prevent='purchase'>
-                  <select v-model='selected'>
-                    <option disabled value=''>Have your pick</option>
-                    <option v-for='option in attribute.options'
-                            :key='option.id'
-                            :value='option'
-                            v-html='option'/>
+              <div class="single_sale__main__left__payment__form">
+                <form @submit.prevent='purchase'>
+                  <select v-model='selectedVariation'>
+                    <option disabled value='' v-html='shop.singleProduct.variations[0].attributes[0].name'></option>
+                    <option v-for='variation in shop.singleProduct.variations'
+                            :disabled='!variation.in_stock'
+                            :key='variation.id'
+                            :value='variation.attributes[0].option'
+                            v-html='variation.attributes[0].option'/>
                   </select>
                   <input type='submit' value='Pre-order' />
                 </form>
@@ -54,7 +52,7 @@
 </template>
 
 <script>
-import {mapState, mapActions} from 'vuex'
+import {mapState, mapActions, mapGetters} from 'vuex'
 import navbar from '@/components/navbar'
 import topbar from '@/components/topbar'
 import aboutSophie from '@/components/about-sophie'
@@ -68,14 +66,24 @@ export default {
   },
   data() {
     return {
-      selected: ''
+      selectedVariation: ''
     }
   },
   computed: {
     ...mapState(['main', 'shop']),
+    ...mapGetters(['productVariationByOption']),
     variableProduct() {
       if (this.shop.singleProduct.variations.length > 0) return true
       else return false
+    },
+    imageSource() {
+      if (this.shop.singleProduct.variations.length > 0) {
+        console.log(this.productVariationByOption(this.selectedVariation))
+        if (this.selectedVariation === '') return this.shop.singleProduct.product.acf.image.sizes['s-h-small']
+        else return this.productVariationByOption(this.selectedVariation).image.src
+      } else {
+        return this.shop.singleProduct.product.acf.image.sizes['s-h-small']
+      }
     }
   },
   methods: {
@@ -85,25 +93,23 @@ export default {
     addToCart() {
       console.log('add to cart variable')
       if (this.variableProduct === true) {
-        const variation = this.productVariationByOption(this.selected)
+        const variation = this.productVariationByOption(this.selectedVariation)
         console.log(variation)
         this.ADD_TO_CART({
           product: this.shop.singleProduct.product,
-          acf: this.main.single_garment.acf,
           variation: variation
         })
       } else {
         console.log('add to cart simple')
         console.log(this.shop.singleProduct.product)
         this.ADD_TO_CART({
-          product: this.shop.singleProduct.product,
-          acf: this.main.single_garment.acf
+          product: this.shop.singleProduct.product
         })
       }
     },
     purchase() {
       if (this.variableProduct) {
-        if (this.selected !== '') {
+        if (this.selectedVariation !== '') {
           this.addToCart()
           this.$router.push({name: 'checkout'})
         } else {

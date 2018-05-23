@@ -137,14 +137,11 @@ export default {
           break
         case ('single sale'):
           this.GET_GARMENT_CATEGORIES()
-          this.GET_SINGLE_GARMENT(route.params.item).then(() => {
-            if (this.main.single_garment.acf.linked_product) {
-              // console.log('get linked product', this.main.single_garment.acf.linked_product[0].ID)
-              let id = this.main.single_garment.acf.linked_product[0].ID
-              this.GET_PRODUCT(id)
-                .then(this.GET_PRODUCT_VARIATIONS(id))
-            }
-          })
+          this.GET_PRODUCT(route.params.item)
+            .then(() => {
+              const id = this.shop.singleProduct.product.id
+              this.GET_PRODUCT_VARIATIONS(id)
+            })
           break
         case 'checkout':
           this.GET_PRODUCTS()

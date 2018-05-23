@@ -74,7 +74,7 @@
                           v-for='garment in main.garment_categories'
                           :key='garment.id'
                           v-if='categoryPopulated(garment.id)'
-                          :to='{name: "sale", params: {slug: "all"}}'>
+                          :to='{name: "sale", params: {slug: garment.slug}}'>
                           <span>
                             <span v-html='garment.name' />
                             <sup  v-for='label in garment.acf.labels'

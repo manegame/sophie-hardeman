@@ -35,12 +35,11 @@ export default {
       )
     })
   },
-  getProduct(id) {
+  getProduct(slug) {
     return new Promise((resolve, reject) => {
-      WooCommerce.getAsync('products/' + id + '').then(
+      WooCommerce.getAsync('products/?slug=' + slug + '').then(
         response => {
-          console.log('response')
-          resolve(JSON.parse(response.toJSON().body))
+          resolve(JSON.parse(response.toJSON().body)[0])
         },
         response => {
           reject(response)

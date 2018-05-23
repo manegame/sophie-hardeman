@@ -3,7 +3,7 @@
     <navbar />
     <topbar />
     <div class="checkout__main"
-         v-if='shop.cart.length'>
+         v-if='shop.cart.length > 0'>
          <!-- START LEFT COL -->
          <div class="checkout__main__left">
             <div class='checkout__main__left__item'
@@ -18,11 +18,14 @@
                     <button v-if='item.quantity === 5' @click='ADD_TO_CART(item.data)'>please, I'm begging you</button>
                  </span>
                  <img class='checkout__main__left__item__image' 
-                      v-if='item.data.acf.image' 
-                      :src='item.data.acf.image.sizes["s-h-small"]' />
+                      v-if='!item.data.variation' 
+                      :src='item.data.product.acf.image.sizes["s-h-small"]' />
+                 <img class='checkout__main__left__item__image' 
+                      v-else
+                      :src='item.data.variation.image.src' />
                  <div class="checkout__main__left__item__meta">
                     <h6>
-                      <span class='checkout__main__left__item__meta__season' v-html='item.data.acf.season'></span>
+                      <span class='checkout__main__left__item__meta__season' v-html='item.data.product.acf.season'></span>
                       <template v-if='item.data.variation'>
                         <span class="checkout__main__left__item__meta__title">{{item.data.product.name}} ({{item.data.variation.attributes[0].option}})</span>
                         <span class="checkout__main__left__item__meta__price">{{item.data.variation.price}}</span><br>
@@ -154,13 +157,17 @@
               <ul class="checkout__main__right__totals__list">
                 <li class="checkout__main__right__totals__list__item naturel" 
                     v-for='item in shop.cart'
+                    v-if='item.data.variation'
+                    :key='"list" + item.data.variation.id'>
+                  <span>
+                    {{item.quantity}} x {{item.data.product.name}} ({{item.data.variation.attributes[0].option}}): €{{item.data.variation.price}}
+                  </span>
+                </li>
+                <li v-else
                     :key='"list" + item.data.product.id'>
-                    <span v-if='item.data.variation'>
-                      {{item.quantity}} x {{item.data.product.name}} ({{item.data.variation.attributes[0].option}}): €{{item.data.variation.price}}
-                    </span>
-                    <span v-else>
-                      {{item.quantity}} x {{item.data.product.name}}: €{{item.data.product.price}}
-                    </span>
+                  <span>
+                    {{item.quantity}} x {{item.data.product.name}}: €{{item.data.product.price}}
+                  </span>
                 </li>
               </ul>
               <ul class="checkout__main__right__totals__list" v-if='shippingTotal !== null'>
