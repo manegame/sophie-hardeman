@@ -16,14 +16,30 @@
                <p class="single_sale__main__left__text--head">Description</p>
                <p class="single_sale__main__left__text--main"
                   v-html='shop.singleProduct.product.acf.details' />
-             </template>
-           </div>
+              </template>
+            </div>
            <div class="single_sale__main__left__payment">
-            <!-- PRODUCT VARIABLE -->
+            <!-- NON-VARIABLE ATTRIBUTES -->
+            <!-- <div  v-if='shop.singleProduct.product.attributes.length'
+                  class="single_sale__main__left__attributes">
+              <select v-for='(attribute, index) in shop.singleProduct.product.attributes'
+                      v-model='selectedAttribute'
+                      v-if='!attribute.variation && attribute.visible'
+                      :key='attribute.id'>
+                <option disabled value='' v-html='attribute.name'></option>
+                <option v-for='(variation) in attribute.options'
+                        :key='variation'
+                        :value='variation'
+                        v-html='variation'/>
+              </select>
+            </div> -->
             <template v-if='shop.singleProduct.variations.length > 0'>
               <div class="single_sale__main__left__payment__form">
                 <form @submit.prevent='purchase'>
                   <select v-model='selectedVariation'>
+                    <template>
+                      
+                    </template>
                     <option disabled value='' v-html='shop.singleProduct.variations[0].attributes[0].name'></option>
                     <option v-for='variation in shop.singleProduct.variations'
                             :disabled='!variation.in_stock'
@@ -66,7 +82,8 @@ export default {
   },
   data() {
     return {
-      selectedVariation: ''
+      selectedVariation: '',
+      selectedAttribute: ''
     }
   },
   computed: {

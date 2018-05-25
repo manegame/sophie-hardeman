@@ -178,16 +178,17 @@
                 Grand Total: €{{cartTotal + shippingTotal}} (VAT incl.)
             </fieldset>
             <!-- START PAYMENT -->
-            <!-- <fieldset id='payment' 
+            <fieldset id='payment' 
                       :class='{"incomplete": !billingComplete}'>
               <legend>Payment</legend>
-              <card class='stripe-card'
+              <!-- <card class='stripe-card'
                     :class='{ complete }'
                     :stripe='stripeKey'
                     :options='stripeOptions'
                     @change='complete = $event.complete'/>
-                <input class='pay-with-stripe' type='submit' value='Pay with credit card' :disabled='!complete'>
-            </fieldset> -->
+                <input class='pay-with-stripe' type='submit' value='Pay with credit card' :disabled='!complete'> -->
+                <div id="paypal-button"></div>
+            </fieldset>
             <fieldset id='payment'>
               <input type='submit' value='PRE-ORDER'>
             </fieldset>
@@ -227,7 +228,9 @@ export default {
   mixins: [checkout],
   data() {
     return {
-      stripeKey: 'pk_live_cF6ffZbXqoMaxvXr8ZPXI0J9'
+      // stripeKey: 'pk_live_cF6ffZbXqoMaxvXr8ZPXI0J9'
+      paypalScript: 'https://www.paypalobjects.com/api/checkout.js',
+      paypalLoaded: false
     }
   },
   computed: {
@@ -235,13 +238,75 @@ export default {
   },
   mounted() {
     this.setShippingZone()
+    // paypal
+    let paypal = document.createElement('script')
+    paypal.setAttribute('src', this.paypalScript)
+    paypal.addEventListener('load', this.paypalScriptLoaded)
+    document.head.appendChild(paypal)
   },
   methods: {
     ...mapActions([
       'ADD_TO_CART',
       'REMOVE_FROM_CART'
-    ])
-  }
+    ]),
+    paypalScriptLoaded() {
+      console.log('paypal has loaded')
+      this.paypalLoaded = true
+      this.paypalInit()
+    },
+    paypalInit() {
+      console.log('paypal init')
+      paypal.Button.render({
+        env: 'sandbox', // Or 'sandbox',
+
+        commit: true, // Show a 'Pay Now' button
+
+        // PayPal Client IDs - replace with your own
+        // Create a PayPal app: https://developer.paypal.com/developer/applications/create
+        client: {
+            sandbox:    'ARxqTmcXElXkbqbdVOKiK_Icq0mdRimros412LhoCZUwPtutl05ab9qoNVP96F0jGw8JjW5LpPYW4FsA',
+            production: '<insert production client id>'
+        },
+
+        style: {
+          color: 'gold',
+          size: 'small'
+        },
+
+        payment: function(data, actions) {
+            return actions.payment.create({
+                payment: {
+                    transactions: [
+                        {
+                            amount: { total: '1.00', currency: 'USD' }
+                        }
+                    ]
+                }
+            })
+        },
+
+        onAuthorize: function(data, actions) {
+            return actions.payment.execute().then(function(payment) {
+              window.alert("payment complete!")
+                // The payment is complete!
+                // You can now show a confirmation message to the customer
+            })
+        },
+
+        onCancel: function(data, actions) {
+          /*
+          * Buyer cancelled the payment
+          */
+        },
+
+        onError: function(err) {
+          /*
+          * An error occurred during the transaction
+          */
+        }
+      }, '#paypal-button')
+    }
+  },
 }
 </script>
 
