@@ -47,14 +47,14 @@
                             :value='variation.attributes[0].option'
                             v-html='variation.attributes[0].option'/>
                   </select>
-                  <input type='submit' value='Pre-order' />
+                  <input type='submit' value='Order' />
                 </form>
               </div>
             </template>
             <template v-else>
               <div class="single_sale__main__left__payment__form">
                 <form @submit.prevent='purchase'>
-                  <input type='submit' value='Pre-order' />
+                  <input type='submit' value='Order' />
                 </form>
               </div>
             </template>

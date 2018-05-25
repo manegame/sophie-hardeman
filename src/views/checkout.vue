@@ -189,9 +189,9 @@
                 <input class='pay-with-stripe' type='submit' value='Pay with credit card' :disabled='!complete'> -->
                 <div id="paypal-button"></div>
             </fieldset>
-            <fieldset id='payment'>
+            <!-- <fieldset id='payment'>
               <input type='submit' value='PRE-ORDER'>
-            </fieldset>
+            </fieldset> -->
             <!-- END PAYMENT -->
             <!-- MESSAGE TO USER -->
             <p id='message' v-html='msg' />
@@ -256,15 +256,13 @@ export default {
       'PLACE_ORDER'
     ]),
     paypalScriptLoaded() {
-      console.log('paypal has loaded')
       this.paypalLoaded = true
       this.paypalInit()
     },
     paypalInit() {
-      console.log('paypal init')
       const vm = this
       paypal.Button.render({
-        env: 'sandbox', // Or 'sandbox',
+        env: 'production', // 'production' or 'sandbox',
 
         commit: true, // Show a 'Pay Now' button
 
@@ -272,7 +270,7 @@ export default {
         // Create a PayPal app: https://developer.paypal.com/developer/applications/create
         client: {
             sandbox:    'ARxqTmcXElXkbqbdVOKiK_Icq0mdRimros412LhoCZUwPtutl05ab9qoNVP96F0jGw8JjW5LpPYW4FsA',
-            production: '<insert production client id>'
+            production: 'AULkwxKm8-yuCK1jhRf_QRv_ZkvnSgcKJ4SrjElsFBfmpPzrSlmipnFMmK23mBWSLhmOMJpQUX90aV9C'
         },
 
         style: {
@@ -302,7 +300,7 @@ export default {
             }).then(() => {
               vm.PLACE_ORDER(vm.shop.order).then(() => {
                 if (vm.shop.payment.orderResponse.message) {
-                  vm.msg = 'Something went wrong. Please try again or contact <a href="mailto:sales@hardeman.co">sales@hardeman.co</a>. Apologies for the inconvenience'
+                  vm.msg = 'Something went wrong. Please contact <a href="mailto:sales@hardeman.co">sales@hardeman.co</a>. Our apologies for the inconvenience'
                 } else {
                   vm.$router.push({ name: 'order-complete' })
                 }

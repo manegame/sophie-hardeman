@@ -8,6 +8,7 @@
         <!-- ALL GARMENTS -->
         <router-link  tag='div'
                       v-for='item in shop.products'
+                      v-if='item.catalog_visibility !== "hidden"'
                       :event='!item.in_stock ? "" : "click"'
                       :key='item.id'
                       :to="{ name: 'single sale', params: {slug: $route.params.slug, item: item.slug}}"
@@ -41,7 +42,7 @@
       <template v-else >
         <router-link tag='div'
                       v-for='item in shop.products'
-                      v-if='item.acf.garment_category.term_id && item.acf.garment_category.term_id === currentCategory'
+                      v-if='item.acf.garment_category.term_id && item.acf.garment_category.term_id === currentCategory && item.catalog_visibility !== "hidden"'
                       :event='!item.in_stock ? "" : "click"'
                       :key='item.id'
                       :to="{ name: 'single sale', params: {slug: $route.params.slug, item: item.slug}}"
