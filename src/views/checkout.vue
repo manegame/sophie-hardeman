@@ -215,7 +215,7 @@
 </template>
 
 <script>
-import {mapActions, mapState} from 'vuex'
+import {mapActions, mapState, mapGetters} from 'vuex'
 import loader from '@/components/base/loader'
 import navbar from '@/components/navbar'
 import topbar from '@/components/topbar'
@@ -234,7 +234,11 @@ export default {
     }
   },
   computed: {
-    ...mapState(['main', 'shop'])
+    ...mapState(['main', 'shop']),
+    ...mapGetters(['cartTotal', 'shippingTotal']),
+    total() {
+      return this.cartTotal + this.shippingTotal
+    }
   },
   mounted() {
     this.setShippingZone()
@@ -247,7 +251,9 @@ export default {
   methods: {
     ...mapActions([
       'ADD_TO_CART',
-      'REMOVE_FROM_CART'
+      'REMOVE_FROM_CART',
+      'ADD_CUSTOMER_INFO',
+      'PLACE_ORDER'
     ]),
     paypalScriptLoaded() {
       console.log('paypal has loaded')
@@ -256,6 +262,7 @@ export default {
     },
     paypalInit() {
       console.log('paypal init')
+      const vm = this
       paypal.Button.render({
         env: 'sandbox', // Or 'sandbox',
 
@@ -274,23 +281,36 @@ export default {
         },
 
         payment: function(data, actions) {
-            return actions.payment.create({
-                payment: {
-                    transactions: [
-                        {
-                            amount: { total: '1.00', currency: 'USD' }
-                        }
-                    ]
-                }
-            })
+          return actions.payment.create({
+              payment: {
+                  transactions: [
+                      {
+                          amount: { total: '' + vm.total + '', currency: 'EUR' }
+                      }
+                  ]
+              }
+          })
         },
 
         onAuthorize: function(data, actions) {
-            return actions.payment.execute().then(function(payment) {
-              window.alert("payment complete!")
-                // The payment is complete!
-                // You can now show a confirmation message to the customer
+          return actions.payment.execute().then(function(payment) {
+            vm.shop.order.payment_method = 'paypal'
+            vm.shop.order.set_paid = true
+            vm.ADD_CUSTOMER_INFO({
+              billing: vm.billing,
+              shipping: vm.shipping
+            }).then(() => {
+              vm.PLACE_ORDER(vm.shop.order).then(() => {
+                if (vm.shop.payment.orderResponse.message) {
+                  vm.msg = 'Something went wrong. Please try again or contact <a href="mailto:sales@hardeman.co">sales@hardeman.co</a>. Apologies for the inconvenience'
+                } else {
+                  vm.$router.push({ name: 'order-complete' })
+                }
+              })
             })
+            // The payment is complete!
+            // You can now show a confirmation message to the customer
+          })
         },
 
         onCancel: function(data, actions) {
@@ -306,7 +326,7 @@ export default {
         }
       }, '#paypal-button')
     }
-  },
+  }
 }
 </script>
 
