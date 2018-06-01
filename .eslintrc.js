@@ -20,6 +20,8 @@ module.exports = {
     'no-unused-vars': 1,
     // to avoid conflict between prettier formatter and standard js linter
     // ref. https://github.com/prettier/prettier/issues/1139
-    'space-before-function-paren': 0
+    'space-before-function-paren': 0,
+    // allow arrows in text like <- this
+    'invalid-first-character-of-tag-name': 0
   }
 }

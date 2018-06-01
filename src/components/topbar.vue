@@ -32,16 +32,10 @@ export default {
   computed: {
     ...mapState(['main']),
     reccomendLink() {
-      switch (this.$route.name) {
-        case 'collection':
-          return 'mailto:?subject=Hey! Check out ' + this.main.single.title.rendered + '&body=It\'s a collection by Hardeman... \nhardeman.com'
-      }
+      return 'mailto:?subject=Hey! Check it out&body=Made by Hardeman... \nhardeman.com'
     },
     mailSophie() {
-      switch (this.$route.name) {
-        case 'collection':
-          return 'mailto:info@hardeman.co?subject=It\'s been a while since we last talked...'
-      }
+      return 'mailto:info@hardeman.co?subject=It\'s been a while since we last talked...'
     }
   },
   methods: {

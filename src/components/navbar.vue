@@ -12,13 +12,18 @@
         <template v-for='collection in main.collections'>
           <router-link class="nav__item"
                        :class='{"nav__item--emphasis": main.single.slug === collection.slug}'
+                       :key='collection.id'
                        tag='li'
                        :to='{name: "collection", params: {slug: collection.slug, section: "lookbook"}}'>
                        <span class='nav__item--ss'>{{collection.acf.season}}</span>
-                       <span class='nav__item--tt'>{{collection.title.rendered}}<sup v-for='label in collection.acf.labels'>{{label.post_title}}</sup></span>
+                       <span class='nav__item--tt'>{{collection.title.rendered}}
+                          <sup  v-for='label in collection.acf.labels'
+                                :key='"a" + label.id'>{{label.post_title}}</sup>
+                        </span>
                        </router-link>
-                       <ul class="nav__item__sub"
-                           :class='{"nav__item__sub--show": main.single.slug === collection.slug}'>
+                       <ul  class="nav__item__sub"
+                            :key='"list" + collection.id'
+                            :class='{"nav__item__sub--show": main.single.slug === collection.slug}'>
                            <router-link tag='li'
                                         class="nav__item__sub__item nav__item__sub__item--show"
                                         :class="{'nav__item__sub__item--active': $route.params.section === 'lookbook'}"
@@ -51,11 +56,14 @@
       <p class='navbar__head'>about </p>
       <ul class="nav">
         <template v-for='page in main.about'>
-          <router-link class="nav__item"
-                       :class='{"nav__item--emphasis": $route.params.slug === page.slug}'
-                       tag='li'
-                       :to='{name: "about", params: {slug: page.slug}}'>
-                       {{page.title.rendered}}<sup v-for='label in page.acf.labels'>{{label.post_title}}</sup>
+          <router-link  class="nav__item"
+                        :key='page.id'
+                        :class='{"nav__item--emphasis": $route.params.slug === page.slug}'
+                        tag='li'
+                        :to='{name: "about", params: {slug: page.slug}}'>
+                        {{page.title.rendered}}
+                          <sup  v-for='label in page.acf.labels'
+                                :key='"b" + label.id'>{{label.post_title}}</sup>
                        </router-link>
         </template>
       </ul>
@@ -77,21 +85,30 @@
                        :key='"navcat" + category.id'
                        v-if='categoryPopulated(category.id)'
                        :to='{name: "sale", params: {slug: category.slug}}'>
-                       {{category.name}}<sup v-for='label in category.acf.labels'>{{label.post_title}}</sup>
+                       {{category.name}}
+                        <sup v-for='label in category.acf.labels'
+                            :key='"c" + label.id'>{{label.post_title}}</sup>
                        </router-link>
         </template>
       </ul>
+    </template>
+    <!-- CHECKOUT -->
+    <template v-if='$route.name === "checkout"'>
+      <p class='navbar__head'>checkout </p>
     </template>
     <!-- HARDEMAN TV -->
     <template v-if='$route.name === "hardeman tv"'>
       <p class='navbar__head'>hardeman tv </p>
       <ul class="nav">
         <template v-for='video in main.videos'>
-          <router-link class="nav__item"
-                       :class='{"nav__item--emphasis": $route.params.slug === video.slug}'
-                       tag='li'
-                       :to='{name: "hardeman tv", params: {slug: video.slug}}'>
-                       {{video.title.rendered}}<sup v-for='label in video.acf.labels'>{{label.post_title}}</sup>
+          <router-link  class="nav__item"
+                        :key='video.id'
+                        :class='{"nav__item--emphasis": $route.params.slug === video.slug}'
+                        tag='li'
+                        :to='{name: "hardeman tv", params: {slug: video.slug}}'>
+                        {{video.title.rendered}}
+                          <sup  v-for='label in video.acf.labels'
+                                :key='"d" + label.id'>{{label.post_title}}</sup>
                        </router-link>
         </template>
       </ul>
@@ -102,10 +119,14 @@
       <ul class="nav">
         <template v-for='entry in main.diary'>
           <router-link class="nav__item"
-                       :class='{"nav__item--emphasis": $route.params.slug === entry.slug && $route.params.noScrollTo === true}'
-                       tag='li'
-                       :to='{name: "diary", params: {slug: entry.slug, scrollTo: true}}'>
-                       {{entry.title.rendered}} <sup v-for='label in entry.acf.labels'>{{label.post_title}}</sup>
+                        :key='entry.id'
+                        :class='{"nav__item--emphasis": $route.params.slug === entry.slug && $route.params.noScrollTo === true}'
+                        tag='li'
+                        :to='{name: "diary", params: {slug: entry.slug, scrollTo: true}}'>
+                        {{entry.title.rendered}} 
+                          <sup  v-for='label in entry.acf.labels'
+                                :key='"e" + label.id'>{{label.post_title}}</sup>
+                        
                        </router-link>
         </template>
       </ul>
@@ -115,12 +136,16 @@
       <p class='navbar__head'>community</p>
       <ul class="nav">
         <template v-for='entry in main.community'>
-          <router-link class="nav__item"
-                       :class='{"nav__item--emphasis": $route.params.slug === entry.slug}'
-                       tag='li'
-                       :to='{name: "community", params: {slug: entry.slug}}'>
-                       {{entry.title.rendered}} <sup v-for='label in entry.acf.labels'>{{label.post_title}}</sup>
-                       </router-link>
+          <router-link  class="nav__item"
+                        :key='entry.id'
+                        :class='{"nav__item--emphasis": $route.params.slug === entry.slug}'
+                        tag='li'
+                        :to='{name: "community", params: {slug: entry.slug}}'>
+                        {{entry.title.rendered}} 
+                          <sup  v-for='label in entry.acf.labels'
+                                :key='"f" + label.id'>{{label.post_title}}</sup>
+                        
+                        </router-link>
         </template>
       </ul>
     </template>
@@ -134,7 +159,10 @@
                        tag='li'
                        :key='s.id'
                        :to='{name: "stockists", params: {slug: s.slug}}'>
-                       <span v-html='s.title.rendered'/> <sup v-for='label in s.acf.labels'>{{label.post_title}}</sup>
+                       <span v-html='s.title.rendered'/> 
+                        <sup  v-for='label in s.acf.labels'
+                              :key='"g" + label.id'>{{label.post_title}}</sup>
+                      
                        </router-link>
         </template>
       </ul>
@@ -149,7 +177,9 @@
                        tag='li'
                        :key='e.id'
                        :to='{name: "events", params: {slug: e.slug}}'>
-                       {{e.title.rendered}} <sup v-for='label in e.acf.labels'>{{label.post_title}}</sup>
+                       {{e.title.rendered}} 
+                        <sup  v-for='label in e.acf.labels'
+                              :key='"h" + label.id'>{{label.post_title}}</sup>
                        </router-link>
         </template>
       </ul>
@@ -157,7 +187,7 @@
     </template>
     <!-- IMPRESSUM -->
     <template v-if='$route.name === "impressum"'>
-      <!-- <p class='navbar__head'>impressum</p> -->
+      <p class='navbar__head'>impressum</p>
     </template>
   </div>
 </template>

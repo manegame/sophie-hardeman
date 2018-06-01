@@ -441,8 +441,8 @@ export default {
   &__column_middle {
     width: calc(9/14 * 100%);
     display: block;
-    height: 100%;
-    padding: 0 20px 20px;
+    height: $exact-height;
+    padding: 0 20px;
     position: relative;
     overflow: scroll;
     @include hide-scroll;
@@ -506,6 +506,8 @@ export default {
         &__community {
           &__image {
             width: 100%;
+            max-height: 400px;
+            object-fit: cover;
             cursor: pointer;
           }
         }
@@ -584,4 +586,38 @@ export default {
     }
   }
 }
+
+h4 {
+  color: $blue;
+}
+
+ul {
+  font-family: $sans-serif-stack;
+  font-size: $font-size;
+  line-height: $line-height;
+  font-weight: bold;
+  color: $blue;
+
+  &.duo {
+    display: flex;
+    flex-flow: row wrap;
+
+    li {
+      width: 50%;
+      &:nth-child(odd) {
+        width: calc(50% - 20px);
+        margin-right: 20px;
+      }
+    }
+  }
+
+  li {
+    border-bottom: $border-light;
+
+    &.naturel {
+      border-bottom: 0;
+    }
+  }
+}
+
 </style>

@@ -34,3 +34,4 @@ $landing-width: 1200px;
 $left-col-width: 350px;
 $banner-height: 160px;
 $topbar-height: 30px;
+$exact-height: calc(100% - #{$footer-height - $margin-top});

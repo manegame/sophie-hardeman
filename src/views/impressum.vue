@@ -4,9 +4,7 @@
     <topbar />
     <div class="impressum__main"
          v-if='main.single_impressum.acf'>
-         <div class="impressum__main__left">
-           <randomImage />
-         </div>
+         <h5 v-html='main.single_impressum.title.rendered' />
          <div class="impressum__main__right"
               v-if='main.single_impressum.acf.wysiwyg'>
            <p v-html='main.single_impressum.acf.wysiwyg' />
@@ -52,6 +50,8 @@ export default {
 @import '../style/_variables.scss';
 
 .impressum {
+  height: $exact-height;
+
   @include single;
 
   &__main {
@@ -74,6 +74,7 @@ export default {
 
     &__right {
       @include right-col;
+      padding-top: $line-height-s;
 
       &__title {
         color: $black;

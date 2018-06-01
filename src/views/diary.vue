@@ -9,10 +9,11 @@
            <img class="diary__main__image scrollItem"
                 v-if='entry.acf.image'
                 :id='entry.slug'
-                :key='entry.id'
+                :key='"img" + entry.id'
                 :ref='entry.id'
                 :src='entry.acf.image.sizes["s-h-large"]'/>
-           <p class="diary__main__title">
+           <p class="diary__main__title"
+              :key='"p" + entry.id'>
                  {{entry.title.rendered}}
            </p>
          </template>

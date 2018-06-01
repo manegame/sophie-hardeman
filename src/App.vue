@@ -274,4 +274,26 @@ export default {
   height: 100%;
   padding: 0;
 }
+
+.wikipedia {
+  padding-bottom: $line-height * 4;
+  ul {
+    display: block;
+  }
+
+  h2,
+  h3 {
+    font-weight: 600 !important;
+    margin-top: $line-height * 1.5;
+    margin-bottom: $line-height-s;
+  }
+
+  b {
+    font-weight: 600;
+  }
+
+  span {
+    font-weight: inherit;
+  }
+}
 </style>

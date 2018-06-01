@@ -1,9 +1,3 @@
-@mixin blue-sans {
-  font-family: $sans-serif-stack;
-  font-weight: bold;
-  color: $blue;
-}
-
 a {
   text-decoration: none;
   color: $blue;
@@ -15,12 +9,44 @@ a {
   }
 }
 
+h1,
+h2,
+h3 {
+  color: $blue;
+}
+
+h2,
+h3 {
+  font-weight: 600;
+}
+
 h1 {
   font-size: 40px;
   line-height: 44px;
   font-family: $serif-stack;
   color: $blue;
   font-weight: normal;
+}
+
+h2 {
+  font-size: 24px;
+  line-height: 36px;
+  background: $yellow;
+  border: $border;
+  text-align: center;
+}
+
+h3 {
+  font-size: $font-size;
+  line-height: $line-height;
+  background: $yellow;
+  border-top: $border;
+  border-bottom: $border;
+}
+
+h4 {
+  font-size: $font-size;
+  line-height: $line-height;
 }
 
 h5 {
@@ -38,68 +64,12 @@ h6 {
   font-weight: normal;
 }
 
-h2 {
-  font-size: 24px;
-  line-height: 36px;
-  @include blue-sans;
-  background: $yellow;
-  border: $border;
-  text-align: center;
-}
-
-h3 {
-  font-size: $font-size;
-  line-height: $line-height;
-  @include blue-sans;
-  background: $yellow;
-  border-top: $border;
-  border-bottom: $border;
-}
-
-h4 {
-  @include blue-sans;
-  font-size: $font-size;
-  line-height: $line-height;
-}
-
-ul {
-  font-family: $sans-serif-stack;
-  font-size: $font-size;
-  line-height: $line-height;
-  font-weight: bold;
-  color: $blue;
-
-  &.duo {
-    display: flex;
-    flex-flow: row wrap;
-
-    li {
-      width: 50%;
-      &:nth-child(odd) {
-        width: calc(50% - 20px);
-        margin-right: 20px;
-      }
-    }
-  }
-
-  li {
-    border-bottom: $border-light;
-
-    &.naturel {
-      border-bottom: 0;
-    }
-  }
-}
-
 .router-link,
 .router-link-active,
 .landing__column_middle__sections h2,
+.landing__column_left__head__links__item,
 section > ul > li {
   cursor: pointer;
-
-  &:active {
-    // text-decoration: underline;
-  }
 }
 
 li {
@@ -107,11 +77,25 @@ li {
   font-size: $font-size;
   line-height: $line-height;
   font-weight: normal;
-  color: $blue;
 }
 
 p {
-  color: $black;
+  margin-bottom: $line-height-s;
+
+  ul {
+    display: inline-block;
+    list-style: disc outside;
+    font-size: $font-size-s;
+    line-height: $line-height-s;
+    margin-bottom: $line-height-s;
+    margin-left: $line-height-s;
+
+    li {
+      display: list-item;
+      font-size: $font-size-s;
+      line-height: $line-height-s;
+    }
+  }
 }
 
 strong {

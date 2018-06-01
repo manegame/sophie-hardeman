@@ -15,7 +15,8 @@
           {{main.single_about.title.rendered}}
         </h5>
         <p v-if='main.single_about.acf.text'
-           v-html='main.single_about.acf.text' />
+           v-html='main.single_about.acf.text'
+           :class='$route.name === "bio" ? "hgfjhgf" : "wikipedia"' />
         <form v-if='$route.params.slug === "mailing-list"' action="https://hardemanonline.us15.list-manage.com/subscribe/post?u=cb8eb732cb92c6160af716458&amp;id=ec3eab11ff" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
             <div id="mc_embed_signup_scroll">
         <div class="mc-field-group">
@@ -75,6 +76,7 @@ export default {
   @include single;
 
   &__main {
+    height: $exact-height;
     position: relative;
     clear: none;
 

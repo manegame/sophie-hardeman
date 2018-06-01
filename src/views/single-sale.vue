@@ -19,7 +19,7 @@
               </template>
             </div>
             <div class="single_sale__main__left__payment">
-              <template v-for='attr in shop.singleProduct.product.attributes'>
+              <!-- <template v-for='attr in shop.singleProduct.product.attributes'>
                 <select v-if='!attr.variation'
                         v-model='selectedAttribute.value'
                         :key='attr.name'>
@@ -31,7 +31,7 @@
                           v-html='option'/>
                   {{attr.name}}
                 </select>
-              </template>
+              </template> -->
               <template v-if='shop.singleProduct.variations.length > 0'>
                 <div class="single_sale__main__left__payment__form">
                   <form @submit.prevent='purchase'>

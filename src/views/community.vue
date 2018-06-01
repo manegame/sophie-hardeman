@@ -7,16 +7,16 @@
          @scroll='checkEls'
          v-if='main.community.length > 0'>
       <template v-for='entry in main.community'>
-        <h1 class="community__main__title scrollItem"
-            :id='entry.slug'
-            :key='entry.id'
-            :ref='entry.id'>
-              {{entry.title.rendered}}
-        </h1>
-        <img class="community__main__image"
+        <img class="community__main__image scrollItem"
              :key='"img"+entry.id'
+             :id='entry.slug'
+             :ref='entry.id'
              v-if='entry.acf.image'
              :src='entry.acf.image.sizes["s-h-large"]'/>
+        <p class="community__main__title"
+          :key='"p" + entry.id'>
+              {{entry.title.rendered}}
+        </p>
       </template>
     </div>
   </div>
@@ -65,9 +65,9 @@ export default {
     padding-bottom: 80px;
 
     &__title {
-      font-size: 26px;
-      line-height: 42px;
-      color: $black;
+      font-size: $font-size;
+      line-height: $line-height;
+      color: $blue;
     }
 
     &__image {

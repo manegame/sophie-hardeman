@@ -50,6 +50,7 @@ export default {
   color: $blue;
   border-top: $border;
   text-align: center;
+  text-transform: lowercase;
   position: absolute;
   bottom: 0;
   white-space: nowrap;
