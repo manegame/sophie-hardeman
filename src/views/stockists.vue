@@ -9,9 +9,8 @@
              :src='main.single_stockist.acf.image.sizes["s-h-medium"]' />
       </div>
       <div class="stockists__main__right">
-        <h5 class='stockists__main__right__title'>
-          {{main.single_stockist.title.rendered}}
-        </h5>
+        <h5 class='stockists__main__right__title' 
+            v-html='main.single_stockist.title.rendered'/>
         <p v-html='main.single_stockist.acf.description' />
       </div>
     </div>
@@ -61,7 +60,12 @@ export default {
 
     &__left {
       width: $left-col-width;
+      padding-right: 20px;
       float: left;
+
+      @include screen-size('small') {
+        width: 100%;
+      }
 
       &__image {
         width: 100%;
@@ -71,7 +75,12 @@ export default {
 
     &__right {
       @include right-col;
+
+      font-size: $font-size;
+      line-height: $line-height;
+
       &__title {
+        margin-bottom: $line-height-s;
         color: $black;
       }
     }

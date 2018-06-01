@@ -52,10 +52,10 @@
     <div class="landing__column_middle landing__column"
           @scroll='handleScroll'>
       <!-- BANNER -->
-      <div v-if='main.banner.sizes'
+      <div v-if='main.banner.banner.sizes'
             class="landing__column_middle__banner">
-        <a :href="bannerLink">
-          <img :src='main.banner.sizes["s-h-medium"]'/>
+        <a :href="main.banner.url">
+          <img :src='main.banner.banner.sizes["s-h-medium"]'/>
         </a>
       </div>
       <div class="landing__column_middle__sections">
@@ -333,14 +333,14 @@ export default {
   }
 
   &__column {
-    height: calc(100vh - #{$topbar-height + $margin-top + $footer-height});
+    height: $exact-height;
   }
 
   &__column_left {
     position: relative;
     float: left;
     width: calc(3/14 * 100%);
-    height: 100%;
+    height: $exact-height;
     background: $grey;
     border-top: $border;
     border-left: $border;
@@ -421,16 +421,13 @@ export default {
       }
     }
 
-    &__weather_head {
-      margin-top: $margin-top * 4;
-      background: $grey;
-      border-top: $border-light;
-      border-bottom: $border-light;
-    }
-
     &__toe {
       background: $grey;
+      height: auto;
       overflow: hidden;
+      position: absolute;
+      width: calc(100% - 40px);
+      bottom: 40px;
 
       @include screen-size('small') {
         display: none;
@@ -483,7 +480,7 @@ export default {
       width: 100%;
       column-count: 2;
       column-gap: 40px;
-      padding-bottom: 80px;
+      padding-bottom: 0;
       @include hide-scroll;
 
       @include screen-size('small') {
@@ -542,7 +539,6 @@ export default {
     position: relative;
     float: left;
     width: calc(2/14 * 100%);
-    height: 100%;
     background: $grey;
     border-top: $border;
     border-left: $border;
@@ -569,7 +565,7 @@ export default {
 
     &__toe {
       position: absolute;
-      height: 100px;
+      height: auto;
       bottom: 40px;
       left: 20px;
       background: $grey;

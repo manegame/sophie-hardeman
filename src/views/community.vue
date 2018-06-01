@@ -74,7 +74,7 @@ export default {
       max-height: 75vh;
       width: auto;
       max-width: 100%;
-      margin-bottom: $margin-top;
+      margin-top: $margin-top;
     }
   }
 }

@@ -13,7 +13,7 @@ export default {
       Vue.http.get(API_ROOT + 'pages?slug=banner&fields=acf').then(
         response => {
           console.log(response.body)
-          resolve(response.body[0].acf.banner)
+          resolve(response.body[0].acf)
         },
         response => {
           reject(response)

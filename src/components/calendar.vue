@@ -70,7 +70,6 @@ export default {
   width: 100%;
   height: auto;
   min-height: 160px;
-  padding-bottom: 40px;
   box-sizing: border-box;
 
   &__head {

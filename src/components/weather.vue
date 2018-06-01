@@ -1,14 +1,15 @@
 <template>
   <div class="weather" v-if='main.weather.weather'>
-    <!-- <div class="weather__tip"><img src='https://s-h.manusnijhoff.nl/wp-content/uploads/2018/05/0.png'/></div> -->
     <h3 class="weather__head">what to wear?</h3>
     <div class="weather__top">
       <p class="weather__top__title" v-html='main.weather.name'/>
       <div class="weather__top__info">
         <img class="weather__top__info__icon"
            :src='"https://openweathermap.org/img/w/" + main.weather.weather[0].icon + ".png"' />
-        <h1 class="weather__top__info__temp">{{Math.round(main.weather.main.temp) | temperature}}</h1>
-        <p class="weather__top__info__sub" v-html='main.weather.weather[0].description'/>
+        <div class="weather__top__info__right">
+          <h1 class="weather__top__info__right__temp">{{Math.round(main.weather.main.temp) | temperature}}</h1>
+          <p class="weather__top__info__right__sub" v-html='main.weather.weather[0].description'/>
+        </div>
       </div>
     </div>
     <div class="weather__bottom">
@@ -58,7 +59,9 @@ export default {
 .weather {
   text-align: left;
   text-transform: lowercase;
-  padding: 0 0 40px;
+  height: auto;
+  overflow: hidden;
+  margin-bottom: $line-height;
 
   &__head {
     text-align: center;
@@ -82,11 +85,11 @@ export default {
     }
 
     &__info {
-      margin-left: 20px;
-      width: 80px;
+      width: 100%;
       display: flex;
-      flex-flow: row wrap;
-      align-items: flex-end;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: flex-start;
 
       @include screen-size('medium') {
         margin-left: 0;
@@ -111,27 +114,26 @@ export default {
         }
       }
 
-      &__temp {
-        width: auto;
-        font-family: $sans-serif-stack;
-        font-weight: bold;
-        font-size: 26px;
-        line-height: 26px;
+      &__right {
+        flex-grow: 1;
+        text-align: right;
+        width: 100%;
 
-        @include screen-size('medium') {
-          text-align: right;
+        &__temp {
+          font-family: $sans-serif-stack;
+          font-weight: bold;
+          font-size: 26px;
+          line-height: 26px;
+
+          @include screen-size('medium') {
+            text-align: right;
+          }
         }
 
-        @include screen-size('short') {
-          margin: auto;
-          width: calc(100% - 60px);
+        &__sub {
+          margin-bottom: 6px;
+          color: $blue;
         }
-      }
-
-      &__sub {
-        text-align: left;
-        margin-bottom: 6px;
-        color: $blue;
       }
     }
   }
@@ -140,7 +142,6 @@ export default {
     display: flex;
     border-bottom: $border-light;
     padding: 2px 0;
-    height: calc(#{$line-height-s * 2} + 8px);
 
     @include screen-size('short') {
       display: none;
@@ -149,6 +150,7 @@ export default {
     &__day {
       color: $blue;
       width: 120px;
+      margin: 0;
     }
 
     &__temps {
@@ -156,6 +158,7 @@ export default {
         color: $blue;
         font-size: $font-size-s;
         line-height: $line-height-s;
+        margin: 0;
       }
     }
   }

@@ -388,10 +388,10 @@ add_filter('acf/fields/wysiwyg/toolbars', 'my_toolbars');
 function my_toolbars($toolbars)
 {
     $toolbars['Full' ] = array();
-    $toolbars['Full' ][1] = array('bold', 'italic', 'link', 'unlink', 'bullist', 'code');
+    $toolbars['Full' ][1] = array('bold', 'italic', 'link', 'unlink', 'bullist', 'code', 'last');
 
     $toolbars['Sophie' ] = array();
-    $toolbars['Full' ][1] = array('bold', 'italic', 'link', 'unlink', 'bullist', 'code');
+    $toolbars['Full' ][1] = array('bold', 'italic', 'link', 'unlink', 'bullist', 'code', 'last');
 
     // remove the 'Basic' toolbar completely
     unset($toolbars['Basic' ]);

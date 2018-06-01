@@ -228,7 +228,7 @@ export default {
   padding: 0 20px;
 
   @include screen-size('medium') {
-    width: calc(4/14 * 100%);
+    width: calc(4/14 * 100% - 20px);
   }
 
   @include screen-size('small') {
