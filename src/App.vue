@@ -23,10 +23,9 @@ export default {
       ready: false,
       cat_id: 6,
       meta: {
-        sitename: 'Sophie Hardeman',
+        sitename: 'Hardeman',
         facebook: 'https://www.facebook.com/hardemanonline/',
-        twitter: '@',
-        title: 'Sophie Hardeman',
+        title: 'Hardeman',
         description: 'HARDEMAN is a genderless jeans brand based in Amsterdam.',
         type: 'website',
         image: 'https://scontent.fham1-1.fna.fbcdn.net/v/t1.0-9/31957071_1699340483518973_3009747316774010880_o.jpg?_nc_cat=0&oh=aac5375f699f3d6bdad8894f36e62f34&oe=5B96B5DE',
@@ -84,11 +83,12 @@ export default {
       'EMPTY_ORDER'
     ]),
     $_setMetaTags(meta = {}) {
+      console.log(meta.title)
       this.meta.title = meta.title || this.meta.defaults.title
       this.meta.description = meta.description || this.meta.defaults.description
       this.meta.image = meta.image || this.meta.defaults.image
       this.meta.type = meta.type || this.meta.defaults.type
-      this.meta.url = 'http://xxx.com' + this.$route.fullPath
+      this.meta.url = 'https://hardeman.co' + this.$route.fullPath
       this.$emit('updateHead')
     },
     $_fetchData(route) {

@@ -252,6 +252,18 @@ import calendar from '@/components/calendar'
 
 export default {
   name: 'landing',
+  head: {
+    title: () => {
+      return {
+        inner: 'Welcome'
+      }
+    },
+    meta: () => {
+      return [
+        { name: 'title', content: 'Home' }
+      ]
+    }
+  },
   components: {
     weather,
     calendar

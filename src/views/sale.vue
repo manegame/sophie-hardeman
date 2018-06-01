@@ -83,6 +83,18 @@ import topbar from '@/components/topbar'
 
 export default {
   name: 'sale',
+  head: {
+    title: () => {
+      return {
+        inner: 'Sale'
+      }
+    },
+    meta: () => {
+      return [
+        { name: 'title', content: 'Sale' }
+      ]
+    }
+  },
   components: {
     navbar,
     topbar

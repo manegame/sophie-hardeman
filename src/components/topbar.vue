@@ -40,7 +40,7 @@ export default {
     mailSophie() {
       switch (this.$route.name) {
         case 'collection':
-          return 'mailto:sophie@hardemanonline.com?subject=It\'s been a while since we last talked...'
+          return 'mailto:info@hardeman.co?subject=It\'s been a while since we last talked...'
       }
     }
   },

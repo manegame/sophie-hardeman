@@ -1,4 +1,4 @@
-# Sophie Hardeman
+# Hardeman
 
 [Auto deploy](http://sophie-hardeman.netlify.com/)
 

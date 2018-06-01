@@ -23,6 +23,18 @@ import randomImage from '@/components/random-image'
 
 export default {
   name: 'impressum',
+  head: {
+    title: () => {
+      return {
+        inner: 'Impressum'
+      }
+    },
+    meta: () => {
+      return [
+        { name: 'title', content: 'Impressum' }
+      ]
+    }
+  },
   components: {
     navbar,
     topbar,

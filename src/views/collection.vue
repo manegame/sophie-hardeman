@@ -99,6 +99,18 @@ import Swiper from 'swiper'
 
 export default {
   name: 'collection',
+  head: {
+    title: () => {
+      return {
+        inner: 'Collection'
+      }
+    },
+    meta: () => {
+      return [
+        { name: 'title', content: 'Collection' }
+      ]
+    }
+  },
   components: {
     navbar,
     topbar,

@@ -193,11 +193,21 @@ const mutations = {
       } else {
         // new variable product
         // 1. add to order
-        state.order.line_items.push({
-          product_id: data.product.id,
-          quantity: 1,
-          variation_id: data.variation.id
-        })
+        if (data.attribute.value) {
+          state.order.line_items.push({
+            product_id: data.product.id,
+            quantity: 1,
+            variation_id: data.variation.id,
+            // UGLY
+            meta_data: [1, 'Size', data.attribute.value]
+          })
+        } else {
+          state.order.line_items.push({
+            product_id: data.product.id,
+            quantity: 1,
+            variation_id: data.variation.id
+          })
+        }
         // 2. add to cart
         state.cart.push({
           data: data,
@@ -217,10 +227,18 @@ const mutations = {
       } else {
         // new simple product
         // 1. add to order
-        state.order.line_items.push({
-          product_id: data.product.id,
-          quantity: 1
-        })
+        if (data.attribute.value) {
+          state.order.line_items.push({
+            product_id: data.product.id,
+            quantity: 1,
+            meta_data: [1, 'Size', data.attribute.value]
+          })
+        } else {
+          state.order.line_items.push({
+            product_id: data.product.id,
+            quantity: 1
+          })
+        }
         // 2. add to cart
         state.cart.push({
           data: data,

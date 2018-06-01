@@ -31,6 +31,7 @@ function image_size_setup()
     // add_image_size('slide-large', 710, 480, true);
 }
 
+
 // 
 // 
 // 
@@ -463,7 +464,7 @@ function acf_set_featured_image( $value, $post_id, $field  ){
 }
 
 // acf/update_value/name={$field_name} - filter for a specific field based on it's name
-add_filter('acf/update_value/name=cursusfoto', 'acf_set_featured_image', 10, 3);
+add_filter('acf/update_value/name=image', 'acf_set_featured_image', 10, 3);
 
 
 // -------

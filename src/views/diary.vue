@@ -29,6 +29,18 @@ import dynamicScroll from '@/components/mixins/dynamicScroll'
 
 export default {
   name: 'diary',
+  head: {
+    title: () => {
+      return {
+        inner: 'Diary'
+      }
+    },
+    meta: () => {
+      return [
+        { name: 'title', content: 'Diary' }
+      ]
+    }
+  },
   mixins: [dynamicScroll],
   components: {
     navbar,

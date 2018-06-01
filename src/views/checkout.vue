@@ -243,10 +243,12 @@ export default {
   mounted() {
     this.setShippingZone()
     // paypal
-    let paypal = document.createElement('script')
-    paypal.setAttribute('src', this.paypalScript)
-    paypal.addEventListener('load', this.paypalScriptLoaded)
-    document.head.appendChild(paypal)
+    if (this.shop.cart.length > 0) {
+      let paypal = document.createElement('script')
+      paypal.setAttribute('src', this.paypalScript)
+      paypal.addEventListener('load', this.paypalScriptLoaded)
+      document.head.appendChild(paypal)
+    }
   },
   methods: {
     ...mapActions([
@@ -261,6 +263,7 @@ export default {
     },
     paypalInit() {
       const vm = this
+      // eslint-disable-next-line
       paypal.Button.render({
         env: 'production', // 'production' or 'sandbox',
 
@@ -269,8 +272,8 @@ export default {
         // PayPal Client IDs - replace with your own
         // Create a PayPal app: https://developer.paypal.com/developer/applications/create
         client: {
-            sandbox:    'ARxqTmcXElXkbqbdVOKiK_Icq0mdRimros412LhoCZUwPtutl05ab9qoNVP96F0jGw8JjW5LpPYW4FsA',
-            production: 'AULkwxKm8-yuCK1jhRf_QRv_ZkvnSgcKJ4SrjElsFBfmpPzrSlmipnFMmK23mBWSLhmOMJpQUX90aV9C'
+          sandbox: 'ARxqTmcXElXkbqbdVOKiK_Icq0mdRimros412LhoCZUwPtutl05ab9qoNVP96F0jGw8JjW5LpPYW4FsA',
+          production: 'AULkwxKm8-yuCK1jhRf_QRv_ZkvnSgcKJ4SrjElsFBfmpPzrSlmipnFMmK23mBWSLhmOMJpQUX90aV9C'
         },
 
         style: {
@@ -278,15 +281,15 @@ export default {
           size: 'small'
         },
 
-        payment: function(data, actions) {
+        payment: (data, actions) => {
           return actions.payment.create({
-              payment: {
-                  transactions: [
-                      {
-                          amount: { total: '' + vm.total + '', currency: 'EUR' }
-                      }
-                  ]
-              }
+            payment: {
+              transactions: [
+                {
+                  amount: { total: '' + vm.total + '', currency: 'EUR' }
+                }
+              ]
+            }
           })
         },
 
@@ -312,15 +315,15 @@ export default {
         },
 
         onCancel: function(data, actions) {
+          vm.msg = ''
           /*
           * Buyer cancelled the payment
           */
         },
 
         onError: function(err) {
-          /*
-          * An error occurred during the transaction
-          */
+          vm.msg = 'There was an error processing your payment. Please contact <a href="mailto:sales@hardeman.co">sales@hardeman.co</a>. Our apologies for the inconvenience.'
+          return err
         }
       }, '#paypal-button')
     }

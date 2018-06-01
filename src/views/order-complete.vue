@@ -21,6 +21,18 @@ import randomImage from '@/components/random-image'
 
 export default {
   name: 'order-complete',
+  head: {
+    title: () => {
+      return {
+        inner: 'Order Complete'
+      }
+    },
+    meta: () => {
+      return [
+        { name: 'title', content: 'Order Complete' }
+      ]
+    }
+  },
   components: {
     navbar,
     topbar,

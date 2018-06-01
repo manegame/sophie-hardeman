@@ -42,6 +42,19 @@ import randomImage from '@/components/random-image'
 
 export default {
   name: 'about',
+  head: {
+    title: () => {
+      return {
+        inner: 'About'
+      }
+    },
+    meta: () => {
+      return [
+        { name: 'title', content: 'About' },
+        { name: 'description', content: 'All about Hardeman' }
+      ]
+    }
+  },
   components: {
     navbar,
     topbar,

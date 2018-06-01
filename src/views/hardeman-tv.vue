@@ -20,6 +20,18 @@ import embed from 'embed-video'
 
 export default {
   name: 'hardeman-tv',
+  head: {
+    title: () => {
+      return {
+        inner: 'Hardeman TV'
+      }
+    },
+    meta: () => {
+      return [
+        { name: 'title', content: 'Hardeman TV' }
+      ]
+    }
+  },
   components: {
     navbar,
     topbar

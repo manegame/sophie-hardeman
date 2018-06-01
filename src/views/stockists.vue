@@ -25,6 +25,18 @@ import topbar from '@/components/topbar'
 
 export default {
   name: 'stockists',
+  head: {
+    title: () => {
+      return {
+        inner: 'Stockists'
+      }
+    },
+    meta: () => {
+      return [
+        { name: 'title', content: 'Stockists' }
+      ]
+    }
+  },
   components: {
     navbar,
     topbar
