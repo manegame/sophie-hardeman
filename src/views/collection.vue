@@ -224,6 +224,7 @@ export default {
       &__carousel {
         height: 100%;
         width: $left-col-width;
+        padding-right: 20px;
         float: left;
 
         @include screen-size('medium') {
@@ -232,6 +233,7 @@ export default {
 
         @include screen-size('small') {
           width: 100%;
+          padding: 0;
         }
 
         .swiper-button-next {
@@ -309,7 +311,7 @@ export default {
           width: 100%;
           max-height: 75vh;
           object-fit: contain;
-          object-position: center;
+          object-position: left;
           margin-bottom: 20px;
         }
       }

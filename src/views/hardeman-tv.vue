@@ -39,7 +39,7 @@ export default {
   computed: {
     ...mapState(['main']),
     embedCode() {
-      return embed(this.main.single_video.acf.video, { query: {width: 2000, portrait: 0, color: '00f', quality: '1080p'}, attr: {class: 'inner'}})
+      return embed(this.main.single_video.acf.video, {query: {width: 2000, portrait: 0, color: '00f', quality: '1080p'}, attr: {class: 'inner'}})
     }
   }
 }
