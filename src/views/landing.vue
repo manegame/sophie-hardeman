@@ -271,8 +271,7 @@ export default {
   props: [],
   data() {
     return {
-      collapse: false,
-      bannerLink: '/hardeman-tv/rouge-66'
+      collapse: false
     }
   },
   computed: {
