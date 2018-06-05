@@ -26,56 +26,57 @@ export default new Router({
       component: landing
     },
     {
-      path: '/collection/:slug',
+      path: '/s-h_collection/:slug',
       redirect: {name: 'collection', params: {section: 'lookbook'}}
     },
     {
       path: '/s-h_collection/:slug/:section',
       name: 'collection',
-      component: collection
+      component: collection,
+      alias: '/c'
     },
     {
-      path: '/about/:slug',
+      path: '/s-h_about/:slug',
       name: 'about',
       component: about
     },
     {
-      path: '/sale/:slug',
+      path: '/product/:slug',
       name: 'sale',
       component: sale
     },
     {
-      path: '/sale/:slug/:item',
+      path: '/product/:item',
       name: 'single sale',
       component: singleSale
     },
     {
-      path: '/hardeman-tv/:slug',
+      path: '/s-h_videos/:slug',
       name: 'hardeman tv',
       component: hardemanTV
     },
     {
-      path: '/diary/:slug',
+      path: '/s-h_diary/:slug',
       name: 'diary',
       component: diary
     },
     {
-      path: '/stockist/:slug',
+      path: '/s-h_stockist/:slug',
       name: 'stockists',
       component: stockists
     },
     {
-      path: '/event/:slug',
+      path: '/s-h_events/:slug',
       name: 'events',
       component: events
     },
     {
-      path: '/impressum/:slug',
+      path: '/s-h_misc/:slug',
       name: 'impressum',
       component: impressum
     },
     {
-      path: '/community/:slug',
+      path: '/s-h_community/:slug',
       name: 'community',
       component: community
     },

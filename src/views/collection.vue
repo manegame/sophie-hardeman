@@ -15,6 +15,7 @@
                   <div class="swiper-wrapper">
                     <div class="swiper-slide"
                          v-for='g in main.single.garments'
+                         :key='"gtop" + g.id'
                          :style='"background-image:url("+ g.acf.image.sizes["s-h-large"] +")"' />
                   </div>
                   <!-- Add Arrows -->
@@ -25,6 +26,7 @@
                   <div class="swiper-wrapper">
                     <div class="swiper-slide"
                          v-for='g in main.single.garments'
+                         :key='"gbottom" + g.id'
                          :style='"background-image:url("+ g.acf.image.sizes["s-h-small"] +")"' />
                   </div>
                   <!-- Add Arrows -->
@@ -53,7 +55,6 @@
                                   v-html='c.name' />
                    </ul>
                  </section>
-                 <suggestions class="bottom" />
             </div>
       </div>
       <!-- VIDEO -->
@@ -81,7 +82,6 @@
               <span v-html='main.single.title.rendered' />
             </h5>
             <p v-html='main.single.acf.campaign_description' />
-            <suggestions class="bottom" :not='true' />
           </div>
         </div>
       </div>
@@ -93,7 +93,6 @@
 import {mapState} from 'vuex'
 import navbar from '@/components/navbar'
 import topbar from '@/components/topbar'
-import suggestions from '@/components/suggestions'
 import embed from 'embed-video'
 import Swiper from 'swiper'
 
@@ -113,8 +112,7 @@ export default {
   },
   components: {
     navbar,
-    topbar,
-    suggestions
+    topbar
   },
   data() {
     return {

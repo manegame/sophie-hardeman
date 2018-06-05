@@ -18,7 +18,7 @@
                        <span class='nav__item--ss'>{{collection.acf.season}}</span>
                        <span class='nav__item--tt'>{{collection.title.rendered}}
                           <sup  v-for='label in collection.acf.labels'
-                                :key='"a" + label.id'>{{label.post_title}}</sup>
+                                :key='"a" + label.ID'>{{label.post_title}}</sup>
                         </span>
                        </router-link>
                        <ul  class="nav__item__sub"
@@ -63,7 +63,7 @@
                         :to='{name: "about", params: {slug: page.slug}}'>
                         {{page.title.rendered}}
                           <sup  v-for='label in page.acf.labels'
-                                :key='"b" + label.id'>{{label.post_title}}</sup>
+                                :key='"b" + label.ID'>{{label.post_title}}</sup>
                        </router-link>
         </template>
       </ul>
@@ -87,7 +87,7 @@
                        :to='{name: "sale", params: {slug: category.slug}}'>
                        {{category.name}}
                         <sup v-for='label in category.acf.labels'
-                            :key='"c" + label.id'>{{label.post_title}}</sup>
+                            :key='"c" + label.ID'>{{label.post_title}}</sup>
                        </router-link>
         </template>
       </ul>
@@ -108,7 +108,7 @@
                         :to='{name: "hardeman tv", params: {slug: video.slug}}'>
                         {{video.title.rendered}}
                           <sup  v-for='label in video.acf.labels'
-                                :key='"d" + label.id'>{{label.post_title}}</sup>
+                                :key='"d" + label.ID'>{{label.post_title}}</sup>
                        </router-link>
         </template>
       </ul>
@@ -125,7 +125,7 @@
                         :to='{name: "diary", params: {slug: entry.slug, scrollTo: true}}'>
                         {{entry.title.rendered}} 
                           <sup  v-for='label in entry.acf.labels'
-                                :key='"e" + label.id'>{{label.post_title}}</sup>
+                                :key='"e" + label.ID'>{{label.post_title}}</sup>
                         
                        </router-link>
         </template>
@@ -143,7 +143,7 @@
                         :to='{name: "community", params: {slug: entry.slug}}'>
                         {{entry.title.rendered}} 
                           <sup  v-for='label in entry.acf.labels'
-                                :key='"f" + label.id'>{{label.post_title}}</sup>
+                                :key='"f" + label.ID'>{{label.post_title}}</sup>
                         
                         </router-link>
         </template>
@@ -161,7 +161,7 @@
                        :to='{name: "stockists", params: {slug: s.slug}}'>
                        <span v-html='s.title.rendered'/> 
                         <sup  v-for='label in s.acf.labels'
-                              :key='"g" + label.id'>{{label.post_title}}</sup>
+                              :key='"g" + label.ID'>{{label.post_title}}</sup>
                       
                        </router-link>
         </template>
@@ -175,11 +175,11 @@
           <router-link class="nav__item"
                        :class='{"nav__item--emphasis": $route.params.slug === e.slug}'
                        tag='li'
-                       :key='e.id'
+                       :key='"h" + e.id'
                        :to='{name: "events", params: {slug: e.slug}}'>
                        {{e.title.rendered}} 
                         <sup  v-for='label in e.acf.labels'
-                              :key='"h" + label.id'>{{label.post_title}}</sup>
+                              :key='"h" + label.ID'>{{label.post_title}}</sup>
                        </router-link>
         </template>
       </ul>
