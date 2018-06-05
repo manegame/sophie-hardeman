@@ -7,7 +7,6 @@
         <img v-if='$route.params.slug === "bio" && main.single_about.acf'
              class="about__main__left__bio_profile_pic"
              :src='main.single_about.acf.profile_pic.sizes["s-h-small"]' />
-        <randomImage v-else />
       </div>
       <div class="about__main__right"
            v-if='main.single_about.acf'>
@@ -39,7 +38,6 @@
 import {mapState} from 'vuex'
 import navbar from '@/components/navbar'
 import topbar from '@/components/topbar'
-import randomImage from '@/components/random-image'
 
 export default {
   name: 'about',
@@ -58,8 +56,7 @@ export default {
   },
   components: {
     navbar,
-    topbar,
-    randomImage
+    topbar
   },
   computed: {
     ...mapState(['main'])

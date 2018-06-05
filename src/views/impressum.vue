@@ -17,7 +17,7 @@
 import {mapState} from 'vuex'
 import navbar from '@/components/navbar'
 import topbar from '@/components/topbar'
-import randomImage from '@/components/random-image'
+
 
 export default {
   name: 'impressum',
@@ -35,8 +35,7 @@ export default {
   },
   components: {
     navbar,
-    topbar,
-    randomImage
+    topbar
   },
   computed: {
     ...mapState(['main'])

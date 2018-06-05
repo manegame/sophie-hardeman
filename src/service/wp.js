@@ -44,18 +44,6 @@ export default {
       )
     })
   },
-  getRandomImages() {
-    return new Promise((resolve, reject) => {
-      Vue.http.get(API_ROOT + API_VERSION + 'pages?slug=random-images&fields=acf').then(
-        response => {
-          resolve(response.body)
-        },
-        response => {
-          reject(response)
-        }
-      )
-    })
-  },
   getSingleImpressum(slug) {
     return new Promise((resolve, reject) => {
       Vue.http.get(API_ROOT + API_VERSION + 's-h_misc/?slug=' + slug).then(

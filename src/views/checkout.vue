@@ -181,17 +181,8 @@
             <fieldset id='payment' 
                       :class='{"incomplete": !billingComplete}'>
               <legend>Payment</legend>
-              <!-- <card class='stripe-card'
-                    :class='{ complete }'
-                    :stripe='stripeKey'
-                    :options='stripeOptions'
-                    @change='complete = $event.complete'/>
-                <input class='pay-with-stripe' type='submit' value='Pay with credit card' :disabled='!complete'> -->
-                <div id="paypal-button"></div>
+              <div id="paypal-button"></div>
             </fieldset>
-            <!-- <fieldset id='payment'>
-              <input type='submit' value='PRE-ORDER'>
-            </fieldset> -->
             <!-- END PAYMENT -->
             <!-- MESSAGE TO USER -->
             <p id='message' v-html='msg' />
@@ -202,7 +193,7 @@
     </div>
     <div class="checkout__main" v-else>
       <div class="checkout__main__left">
-        <randomImage/>
+        <!--  -->
       </div>
       <div class="checkout__main__right">
         It seems there is nothing to check out.<br/>
@@ -219,12 +210,12 @@ import {mapActions, mapState, mapGetters} from 'vuex'
 import loader from '@/components/base/loader'
 import navbar from '@/components/navbar'
 import topbar from '@/components/topbar'
-import randomImage from '@/components/random-image'
+
 import checkout from '@/components/shop/mixins/checkout'
 
 export default {
   name: 'checkout',
-  components: { loader, navbar, topbar, randomImage },
+  components: { loader, navbar, topbar },
   mixins: [checkout],
   data() {
     return {

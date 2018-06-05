@@ -34,7 +34,6 @@ const state = {
   community: [],
   impressum: [],
   single_impressum: [],
-  random_images: {},
   big_cartel: {
     shop: {},
     products: []
@@ -51,10 +50,6 @@ const actions = {
   async [actionTypes.GET_SINGLE_IMPRESSUM]({commit, state}, slug) {
     commit(mutationTypes.SET_SINGLE_IMPRESSUM, await api.getSingleImpressum(slug))
   },
-  async [actionTypes.GET_RANDOM_IMAGES]({commit, state}) {
-    commit(mutationTypes.SET_RANDOM_IMAGES, await api.getRandomImages())
-  },
-  //
   async [actionTypes.GET_BANNER]({commit, state}) {
     commit(mutationTypes.SET_BANNER, await api.getBanner())
   },

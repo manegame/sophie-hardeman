@@ -4,7 +4,7 @@
     <topbar />
     <div class="order-complete__main">
          <div class="order-complete__main__left">
-           <randomImage />
+          <!--  -->
          </div>
          <div class="order-complete__main__right">
            Thanks for ordering at Hardeman. You'll be looking fly soon!
@@ -17,7 +17,7 @@
 import {mapState} from 'vuex'
 import navbar from '@/components/navbar'
 import topbar from '@/components/topbar'
-import randomImage from '@/components/random-image'
+
 
 export default {
   name: 'order-complete',
@@ -35,8 +35,7 @@ export default {
   },
   components: {
     navbar,
-    topbar,
-    randomImage
+    topbar
   },
   computed: {
     ...mapState(['main'])
