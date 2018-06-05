@@ -435,9 +435,10 @@ export default {
       font-size: $font-size;
       line-height: $line-height;
       padding-bottom: 80px;
+      padding-left: 20px;
 
       @include screen-size('small') {
-        padding-bottom: 80px;
+        padding-left: 0;
       }
 
       &__totals {

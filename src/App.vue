@@ -23,15 +23,15 @@ export default {
       ready: false,
       cat_id: 6,
       meta: {
-        sitename: 'Hardeman',
+        sitename: 'HARDEMAN',
         facebook: 'https://www.facebook.com/hardemanonline/',
-        title: 'Hardeman',
+        title: 'HARDEMAN',
         description: 'HARDEMAN is a genderless jeans brand based in Amsterdam.',
         type: 'website',
         image: 'https://scontent.fham1-1.fna.fbcdn.net/v/t1.0-9/31957071_1699340483518973_3009747316774010880_o.jpg?_nc_cat=0&oh=aac5375f699f3d6bdad8894f36e62f34&oe=5B96B5DE',
         url: 'https://hardeman.co',
         defaults: {
-          title: 'Home',
+          title: 'Welcome',
           description: 'HARDEMAN is a genderless jeans brand based in Amsterdam.',
           image: 'https://scontent.fham1-1.fna.fbcdn.net/v/t1.0-9/31957071_1699340483518973_3009747316774010880_o.jpg?_nc_cat=0&oh=aac5375f699f3d6bdad8894f36e62f34&oe=5B96B5DE',
           type: 'website'
@@ -186,7 +186,7 @@ export default {
     },
     meta() {
       return [
-        {name: 'application-name', content: 'Sophie Hardeman'},
+        {name: 'application-name', content: 'HARDEMAN'},
         {name: 'description', content: this.meta.description},
         // Twitter
         {name: 'twitter:card', content: 'summary'},

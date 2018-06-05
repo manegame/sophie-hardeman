@@ -222,7 +222,7 @@ export default {
 
 .navbar {
   width: calc(3/14 * 100%);
-  height: calc(100% - #{$topbar-height});
+  height: $exact-height;
   position: relative;
   float: left;
   padding: 0 20px;

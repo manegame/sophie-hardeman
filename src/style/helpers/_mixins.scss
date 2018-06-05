@@ -37,6 +37,11 @@
   font-size: $font-size-s;
   line-height: $line-height-s;
   float: left;
+  padding: 0 20px;
+
+  h5 {
+    margin-bottom: $line-height-s;
+  }
 
   @include screen-size('small') {
     width: 100%;

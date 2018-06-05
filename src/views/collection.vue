@@ -45,14 +45,14 @@
                  v-html='main.single.acf.info' />
                  <section v-if='main.single.acf.items_for_sale'
                           class="collection__main__lookbook__info__for_sale">
-                   <p>The following items are for sale:</p>
+                   <!-- <p>The following items are for sale:</p>
                    <ul class="collection__main__lookbook__info__for_sale">
                      <router-link class="collection__main__lookbook__info__for_sale__item"
                                   v-for='c in main.single.acf.items_for_sale'
                                   tag='li'
                                   :key='c.id'
                                   :to='{name: "sale", params: {slug: c.slug}}'
-                                  v-html='c.name' />
+                                  v-html='c.name' /> -->
                    </ul>
                  </section>
             </div>
@@ -101,12 +101,12 @@ export default {
   head: {
     title: () => {
       return {
-        inner: 'Collection'
+        inner: 'Collections'
       }
     },
     meta: () => {
       return [
-        { name: 'title', content: 'Collection' }
+        { name: 'title', content: 'Collections' }
       ]
     }
   },
@@ -222,7 +222,6 @@ export default {
       &__carousel {
         height: 100%;
         width: $left-col-width;
-        padding-right: 20px;
         float: left;
 
         @include screen-size('medium') {
@@ -231,7 +230,6 @@ export default {
 
         @include screen-size('small') {
           width: 100%;
-          padding: 0;
         }
 
         .swiper-button-next {
@@ -270,7 +268,6 @@ export default {
         &__title,
         &__text {
           color: $black;
-          padding-bottom: 20px;
         }
 
         &__text {

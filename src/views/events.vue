@@ -71,6 +71,12 @@ export default {
 
     &__right {
       @include right-col;
+      padding-left: 20px;
+
+      @include screen-size('small') {
+        padding-left: 0;
+      }
+
       &__title {
         color: $black;
       }
