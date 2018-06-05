@@ -52,7 +52,7 @@
     <div class="landing__column_middle landing__column"
           @scroll='handleScroll'>
       <!-- BANNER -->
-      <div v-if='main.banner.banner.sizes'
+      <div v-if='main.banner.banner'
             class="landing__column_middle__banner">
         <a :href="main.banner.url">
           <img :src='main.banner.banner.sizes["s-h-medium"]'/>
