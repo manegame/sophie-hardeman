@@ -65,7 +65,6 @@ export default {
       'GET_GARMENT_CATEGORIES',
       'GET_VIDEOS',
       'GET_VIDEO',
-      'GET_RANDOM_IMAGES',
       'GET_COMMUNITY',
       'GET_IMPRESSUM',
       'GET_SINGLE_IMPRESSUM',
@@ -126,7 +125,6 @@ export default {
           break
         case ('about'):
           this.CLEAR_SINGLES()
-          this.GET_RANDOM_IMAGES()
           this.GET_ABOUT()
           this.GET_SINGLE_ABOUT(route.params.slug)
           break
@@ -144,7 +142,6 @@ export default {
           break
         case 'checkout':
           this.GET_PRODUCTS()
-          this.GET_RANDOM_IMAGES()
           this.GET_SHIPPING_ZONES()
             .then(() => {
               let promises = []
@@ -176,7 +173,6 @@ export default {
           this.GET_COMMUNITY()
           break
         case ('impressum'):
-          this.GET_RANDOM_IMAGES()
           this.GET_SINGLE_IMPRESSUM(route.params.slug)
           break
       }

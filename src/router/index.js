@@ -25,23 +25,32 @@ export default new Router({
       name: 'landing',
       component: landing
     },
-    {
-      path: '/s-h_collection/:slug',
-      redirect: {name: 'collection', params: {section: 'lookbook'}}
-    },
+    // COLLECTIONS
     {
       path: '/s-h_collection/:slug/:section',
-      name: 'collection',
-      component: collection,
-      alias: '/c'
+      redirect: { name: 'collection' }
     },
     {
+      alias: '/s-h_collection/:slug/:section',
+      path: '/collection/:slug/:section',
+      name: 'collection',
+      component: collection
+    },
+    // ABOUT
+    {
       path: '/s-h_about/:slug',
+      redirect: { name: 'about' }
+    },
+    {
+      path: '/about/:slug',
+      alias: '/s-h_about/:slug',
       name: 'about',
       component: about
     },
+    // SHOP
     {
-      path: '/product/:slug',
+      path: '/shop/:slug',
+      alias: '/product/:slug',
       name: 'sale',
       component: sale
     },
@@ -49,36 +58,6 @@ export default new Router({
       path: '/product/:item',
       name: 'single sale',
       component: singleSale
-    },
-    {
-      path: '/s-h_videos/:slug',
-      name: 'hardeman tv',
-      component: hardemanTV
-    },
-    {
-      path: '/s-h_diary/:slug',
-      name: 'diary',
-      component: diary
-    },
-    {
-      path: '/s-h_stockist/:slug',
-      name: 'stockists',
-      component: stockists
-    },
-    {
-      path: '/s-h_events/:slug',
-      name: 'events',
-      component: events
-    },
-    {
-      path: '/s-h_misc/:slug',
-      name: 'impressum',
-      component: impressum
-    },
-    {
-      path: '/s-h_community/:slug',
-      name: 'community',
-      component: community
     },
     {
       path: '/checkout',
@@ -89,6 +68,72 @@ export default new Router({
       path: '/checkout/complete',
       name: 'order-complete',
       component: orderComplete
+    },
+    // HARDEMAN TV
+    {
+      path: '/s-h_videos/:slug',
+      redirect: { name: 'hardeman tv' }
+    },
+    {
+      path: '/hardeman-tv/:slug',
+      alias: '/s-h_videos/:slug',
+      name: 'hardeman tv',
+      component: hardemanTV
+    },
+    // DIARY
+    {
+      path: '/s-h_diary/:slug',
+      redirect: { name: 'diary' }
+    },
+    {
+      alias: '/s-h_diary/:slug',
+      path: '/diary/:slug',
+      name: 'diary',
+      component: diary
+    },
+    // STOCKISTS
+    {
+      path: '/s-h_stockist/:slug',
+      redirect: { name: 'stockists' }
+    },
+    {
+      alias: '/s-h_stockist/:slug',
+      path: '/stockists/:slug',
+      name: 'stockists',
+      component: stockists
+    },
+    // EVENTS
+    {
+      path: '/s-h_events/:slug',
+      redirect: { name: 'events' }
+    },
+    {
+      alias: '/s-h_events/:slug',
+      path: '/events/:slug',
+      name: 'events',
+      component: events
+    },
+    // IMPRESSUM
+    {
+      path: '/s-h_misc/:slug',
+      redirect: { name: 'impressum' }
+    },
+    {
+      alias: '/s-h_misc/:slug',
+      path: '/impressum/:slug',
+      name: 'impressum',
+      component: impressum
+    },
+    // COMMUNITY
+    {
+      path: '/s-h_community/:slug',
+      redirect: { name: 'community' }
+    },
+    {
+      alias: '/s-h_community/:slug',
+      path: '/community/:slug',
+      name: 'community',
+      component: community
     }
   ]
 })

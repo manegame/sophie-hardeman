@@ -116,9 +116,6 @@ const mutations = {
   [mutationTypes.SET_IMPRESSUM](state, data) {
     state.impressum = data
   },
-  [mutationTypes.SET_RANDOM_IMAGES](state, data) {
-    state.random_images = data[0].acf.images
-  },
   [mutationTypes.SET_COMMUNITY](state, data) {
     state.community = data
   },
