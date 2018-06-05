@@ -42,20 +42,30 @@ export default new Router({
       redirect: { name: 'about' }
     },
     {
-      path: '/about/:slug',
       alias: '/s-h_about/:slug',
+      path: '/about/:slug',
       name: 'about',
       component: about
     },
     // SHOP
+    // COLLECTIONS
     {
-      path: '/shop/:slug',
+      path: '/product/:slug',
+      redirect: { name: 'sale' }
+    },
+    {
       alias: '/product/:slug',
+      path: '/shop/:slug',
       name: 'sale',
       component: sale
     },
     {
-      path: '/product/:item',
+      path: '/product/:slug/:item',
+      redirect: { name: 'single sale' }
+    },
+    {
+      alias: '/product/:slug/:item',
+      path: '/shop/:slug/:item',
       name: 'single sale',
       component: singleSale
     },
@@ -75,8 +85,8 @@ export default new Router({
       redirect: { name: 'hardeman tv' }
     },
     {
-      path: '/hardeman-tv/:slug',
       alias: '/s-h_videos/:slug',
+      path: '/hardeman-tv/:slug',
       name: 'hardeman tv',
       component: hardemanTV
     },
