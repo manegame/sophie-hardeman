@@ -408,6 +408,7 @@ export default {
           }
 
           &__price {
+            white-space: nowrap;
             font-family: $sans-serif-stack;
             font-size: $font-size;
             line-height: 100%;
