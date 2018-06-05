@@ -6,18 +6,17 @@
          id='mainContent'
          @scroll='checkEls'
          v-if='main.community.length > 0'>
-      <template v-for='entry in main.community'>
-        <img class="community__main__image scrollItem"
-             :key='"img"+entry.id'
-             :id='entry.slug'
-             :ref='entry.id'
-             v-if='entry.acf.image'
-             :src='entry.acf.image.sizes["s-h-large"]'/>
-        <p class="community__main__title"
-          :key='"p" + entry.id'>
-              {{entry.title.rendered}}
-        </p>
-      </template>
+      <div  v-for='entry in main.community'
+            class="community__main__item scrollItem"
+            :key='"img"+entry.id'
+            :id='entry.slug'
+            :ref='entry.id'>
+        <load-img class="community__main__item__image"
+                  :item='entry'/>
+        <p  class="community__main__item__title"
+            :key='"p" + entry.id'
+            v-html='entry.title.rendered' />
+      </div>
     </div>
   </div>
 </template>
@@ -26,6 +25,7 @@
 import {mapState} from 'vuex'
 import navbar from '@/components/navbar'
 import topbar from '@/components/topbar'
+import loadImg from '@/components/load-img'
 import dynamicScroll from '@/components/mixins/dynamicScroll'
 
 export default {
@@ -45,7 +45,8 @@ export default {
   mixins: [dynamicScroll],
   components: {
     navbar,
-    topbar
+    topbar,
+    loadImg
   },
   computed: {
     ...mapState(['main'])
@@ -60,22 +61,5 @@ export default {
 
 .community {
   @include single;
-
-  &__main {
-    padding-bottom: 80px;
-
-    &__title {
-      font-size: $font-size;
-      line-height: $line-height;
-      color: $blue;
-    }
-
-    &__image {
-      max-height: 75vh;
-      width: auto;
-      max-width: 100%;
-      margin-top: $margin-top;
-    }
-  }
-}
+  @include scroller;}
 </style>

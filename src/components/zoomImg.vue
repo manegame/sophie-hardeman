@@ -24,15 +24,12 @@ export default {
       required: true
     }
   },
-  updated() {
-    console.log(this.imageSource)
-  },
   methods: {
     panImg(event) {
       if (event.currentTarget.offsetWidth > event.currentTarget.offsetHeight) {
-        this.panY = "" + event.offsetY / event.currentTarget.offsetHeight * 100 + "%"
+        this.panY = '' + event.offsetY / event.currentTarget.offsetHeight * 100 + '%'
       } else {
-        this.panX = "" + event.offsetX / event.currentTarget.offsetWidth * 100 + "%"
+        this.panX = '' + event.offsetX / event.currentTarget.offsetWidth * 100 + '%'
       }
     },
     resetPan() {

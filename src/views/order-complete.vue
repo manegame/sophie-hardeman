@@ -18,7 +18,6 @@ import {mapState} from 'vuex'
 import navbar from '@/components/navbar'
 import topbar from '@/components/topbar'
 
-
 export default {
   name: 'order-complete',
   head: {

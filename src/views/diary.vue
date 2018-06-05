@@ -5,18 +5,19 @@
     <div class="diary__main"
          @scroll='checkEls'
          id='mainContent'>
-         <template v-for='entry in main.diary'>
-           <img class="diary__main__image scrollItem"
-                v-if='entry.acf.image'
-                :id='entry.slug'
-                :key='"img" + entry.id'
-                :ref='entry.id'
-                :src='entry.acf.image.sizes["s-h-large"]'/>
-           <p class="diary__main__title"
-              :key='"p" + entry.id'>
-                 {{entry.title.rendered}}
-           </p>
-         </template>
+         <div v-for='entry in main.diary'
+              class="diary__main__item scrollItem"
+              :key='"item" + entry.id'
+              :ref='entry.id'
+              :id='entry.slug' >
+            <load-img class="diary__main__item__image"
+                      :item='entry'
+                      :key='"img" + entry.id' />
+            <p class="diary__main__item__title"
+                :key='"p" + entry.id'>
+                  {{entry.title.rendered}}
+            </p>
+         </div>
     </div>
   </div>
 </template>
@@ -25,8 +26,8 @@
 import {mapState} from 'vuex'
 import navbar from '@/components/navbar'
 import topbar from '@/components/topbar'
+import loadImg from '@/components/load-img'
 import dynamicScroll from '@/components/mixins/dynamicScroll'
-// import animatedScrollTo from 'animated-scrollto'
 
 export default {
   name: 'diary',
@@ -45,7 +46,8 @@ export default {
   mixins: [dynamicScroll],
   components: {
     navbar,
-    topbar
+    topbar,
+    loadImg
   },
   computed: {
     ...mapState(['main'])
@@ -60,22 +62,6 @@ export default {
 
 .diary {
   @include single;
-
-  &__main {
-    padding-bottom: 80px;
-
-    &__title {
-      font-size: $font-size;
-      line-height: $line-height;
-      color: $blue;
-    }
-
-    &__image {
-      max-height: 75vh;
-      width: auto;
-      max-width: 100%;
-      margin-top: $margin-top;
-    }
-  }
+  @include scroller;
 }
 </style>

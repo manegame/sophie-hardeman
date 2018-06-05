@@ -5,19 +5,13 @@
 import animatedScrollTo from 'animated-scrollto'
 
 export default {
-  data() {
-    return {
-      firstLoad: true
-    }
-  },
   computed: {
-    mainContent() { return document.getElementById('mainContent') }
-    // scrollItems() { return document.querySelectorAll('.scrollItem') }
+    mainContent() { return document.getElementById('mainContent') },
+    scrollItems() { return document.querySelectorAll('.scrollItem') }
   },
   updated() {
     this.$nextTick(() => {
-      if (this.firstLoad) this.scrollToElement()
-      this.firstLoad = false
+      this.scrollToElement()
     })
   },
   methods: {
@@ -41,9 +35,7 @@ export default {
       this.$router.push({name: this.$route.name, params: {slug: el.id, noScrollTo: true}})
     },
     scrollToElement() {
-      // console.log('scroll to called', this.$route.params.slug)
       let el = document.getElementById(this.$route.params.slug)
-      // console.log(el)
       if (el !== null) animatedScrollTo(this.mainContent, el.offsetTop - 40, 600)
     }
   },
@@ -52,9 +44,7 @@ export default {
   },
   watch: {
     $route(to, from) {
-      if (to.params.noScrollTo === true) {
-        console.log('. ')
-      } else {
+      if (to.params.noScrollTo === false) {
         this.scrollToElement()
       }
     }

@@ -61,6 +61,33 @@
   }
 }
 
+@mixin scroller {
+  &__main {
+    padding-bottom: 80px;
+
+    &__item {
+      height: 75vh;
+
+      @include screen-size('small') {
+        height: auto;
+      }
+
+      &__image {
+        width: auto;
+        max-height: 90%;
+        max-width: 100%;
+        margin-top: $margin-top;
+      }
+
+      &__title {
+        font-size: $font-size;
+        line-height: $line-height;
+        color: $blue;
+      }
+    }
+  }
+}
+
 /// Helper to clear inner floats
 /// @author Nicolas Gallagher
 /// @link http://nicolasgallagher.com/micro-clearfix-hack/ Micro Clearfix

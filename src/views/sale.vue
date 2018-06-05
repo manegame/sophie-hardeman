@@ -20,9 +20,8 @@
                 <!-- get the product by linked id and display price -->
                 {{item.price}}
               </span>
-              <img  class="sale__main__item__image"
-                    :src='item.acf.image.sizes["s-h-pixel"]'
-                    @load='handleLoaded($event, item)' />
+              <load-img  class="sale__main__item__image"
+                        :item='item' />
               <div class="sale__main__item__meta">
                 <h6>
                   <span class='sale__main__item__meta__season' 
@@ -54,9 +53,8 @@
                 <!-- get the product by linked id and display price -->
                 {{item.price}}
               </span>
-              <img  class="sale__main__item__image"
-                    :src='item.acf.image.sizes["s-h-pixel"]'
-                    @load='handleLoaded($event, item)' />
+              <load-img class="sale__main__item__image"
+                        :item='item' />
               <div class="sale__main__item__meta">
                 <h6>
                   <span class='sale__main__item__meta__season' 
@@ -78,6 +76,7 @@
 
 <script>
 import {mapState, mapGetters} from 'vuex'
+import loadImg from '@/components/load-img'
 import navbar from '@/components/navbar'
 import topbar from '@/components/topbar'
 
@@ -97,7 +96,8 @@ export default {
   },
   components: {
     navbar,
-    topbar
+    topbar,
+    loadImg
   },
   computed: {
     ...mapState(['main', 'shop']),
@@ -109,12 +109,12 @@ export default {
         })[0].id
       } else return 0
     }
-  },
-  methods: {
-    handleLoaded(event, item) {
-      event.currentTarget.src = item.acf.image.sizes['s-h-medium']
-    }
   }
+  // methods: {
+  //   handleLoaded(event, item) {
+  //     event.currentTarget.src = item.acf.image.sizes['s-h-medium']
+  //   }
+  // }
 }
 </script>
 

@@ -83,7 +83,6 @@ export default {
       'EMPTY_ORDER'
     ]),
     $_setMetaTags(meta = {}) {
-      console.log(meta.title)
       this.meta.title = meta.title || this.meta.defaults.title
       this.meta.description = meta.description || this.meta.defaults.description
       this.meta.image = meta.image || this.meta.defaults.image
@@ -218,7 +217,6 @@ export default {
   },
   watch: {
     $route(to, from) {
-      // console.log(to.params.slug, from.params.slug)
       switch (to) {
         case (to.name === 'collection' && to.params.slug === from.params.slug):
           this.ready = true
@@ -229,7 +227,6 @@ export default {
         default:
           if (from.name === null) {
             // load first time
-            console.log('first load')
             this.$_fetchData('first load')
           }
           this.$_fetchData(to)
