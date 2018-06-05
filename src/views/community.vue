@@ -25,7 +25,7 @@
 import {mapState} from 'vuex'
 import navbar from '@/components/navbar'
 import topbar from '@/components/topbar'
-import loadImg from '@/components/load-img'
+import loadImg from '@/components/base/load-img'
 import dynamicScroll from '@/components/mixins/dynamicScroll'
 
 export default {

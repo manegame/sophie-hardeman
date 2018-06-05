@@ -76,7 +76,7 @@
 
 <script>
 import {mapState, mapGetters} from 'vuex'
-import loadImg from '@/components/load-img'
+import loadImg from '@/components/base/load-img'
 import navbar from '@/components/navbar'
 import topbar from '@/components/topbar'
 

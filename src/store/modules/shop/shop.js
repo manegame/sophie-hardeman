@@ -168,46 +168,32 @@ const mutations = {
     state.singleProduct.variations = data
   },
   [mutationTypes.ADD_TO_CART](state, data) {
-    // adds to the cart and updates order.
-    // pass this function an object with a minimum of product and quantity
-    // e.g:
-    // wcProduct and wcVariation are ibjects returned by WC REST
-    // { product: wcProduct, variation: wcVariation, quantity: 1 }
-    let isVariable = false
-    // check each property to see if variable
-    for (let item in data) {
-      if (data.hasOwnProperty(item)) {
-        if (item === 'variation') isVariable = true
-      }
-    }
-    if (isVariable) {
-      let existing = state.cart.find(item => { return item.data.variation.id === data.variation.id })
-      if (existing !== undefined) {
+    // 1. check if product is variable
+    // 2. check if it is already in store
+    // 3. add to cart
+    if (isVariable(data)) {
+      // 2a
+      if (variableProductExists(state, data.variation.id)) {
+        console.log('add existing variable product')
         // existing variable product
         // 1. add to order
         state.order.line_items.map(li => {
           if (li.variation_id === data.variation.id) li.quantity++
         })
         // 2. add to cart
-        existing.quantity++
+        state.cart.map(item => {
+          if (item.data.product.id === data.product.id) {
+            if (item.data.variation.id === data.variation.id) item.quantity++
+          }
+        })
       } else {
-        // new variable product
         // 1. add to order
-        if (data.attribute.value) {
-          state.order.line_items.push({
-            product_id: data.product.id,
-            quantity: 1,
-            variation_id: data.variation.id,
-            // UGLY
-            meta_data: [1, 'Size', data.attribute.value]
-          })
-        } else {
-          state.order.line_items.push({
-            product_id: data.product.id,
-            quantity: 1,
-            variation_id: data.variation.id
-          })
-        }
+        console.log('add new variable product')
+        state.order.line_items.push({
+          product_id: data.product.id,
+          quantity: 1,
+          variation_id: data.variation.id
+        })
         // 2. add to cart
         state.cart.push({
           data: data,
@@ -215,30 +201,26 @@ const mutations = {
         })
       }
     } else {
-      let existing = state.cart.find(item => { return item.data.product.id === data.product.id })
-      if (existing !== undefined) {
+      if (simpleProductExists(state, data.product.id)) {
+        console.log('add existing simple product')
         // existing simple product
         // 1. add to order
         state.order.line_items.map(li => {
           if (li.product_id === data.product.id) li.quantity++
         })
         // 2. add to cart
-        existing.quantity++
+        state.cart.map(item => {
+          if (item.data.product.id === data.product.id) {
+            item.quantity++
+          }
+        })
       } else {
-        // new simple product
+        console.log('add new simple product')
         // 1. add to order
-        if (data.attribute.value) {
-          state.order.line_items.push({
-            product_id: data.product.id,
-            quantity: 1,
-            meta_data: [1, 'Size', data.attribute.value]
-          })
-        } else {
-          state.order.line_items.push({
-            product_id: data.product.id,
-            quantity: 1
-          })
-        }
+        state.order.line_items.push({
+          product_id: data.product.id,
+          quantity: 1
+        })
         // 2. add to cart
         state.cart.push({
           data: data,
@@ -248,24 +230,12 @@ const mutations = {
     }
   },
   [mutationTypes.REMOVE_FROM_CART](state, data) {
-    let isVariable = false
-    // check each property to see if variable
-    for (let item in data) {
-      if (data.hasOwnProperty(item)) {
-        if (item === 'variation') isVariable = true
-      }
-    }
-    if (isVariable) {
-      let item = state.cart.find(item => { return item.data.variation.id === data.variation.id })
-      if (item.quantity > 1) { // should always exist, though..
-        // item variable product
-        // 1. remove from order
-        state.order.line_items.map(li => {
-          if (li.variation_id === data.variation.id) li.quantity--
-        })
-        // 2. remove from cart
-        item.quantity--
-      } else {
+    // 1. check if product is variable
+    // 2. check if it is the last one
+    // 3. remove from cart
+    if (isVariable(data)) {
+      // existing variable product
+      if (isLastVariableProduct(state, data)) {
         // 1. remove from order
         let removeOrder = state.order.line_items.filter(li => { return li.variation_id === data.variation.id })
         let orderIndex = state.order.line_items.indexOf(removeOrder[0])
@@ -274,15 +244,20 @@ const mutations = {
         let removeCart = state.cart.filter(i => { return i.data.variation.id === data.variation.id })
         let cartIndex = state.cart.indexOf(removeCart[0])
         if (cartIndex > -1) state.cart.splice(cartIndex, 1)
+      } else {
+        state.order.line_items.map(li => {
+          if (li.variation_id === data.variation.id) li.quantity--
+        })
+        // 2. remove from cart
+        state.cart.map(item => {
+          if (item.data.product.id === data.product.id) {
+            if (item.data.variation.id === data.variation.id) item.quantity--
+          }
+        })
       }
     } else {
-      let item = state.cart.find(item => { return item.data.product.id === data.product.id })
-      if (item.quantity > 1) {
-        state.order.line_items.map(li => {
-          if (li.product_id === data.product.id) li.quantity--
-        })
-        item.quantity--
-      } else {
+      // existing simple product
+      if (isLastSimpleProduct(state, data)) {
         // 1. remove from order
         let removeOrder = state.order.line_items.filter(li => { return li.product_id === data.product.id })
         let orderIndex = state.order.line_items.indexOf(removeOrder[0])
@@ -291,6 +266,17 @@ const mutations = {
         let removeCart = state.cart.filter(i => { return i.data.product.id === data.product.id })
         let cartIndex = state.cart.indexOf(removeCart[0])
         if (cartIndex > -1) state.cart.splice(cartIndex, 1)
+      } else {
+        // 1. remove from order
+        state.order.line_items.map(li => {
+          if (li.product_id === data.product.id) li.quantity--
+        })
+        // 2. add to cart
+        state.cart.map(item => {
+          if (item.data.product.id === data.product.id) {
+            item.quantity--
+          }
+        })
       }
     }
   },
@@ -379,4 +365,52 @@ export default {
   actions,
   mutations,
   getters
+}
+
+let isVariable = (passedData) => {
+  if (passedData.variation) return true
+  else return false
+}
+
+let variableProductExists = (state, id) => {
+  let res = state.order.line_items.filter(item => {
+    return item.variation_id === id
+  })
+  console.log(res)
+  if (res.length > 0) {
+    return true
+  } else {
+    return false
+  }
+}
+
+let simpleProductExists = (state, id) => {
+  let res = state.order.line_items.filter(item => {
+    return item.product_id === id
+  })
+  if (res.length > 0) {
+    return true
+  } else {
+    return false
+  }
+}
+
+let isLastVariableProduct = (state, data) => {
+  let quantity
+  state.order.line_items.map(li => {
+    if (li.variation_id === data.variation.id) quantity = li.quantity
+  })
+  console.log(quantity)
+  if (quantity === 1) return true
+  else return false
+}
+
+let isLastSimpleProduct = (state, data) => {
+  let quantity
+  state.order.line_items.map(li => {
+    if (li.product_id === data.product.id) quantity = li.quantity
+  })
+  console.log(quantity)
+  if (quantity === 1) return true
+  else return false
 }

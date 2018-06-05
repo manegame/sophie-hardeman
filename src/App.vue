@@ -10,11 +10,9 @@
 <script>
 import {mapState, mapActions} from 'vuex'
 import foot from './components/foot'
-import core from './components/shop/mixins/core'
 
 export default {
   name: 'app',
-  mixins: [core],
   components: {
     foot
   },
@@ -40,7 +38,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['main'])
+    ...mapState(['main', 'shop'])
   },
   methods: {
     ...mapActions([
@@ -229,6 +227,8 @@ export default {
           this.$_setMetaTags()
           break
       }
+      // Empty order after leaving the complete route
+      if (from.name === 'order-complete') this.EMPTY_ORDER()
     },
     'main.single.acf'() {
       if (this.main.single.acf.videos) this.main.single.acf.videos.map(v => this.GET_VIDEO(v.ID))

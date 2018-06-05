@@ -67,7 +67,7 @@
 import {mapState, mapActions, mapGetters} from 'vuex'
 import navbar from '@/components/navbar'
 import topbar from '@/components/topbar'
-import zoomImg from '@/components/zoomImg'
+import zoomImg from '@/components/base/zoomImg'
 import aboutSophie from '@/components/about-sophie'
 
 export default {

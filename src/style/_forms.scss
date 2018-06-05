@@ -1,0 +1,61 @@
+form input,
+select {
+  font-size: $font-size-s;
+  line-height: $line-height;
+  margin-bottom: 4px;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 0 4px;
+}
+
+input[type='radio'],
+input[type='checkbox'] {
+  width: auto;
+  padding: 0;
+}
+
+input[placeholder='phone'],
+input[placeholder='email'] {
+  width: calc(50% - 4px);
+}
+
+#billing,
+#payment,
+#shipping,
+#shipping_method {
+  border: $border;
+  max-width: $left-col-width * 1.5;
+  padding: 8px;
+
+  &:first-child {
+    margin-top: -10px;
+  }
+}
+
+#payment,
+#shipping,
+#message {
+  margin-top: 10px;
+}
+
+#message {
+  color: $orange;
+}
+
+.pay-with-stripe {
+  color: $black;
+  margin-top: 8px;
+}
+
+input[type='submit'] {
+  &:disabled {
+    opacity: 0.6;
+
+    &:hover {
+      background-color: $white;
+    }
+  }
+}

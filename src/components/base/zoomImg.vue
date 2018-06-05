@@ -41,7 +41,7 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-@import '../style/_variables.scss';
+@import '../../style/_variables.scss';
 
 .zoom_img {
   width: 100%;
