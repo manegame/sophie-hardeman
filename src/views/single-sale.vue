@@ -9,8 +9,7 @@
            <span class='single_sale__main__title--title' v-html='shop.singleProduct.product.name' />
          </h5>
          <div class="single_sale__main__left">
-           <img class="single_sale__main__left__image"
-                :src='imageSource'/>
+           <zoom-img :imageSource='imageSource' />
            <div class="single_sale__main__left__text">
              <template v-if='shop.singleProduct.product.acf.details'>
                <p class="single_sale__main__left__text--head">Description</p>
@@ -68,6 +67,7 @@
 import {mapState, mapActions, mapGetters} from 'vuex'
 import navbar from '@/components/navbar'
 import topbar from '@/components/topbar'
+import zoomImg from '@/components/zoomImg'
 import aboutSophie from '@/components/about-sophie'
 
 export default {
@@ -87,6 +87,7 @@ export default {
   components: {
     navbar,
     topbar,
+    zoomImg,
     aboutSophie
   },
   data() {
@@ -107,10 +108,10 @@ export default {
     imageSource() {
       if (this.shop.singleProduct.variations.length > 0) {
         console.log(this.productVariationByOption(this.selectedVariation))
-        if (this.selectedVariation === '') return this.shop.singleProduct.product.acf.image.sizes['s-h-small']
+        if (this.selectedVariation === '') return this.shop.singleProduct.product.acf.image.sizes['s-h-medium']
         else return this.productVariationByOption(this.selectedVariation).image.src
       } else {
-        return this.shop.singleProduct.product.acf.image.sizes['s-h-small']
+        return this.shop.singleProduct.product.acf.image.sizes['s-h-medium']
       }
     }
   },
@@ -200,14 +201,6 @@ export default {
 
       @include screen-size('small') {
         width: 100%;
-      }
-
-      &__image {
-        width: 100%;
-        height: 45vh;
-        object-fit: contain;
-        background: $grey;
-        margin-bottom: 10px;
       }
 
       &__text {

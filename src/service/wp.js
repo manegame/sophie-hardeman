@@ -12,7 +12,6 @@ export default {
     return new Promise((resolve, reject) => {
       Vue.http.get(API_ROOT + API_VERSION + 'pages?slug=banner&fields=acf').then(
         response => {
-          console.log(response.body)
           resolve(response.body[0].acf)
         },
         response => {
