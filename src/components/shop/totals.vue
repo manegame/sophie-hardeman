@@ -29,22 +29,7 @@ export default {
   name: 'totals',
   computed: {
     ...mapState(['shop']),
-    ...mapGetters(['cartTotal']),
-    shippingTotal() {
-      if (this.selectedMethod === 'flat_rate') {
-        if (this.shop.order.shipping_lines.length) {
-          let total = 0
-          this.shop.order.shipping_lines.map(line => {
-            if (line.total) {
-              total += Number(line.total)
-            } else {
-              total = 0
-            }
-          })
-          return total
-        } else return 0
-      } else return 0
-    }
+    ...mapGetters(['cartTotal', 'shippingTotal'])
   }
 }
 </script>

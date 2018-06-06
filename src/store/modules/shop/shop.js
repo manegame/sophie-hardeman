@@ -88,8 +88,8 @@ const actions = {
   [actionTypes.REMOVE_FROM_CART]({commit, state}, data) {
     commit(mutationTypes.REMOVE_FROM_CART, data)
   },
-  [actionTypes.ADD_CUSTOMER_INFO]({commit, state}, data) {
-    commit(mutationTypes.ADD_CUSTOMER_INFO, data)
+  [actionTypes.SET_CUSTOMER_INFO]({commit, state}, data) {
+    commit(mutationTypes.SET_CUSTOMER_INFO, data)
   },
   [actionTypes.SET_SHIPPING]({commit, state}, data) {
     commit(mutationTypes.SET_SHIPPING, data)
@@ -284,7 +284,7 @@ const mutations = {
     state.order.shipping_lines.splice(0, 1)
     state.order.shipping_lines.push(data)
   },
-  [mutationTypes.ADD_CUSTOMER_INFO](state, data) {
+  [mutationTypes.SET_CUSTOMER_INFO](state, data) {
     // TODO clean up the state so this mumbo jumbo is not necessary
     let b = state.order.billing
     let s = state.order.shipping

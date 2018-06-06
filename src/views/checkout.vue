@@ -17,23 +17,22 @@
       <div class="checkout__main__right">
 
         <!-- FORM -->
-        <form @submit.prevent='pay' 
-              @change=' validate(); 
-                        setShippingInfo($event); 
-                        setShippingZone($event)'>
+        <form @submit.prevent='pay'>
           <!-- SHIPPING AND BILLING INFO -->
           <billing-shipping :billingData='billing'
-                            :shippingData='shipping' />
+                            :shippingData='shipping'
+                            @complete='billingFilled = $event'
+                            @shippingZoneChange='setShippingZone($event)'/>
 
           <!-- SHIPPING METHODS -->
-          <shipping-method  :shippingZone='shippingZone'
-                            :selectedMethod='selectedMethod'
-                            @change='setShippingMethod($event)' />
+          <shipping-method  :selectedZone='selectedZone'
+                            @checked='methodSelected = $event'
+                            @shippingMethodChange='setShippingMethod($event)' />
 
           <totals />
           <!-- START PAYMENT -->
           <fieldset id='payment' 
-                    :class='{"incomplete": !billingComplete}'>
+                    :class='{"incomplete": !complete}'>
             <legend>Payment</legend>
             <div id="paypal-button"></div>
           </fieldset>
@@ -58,6 +57,7 @@
 </template>
 
 <script>
+import { mapState, mapGetters } from 'vuex'
 import checkout from '@/components/shop/mixins/checkout'
 
 import navbar from '@/components/navbar'
@@ -69,6 +69,7 @@ import shippingMethod from '@/components/shop/shipping-method'
 import totals from '@/components/shop/totals'
 
 export default {
+  mixins: [checkout],
   name: 'checkout',
   components: {
     navbar,
@@ -78,7 +79,33 @@ export default {
     shippingMethod,
     totals
   },
-  mixins: [checkout]
+  computed: {
+    ...mapState(['main', 'shop']),
+    ...mapGetters({
+      shippingLoaded: 'shippingLoadedState',
+      cartTotal: 'cartTotal',
+      shippingTotal: 'shippingTotal'
+    }),
+    total() {
+      return this.cartTotal + this.shippingTotal
+    }
+  },
+  mounted() {
+    if (document.getElementById('paypal-button') !== null) this.hasPaypalButton = true
+    // paypal
+    if (!this.paypalLoaded && this.hasPaypalButton) {
+      let paypal = document.createElement('script')
+      paypal.setAttribute('src', this.paypalScript)
+      paypal.addEventListener('load', this.paypalScriptLoaded)
+      document.head.appendChild(paypal)
+    }
+    if (this.paypalLoaded) {
+      if (!this.paypalInitiated) {
+        this.paypalInit()
+        this.paypalInitiated = true
+      }
+    }
+  }
 }
 </script>
 
@@ -133,7 +160,6 @@ export default {
       @include screen-size('small') {
         padding-left: 0;
       }
-
     }
   }
 }

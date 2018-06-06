@@ -1,26 +1,26 @@
 <template>
-  <div>         
+  <div>
     <fieldset id='billing'>
       <legend>Billing Information</legend>
       <input type="text"
             placeholder='first name'
-            v-model='billingData.firstName'/><br />
+            v-model='billing.firstName'/><br />
       <input type="text"
             placeholder='last name'
-            v-model='billingData.lastName'/><br />
+            v-model='billing.lastName'/><br />
       <input type="text"
             placeholder='address'
-            v-model='billingData.address'/><br />
+            v-model='billing.address'/><br />
       <input type="text"
             placeholder='city'
-            v-model='billingData.city'/><br />
+            v-model='billing.city'/><br />
       <input type="text"
             placeholder='state'
-            v-model='billingData.state'/><br />
+            v-model='billing.state'/><br />
       <input type="text"
           placeholder='postcode'
-            v-model='billingData.postcode'/><br />
-      <select v-model='billingData.country'>
+            v-model='billing.postcode'/><br />
+      <select v-model='billing.country'>
         <option v-for='country in shop.countryList' 
                 :value='country[1]'
                 :key='"billing-"+country[1]+"-"+country[3]'
@@ -28,10 +28,10 @@
       </select><br>
       <input type="text"
             placeholder='email'
-            v-model='billingData.email'/>
+            v-model='billing.email'/>
       <input type="text"
             placeholder='phone'
-            v-model='billingData.phone'/>
+            v-model='billing.phone'/>
     </fieldset>
 
     <!-- START SHIPPING -->
@@ -46,29 +46,29 @@
       <template v-if='!sameAsBilling'>
         <input  type="text"
                 placeholder='first name'
-                v-model='shippingData.firstName'/>
+                v-model='shipping.firstName'/>
         <br />
         <input  type="text"
                 placeholder='last name'
-                v-model='shippingData.lastName'/>
+                v-model='shipping.lastName'/>
         <br />
         <input  type="text"
                 placeholder='address'
-                v-model='shippingData.address'/>
+                v-model='shipping.address'/>
         <br />
         <input  type="text"
                 placeholder='city'
-                v-model='shippingData.city'/>
+                v-model='shipping.city'/>
         <br />
         <input  type="text"
                 placeholder='state'
-                v-model='shippingData.state'/>
+                v-model='shipping.state'/>
         <br />
         <input  type="text"
                 placeholder='postcode'
-                v-model='shippingData.postcode'/>
+                v-model='shipping.postcode'/>
         <br />
-        <select v-model='shippingData.country'>
+        <select v-model='shipping.country'>
           <option v-for='country in shop.countryList' 
                   :value='country[1]'
                   :key='"shipping-"+country[1]+"-"+country[3]'
@@ -82,11 +82,11 @@
 
 <script>
 import loader from '@/components/base/loader'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'billing-shipping',
-  components: [ loader ],
+  components: { loader },
   data() {
     return {
       sameAsBilling: true
@@ -103,7 +103,67 @@ export default {
     }
   },
   computed: {
-    ...mapState(['shop'])
+    ...mapState(['shop']),
+    billing() {
+      return this.billingData
+    },
+    shipping() {
+      return this.shippingData
+    }
+  },
+  methods: {
+    ...mapActions(['SET_CUSTOMER_INFO']),
+    validateBilling() {
+      this.missingBilling = []
+      Object.keys(this.billing).forEach(key => {
+        if (key !== 'state') { // exceptions
+          if (this.billing[key] === null) this.missingBilling.push(key)
+        }
+      })
+      // if (this.missingBilling.length === 0) this.$emit('complete', true)
+      // else this.$emit('complete', false)
+    },
+    setShippingInfo() {
+      // if not, set same info as the billing address
+      this.shipping.firstName = this.billing.firstName
+      this.shipping.lastName = this.billing.lastName
+      this.shipping.address = this.billing.address
+      this.shipping.city = this.billing.city
+      this.shipping.state = this.billing.state
+      this.shipping.postcode = this.billing.postcode
+      this.shipping.country = this.billing.country
+    }
+  },
+  watch: {
+    billing: {
+      handler (val) {
+        if (this.sameAsBilling) {
+          this.setShippingInfo()
+          this.SET_CUSTOMER_INFO({
+            billing: val,
+            shipping: val
+          })
+        } else {
+          this.SET_CUSTOMER_INFO({
+            billing: val,
+            shipping: this.shipping
+          })
+        }
+        this.$emit('shippingZoneChange', this.shipping.country)
+      },
+      deep: true
+    },
+    shipping: {
+      handler(val) {
+        this.$emit('change')
+        this.SET_CUSTOMER_INFO({
+          billing: this.billing,
+          shipping: val
+        })
+        this.$emit('shippingZoneChange', this.shipping.country)
+      },
+      deep: true
+    }
   }
 }
 </script>
