@@ -27,7 +27,8 @@ export default {
   name: 'shipping-method',
   data() {
     return {
-      selectedMethod: ''
+      selectedMethod: '',
+      shippingZone: this.selectedZone
     }
   },
   props: {
@@ -37,17 +38,15 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['cartTotal']),
-    shippingZone() {
-      return this.selectedZone
-    }
+    ...mapGetters(['cartTotal'])
   },
   watch: {
     selectedMethod(val) {
+      val !== null || val !== '' ? this.$emit('complete', true) : this.$emit('complete', false)
       this.$emit('shippingMethodChange', val)
     },
-    shippingZone(val) {
-      console.log('zone changed', val)
+    selectedZone(val) {
+      this.shippingZone = val
     }
   }
 }

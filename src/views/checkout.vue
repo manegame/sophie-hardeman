@@ -4,6 +4,8 @@
     <navbar />
     <topbar />
 
+    <span style='color: red' v-html='complete.billing + " " + complete.method' />
+
     <!-- BEGIN CHECKOUT -->
     <div  class="checkout__main"
           v-if='shop.cart.length > 0'>
@@ -21,12 +23,12 @@
           <!-- SHIPPING AND BILLING INFO -->
           <billing-shipping :billingData='billing'
                             :shippingData='shipping'
-                            @complete='billingFilled = $event'
+                            @complete='billingComplete($event)'
                             @shippingZoneChange='setShippingZone($event)'/>
 
           <!-- SHIPPING METHODS -->
           <shipping-method  :selectedZone='selectedZone'
-                            @checked='methodSelected = $event'
+                            @complete='methodComplete($event)'
                             @shippingMethodChange='setShippingMethod($event)' />
 
           <totals />
@@ -88,6 +90,10 @@ export default {
     }),
     total() {
       return this.cartTotal + this.shippingTotal
+    },
+    orderComplete() {
+      // both billing info and shipping method stored in order state
+      return this.complete.billing && this.complete.method
     }
   },
   mounted() {

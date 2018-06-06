@@ -3,6 +3,10 @@ import { mapActions } from 'vuex'
 export default {
   data() {
     return {
+      complete: {
+        billing: false,
+        method: false
+      },
       paypalScript: 'https://www.paypalobjects.com/api/checkout.js',
       paypalLoaded: false,
       paypalInitiated: false,
@@ -41,7 +45,14 @@ export default {
       'PLACE_ORDER',
       'PAY_ORDER'
     ]),
+    billingComplete(bool) {
+      bool ? this.complete.billing = true : this.complete.billing = false
+    },
+    methodComplete(bool) {
+      bool ? this.complete.method = true : this.complete.method = false
+    },
     setShippingZone(event) {
+      // sets the correct shipping zone
       // prepare country filtering
       this.selectedCountry = this.shop.countryList.find(c => { return c[1] === this.shipping.country })
       const continentCode = this.selectedCountry[0]
@@ -55,14 +66,20 @@ export default {
       const byCountry = flatData.find(item => item.location.code === countryCode)
       const byContinent = flatData.find(item => item.location.code === continentCode)
 
+      // set selected method to nothing when changing zone
+      this.selectedMethod = ''
+
       // set selectedZone
       if (byCountry !== undefined) {
+        console.log('by country')
         // try by country
         this.selectedZone = this.shop.shipping_zones.find(zone => zone.id === byCountry.id)
       } else if (byContinent !== undefined) {
+        console.log('by continent')
         // try by continent
         this.selectedZone = this.shop.shipping_zones.find(zone => zone.id === byContinent.id)
       } else {
+        console.log('set to other')
         // set to `other`
         this.selectedZone = this.shop.shipping_zones.find(zone => zone.id === 0)
       }

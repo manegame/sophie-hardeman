@@ -109,22 +109,23 @@ export default {
     },
     shipping() {
       return this.shippingData
+    },
+    missingBilling() {
+      // to return an array with missing fields
+      let missing = []
+      Object.keys(this.billing).forEach(key => {
+        if (key !== 'state') {
+          if (this.billing[key] === null || this.billing[key] === '') {
+            missing.push(key)
+          }
+        }
+      })
+      return missing
     }
   },
   methods: {
     ...mapActions(['SET_CUSTOMER_INFO']),
-    validateBilling() {
-      this.missingBilling = []
-      Object.keys(this.billing).forEach(key => {
-        if (key !== 'state') { // exceptions
-          if (this.billing[key] === null) this.missingBilling.push(key)
-        }
-      })
-      // if (this.missingBilling.length === 0) this.$emit('complete', true)
-      // else this.$emit('complete', false)
-    },
     setShippingInfo() {
-      // if not, set same info as the billing address
       this.shipping.firstName = this.billing.firstName
       this.shipping.lastName = this.billing.lastName
       this.shipping.address = this.billing.address
@@ -135,6 +136,12 @@ export default {
     }
   },
   watch: {
+    'shipping.country'(val) {
+      this.$emit('shippingZoneChange', val)
+    },
+    'billing.country'(val) {
+      this.$emit('shippingZoneChange', val)
+    },
     billing: {
       handler (val) {
         if (this.sameAsBilling) {
@@ -149,18 +156,22 @@ export default {
             shipping: this.shipping
           })
         }
-        this.$emit('shippingZoneChange', this.shipping.country)
+        if (this.missingBilling.length === 0) {
+          this.$emit('complete', true)
+          // to make sure the zones get loaded
+          this.$emit('shippingZoneChange', val)
+        } else {
+          this.$emit('complete', false)
+        }
       },
       deep: true
     },
     shipping: {
       handler(val) {
-        this.$emit('change')
         this.SET_CUSTOMER_INFO({
           billing: this.billing,
           shipping: val
         })
-        this.$emit('shippingZoneChange', this.shipping.country)
       },
       deep: true
     }
