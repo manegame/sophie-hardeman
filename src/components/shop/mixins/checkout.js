@@ -7,10 +7,11 @@ export default {
         billing: false,
         method: false
       },
-      paypalScript: 'https://www.paypalobjects.com/api/checkout.js',
-      paypalLoaded: false,
-      paypalInitiated: false,
-      hasPaypalButton: false,
+      payBuddy: {
+        script: 'https://www.paypalobjects.com/api/checkout.js',
+        loaded: false,
+        initiated: false
+      },
       msg: '',
       billing: {
         firstName: null,
@@ -91,25 +92,28 @@ export default {
         total: val.settings.cost ? val.settings.cost.value : 0 // only charge money for rates with a cost
       })
     },
-    paypalScriptLoaded() {
-      this.paypalLoaded = true
+    payBuddyLoadHandler() {
+      this.payBuddy.loaded = true
+      this.paypalInit()
     },
-    pay() {
-      //
-      // this payment function does a couple of things.
-      // 1. ADD_CUSTOMER INFO pushes the billing and shipping into an order object for the REST API, then
-      // 2. PLACE_ORDER sends the order
-      //
-      this.msg = 'hold on, processing...'
-      this.PLACE_ORDER(this.shop.order).then(() => {
-        if (this.shop.payment.orderResponse.message) {
-          this.msg = 'Something went wrong. Please try again or contact <a href="mailto:sales@hardeman.co">sales@hardeman.co</a>. Apologies for the inconvenience'
-        } else {
-          this.$router.push({ name: 'order-complete' })
-        }
-      })
-    },
+    // placePaidOrder() {
+    //   //
+    //   // this payment function does a couple of things.
+    //   // 2. PLACE_ORDER sends the order
+    //   //
+    //   this.msg = 'hold on, processing...'
+    //   if (this.orderComplete) {
+    //     this.PLACE_ORDER(this.shop.order).then(() => {
+    //       if (this.shop.payment.orderResponse.message) {
+    //         this.msg = 'Something went wrong. Please contact <a href="mailto:sales@hardeman.co">sales@hardeman.co</a>. Apologies for the inconvenience'
+    //       } else {
+    //         this.$router.push({ name: 'order-complete' })
+    //       }
+    //     })
+    //   }
+    // },
     paypalInit() {
+      console.log('initiate paypal')
       const vm = this
       // eslint-disable-next-line
       paypal.Button.render({
@@ -142,6 +146,7 @@ export default {
         },
 
         onAuthorize: function(data, actions) {
+          vm.msg = 'processing payment...'
           return actions.payment.execute().then(function(payment) {
             vm.shop.order.payment_method = 'paypal'
             vm.shop.order.set_paid = true

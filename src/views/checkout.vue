@@ -19,7 +19,7 @@
       <div class="checkout__main__right">
 
         <!-- FORM -->
-        <form @submit.prevent='pay'>
+        <form @submit.prevent='placePaidOrder'>
           <!-- SHIPPING AND BILLING INFO -->
           <billing-shipping :billingData='billing'
                             :shippingData='shipping'
@@ -34,7 +34,7 @@
           <totals />
           <!-- START PAYMENT -->
           <fieldset id='payment' 
-                    :class='{"incomplete": !complete}'>
+                    :class='{"incomplete": !orderComplete}'>
             <legend>Payment</legend>
             <div id="paypal-button"></div>
           </fieldset>
@@ -97,20 +97,19 @@ export default {
     }
   },
   mounted() {
-    if (document.getElementById('paypal-button') !== null) this.hasPaypalButton = true
-    // paypal
-    if (!this.paypalLoaded && this.hasPaypalButton) {
-      let paypal = document.createElement('script')
-      paypal.setAttribute('src', this.paypalScript)
-      paypal.addEventListener('load', this.paypalScriptLoaded)
-      document.head.appendChild(paypal)
-    }
-    if (this.paypalLoaded) {
-      if (!this.paypalInitiated) {
-        this.paypalInit()
-        this.paypalInitiated = true
+    this.$nextTick(() => {
+      // Code that will run only after the
+      // entire view has been rendered
+      if (!this.payBuddy.loaded) {
+        let paypal = document.createElement('script')
+        paypal.setAttribute('src', this.payBuddy.script)
+        document.head.appendChild(paypal)
+        paypal.addEventListener('load', this.payBuddyLoadHandler)
       }
-    }
+    })
+  },
+  destroyed() {
+    console.log(document.head)
   }
 }
 </script>
