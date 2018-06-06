@@ -29,9 +29,7 @@ export default {
         country: 'NL'
       },
       selectedCountry: 'NL',
-      selectedZone: [],
-      billingFilled: false,
-      methodSelected: false
+      selectedZone: []
     }
   },
   methods: {
@@ -93,14 +91,6 @@ export default {
           this.$router.push({ name: 'order-complete' })
         }
       })
-    },
-    billingComplete(event) {
-      console.log('billing complete called')
-      if (event === true) {
-        this.billingFilled = true
-      } else {
-        this.billingFilled = false
-      }
     },
     paypalInit() {
       const vm = this
