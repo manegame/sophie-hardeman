@@ -340,11 +340,16 @@ const mutations = {
 
 const getters = {
   shippingLoadedState: state => state.shippingLoaded,
-  productVariationByOption: (state) => (option) => {
-    console.log('option', option)
+  productVariationByAttribute: (state) => (selectedAttributes) => {
+    // returns first product variation that matches selected attributes
     if (state.singleProduct.variations.length > 0) {
-      return state.singleProduct.variations.find(v => v.attributes[0].option === option)
-    } else return false
+      let result = state.singleProduct.variations.find(v => {
+        return v.attributes.find(attr => {
+          return (attr.id === selectedAttributes.id && attr.option === selectedAttributes.value)
+        })
+      })
+      return result
+    }
   },
   productById: (state) => (id) => {
     if (state.products.length > 0) {

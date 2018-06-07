@@ -1,6 +1,6 @@
 <template>
   <div class='app'>
-    <keep-alive>
+    <keep-alive exclude='checkout'>
       <router-view id='view' />
     </keep-alive>
     <foot />

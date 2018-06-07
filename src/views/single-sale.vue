@@ -82,27 +82,23 @@ export default {
   data() {
     return {
       selectedAttributes: {},
-      variationId: ''
+      selectedVariation: ''
     }
   },
   computed: {
     ...mapState(['main', 'shop']),
-    ...mapGetters(['productVariationByOption']),
+    ...mapGetters({ byAttr: 'productVariationByAttribute' }),
     variableProduct() {
       if (this.shop.singleProduct.variations.length > 0) return true
       else return false
     },
-    variationName() {
-      return this.shop.singleProduct.variations[0].attributes[0].name
-    },
     imageSource() {
-      if (this.shop.singleProduct.variations.length > 0) {
-        console.log(this.productVariationByOption(this.variationId))
-        if (this.variationId === '') return this.shop.singleProduct.product.acf.image.sizes['s-h-medium']
-        else return this.productVariationByOption(this.variationId).image.src
-      } else {
-        return this.shop.singleProduct.product.acf.image.sizes['s-h-medium']
-      }
+      return this.shop.singleProduct.product.acf.image.sizes['s-h-medium']
+      // if (this.shop.singleProduct.variations.length > 0) {
+      //   if (this.variationId === '') return this.shop.singleProduct.product.acf.image.sizes['s-h-medium']
+      //   else return this.byAttr(this.selectedAttributes).image.src
+      // } else {
+      // }
     }
   },
   methods: {
@@ -112,15 +108,14 @@ export default {
     ]),
     addToCart() {
       if (this.variableProduct === true) {
-        const variation = this.productVariationByOption(this.variationId)
+        console.log('add to cart variable')
         this.ADD_TO_CART({
           product: this.shop.singleProduct.product,
-          variation: variation,
+          variation: this.selectedVariation,
           attributes: this.selectedAttributes
         })
       } else {
         console.log('add to cart simple')
-        console.log(this.shop.singleProduct.product)
         this.ADD_TO_CART({
           product: this.shop.singleProduct.product,
           attributes: this.selectedAttributes
@@ -145,6 +140,8 @@ export default {
     }
   },
   destroyed() {
+    this.selectedAttributes = {}
+    this.selectedVariation = ''
     this.CLEAR_SINGLE_PRODUCT()
   },
   watch: {
@@ -157,6 +154,16 @@ export default {
         }
         this.$set(this.selectedAttributes, val[i].name, valueToSet)
       }
+    },
+    selectedAttributes: {
+      handler(val) {
+        Object.keys(val).forEach(key => {
+          if (this.byAttr(this.selectedAttributes[key]) !== undefined) {
+            this.selectedVariation = this.byAttr(this.selectedAttributes[key])
+          }
+        })
+      },
+      deep: true
     }
   }
 }
