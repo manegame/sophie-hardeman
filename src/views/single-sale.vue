@@ -21,18 +21,18 @@
               </template>
             </div>
             <!-- OPTIONS -->
-            <div class="single_sale__main__left__payment">
+            <div class="single_sale__main__left__info">
               <!-- ALL PRODUCTS -->
               <template>
-                <div class="single_sale__main__left__payment__form">
+                <div class="single_sale__main__left__info__form">
                   <form @submit.prevent='purchase'>
                     <!-- ATTRIBUTES -->
                     <select v-for='attr in shop.singleProduct.product.attributes'
                             v-if='selectedAttributes[attr.name]'
-                            :key='attr.id'
+                            :key='"attr" + attr.name'
                             v-model='selectedAttributes[attr.name].value'>
                       <option disabled 
-                              :value='""'
+                              :value='attr.name'
                               v-html='attr.name' />
                       <option v-for='option in attr.options'
                               :key='option'
@@ -82,7 +82,8 @@ export default {
   data() {
     return {
       selectedAttributes: {},
-      selectedVariation: ''
+      selectedVariation: '',
+      optionsSelected: false
     }
   },
   computed: {
@@ -93,12 +94,11 @@ export default {
       else return false
     },
     imageSource() {
-      return this.shop.singleProduct.product.acf.image.sizes['s-h-medium']
-      // if (this.shop.singleProduct.variations.length > 0) {
-      //   if (this.variationId === '') return this.shop.singleProduct.product.acf.image.sizes['s-h-medium']
-      //   else return this.byAttr(this.selectedAttributes).image.src
-      // } else {
-      // }
+      if (this.selectedVariation) {
+        return this.selectedVariation.image.src
+      } else {
+        return this.shop.singleProduct.product.acf.image.sizes['s-h-medium']
+      }
     }
   },
   methods: {
@@ -123,20 +123,12 @@ export default {
       }
     },
     purchase() {
-      this.addToCart()
-      this.$router.push({name: 'checkout'})
-
-      // if (this.variableProduct) {
-      //   if (this.variationId !== '') {
-      //     this.addToCart()
-      //     this.$router.push({name: 'checkout'})
-      //   } else {
-      //     // window.alert('please choose an option first')
-      //   }
-      // } else {
-      //   this.addToCart()
-      //   this.$router.push({name: 'checkout'})
-      // }
+      if (this.optionsSelected) {
+        this.addToCart()
+        this.$router.push({name: 'checkout'})
+      } else {
+        window.alert('please pick an option first!')
+      }
     }
   },
   destroyed() {
@@ -157,11 +149,18 @@ export default {
     },
     selectedAttributes: {
       handler(val) {
+        // Loop over all attributes to compare them with variable products
+        let allOptions = []
         Object.keys(val).forEach(key => {
+          // 1. Loop over all attributes to compare them with variable products
           if (this.byAttr(this.selectedAttributes[key]) !== undefined) {
             this.selectedVariation = this.byAttr(this.selectedAttributes[key])
           }
+          // 2. Check if the user has selected an option
+          allOptions.push(this.selectedAttributes[key].key !== this.selectedAttributes[key].value)
         })
+        // check if all fields passed the test and return to value
+        allOptions.every(option => option === true) ? this.optionsSelected = true : this.optionsSelected = false
       },
       deep: true
     }
@@ -173,6 +172,7 @@ export default {
 @import '../style/helpers/_mixins.scss';
 @import '../style/helpers/_responsive.scss';
 @import '../style/_variables.scss';
+@import '../style/_forms.scss';
 
 .single_sale {
   @include single;
@@ -234,7 +234,7 @@ export default {
         }
       }
 
-      &__payment {
+      &__info {
         font-size: $font-size-s;
         line-height: $line-height-s;
         width: 50%;
