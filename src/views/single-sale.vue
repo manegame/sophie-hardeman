@@ -4,52 +4,41 @@
     <topbar />
     <div v-if='shop.singleProduct.product.id && imageSource'
          class="single_sale__main">
+         <!-- TITLE -->
          <h5 class="single_sale__main__title">
            <span class="single_sale__main__title--season" v-html='shop.singleProduct.product.acf.season' />
            <span class='single_sale__main__title--title' v-html='shop.singleProduct.product.name' />
          </h5>
+         <!-- IMAGE -->
          <div class="single_sale__main__left">
            <zoom-img :imageSource='imageSource' />
            <div class="single_sale__main__left__text">
+             <!-- DESCRIPTION -->
              <template v-if='shop.singleProduct.product.acf.details'>
                <p class="single_sale__main__left__text--head">Description</p>
                <p class="single_sale__main__left__text--main"
                   v-html='shop.singleProduct.product.acf.details' />
               </template>
             </div>
+            <!-- OPTIONS -->
             <div class="single_sale__main__left__payment">
-              <!-- <template v-for='attr in shop.singleProduct.product.attributes'>
-                <select v-if='!attr.variation'
-                        v-model='selectedAttribute.value'
-                        :key='attr.name'>
-                  <option disabled value='' 
-                          v-html='attr.name' />
-                  <option v-for='option in attr.options'
-                          :key='option'
-                          :value='option'
-                          v-html='option'/>
-                  {{attr.name}}
-                </select>
-              </template> -->
-              <template v-if='shop.singleProduct.variations.length > 0'>
+              <!-- ALL PRODUCTS -->
+              <template>
                 <div class="single_sale__main__left__payment__form">
                   <form @submit.prevent='purchase'>
-                    <select   v-model='selectedVariation'>
-                      <option disabled value='' 
-                              v-html='shop.singleProduct.variations[0].attributes[0].name' />
-                      <option v-for='variation in shop.singleProduct.variations'
-                              :disabled='!variation.in_stock'
-                              :key='variation.id'
-                              :value='variation.attributes[0].option'
-                              v-html='variation.attributes[0].option'/>
+                    <!-- ATTRIBUTES -->
+                    <select v-for='attr in shop.singleProduct.product.attributes'
+                            v-if='selectedAttributes[attr.name]'
+                            :key='attr.id'
+                            v-model='selectedAttributes[attr.name].value'>
+                      <option disabled 
+                              :value='""'
+                              v-html='attr.name' />
+                      <option v-for='option in attr.options'
+                              :key='option'
+                              :value='option'
+                              v-html='option'/>
                     </select>
-                    <input type='submit' value='Order' />
-                  </form>
-                </div>
-              </template>
-              <template v-else>
-                <div class="single_sale__main__left__payment__form">
-                  <form @submit.prevent='purchase'>
                     <input type='submit' value='Order' />
                   </form>
                 </div>
@@ -92,10 +81,8 @@ export default {
   },
   data() {
     return {
-      selectedVariation: '',
-      selectedAttribute: {
-        value: ''
-      }
+      selectedAttributes: {},
+      variationId: ''
     }
   },
   computed: {
@@ -105,11 +92,14 @@ export default {
       if (this.shop.singleProduct.variations.length > 0) return true
       else return false
     },
+    variationName() {
+      return this.shop.singleProduct.variations[0].attributes[0].name
+    },
     imageSource() {
       if (this.shop.singleProduct.variations.length > 0) {
-        console.log(this.productVariationByOption(this.selectedVariation))
-        if (this.selectedVariation === '') return this.shop.singleProduct.product.acf.image.sizes['s-h-medium']
-        else return this.productVariationByOption(this.selectedVariation).image.src
+        console.log(this.productVariationByOption(this.variationId))
+        if (this.variationId === '') return this.shop.singleProduct.product.acf.image.sizes['s-h-medium']
+        else return this.productVariationByOption(this.variationId).image.src
       } else {
         return this.shop.singleProduct.product.acf.image.sizes['s-h-medium']
       }
@@ -118,42 +108,56 @@ export default {
   methods: {
     ...mapActions([
       'ADD_TO_CART',
-      'CLEAR_SINGLE_PRODUCT']),
+      'CLEAR_SINGLE_PRODUCT'
+    ]),
     addToCart() {
-      console.log('add to cart variable')
       if (this.variableProduct === true) {
-        const variation = this.productVariationByOption(this.selectedVariation)
-        console.log(variation)
+        const variation = this.productVariationByOption(this.variationId)
         this.ADD_TO_CART({
           product: this.shop.singleProduct.product,
           variation: variation,
-          attribute: this.selectedAttribute
+          attributes: this.selectedAttributes
         })
       } else {
         console.log('add to cart simple')
         console.log(this.shop.singleProduct.product)
         this.ADD_TO_CART({
           product: this.shop.singleProduct.product,
-          attribute: this.selectedAttribute
+          attributes: this.selectedAttributes
         })
       }
     },
     purchase() {
-      if (this.variableProduct) {
-        if (this.selectedVariation !== '') {
-          this.addToCart()
-          this.$router.push({name: 'checkout'})
-        } else {
-          window.alert('please choose an option first')
-        }
-      } else {
-        this.addToCart()
-        this.$router.push({name: 'checkout'})
-      }
+      this.addToCart()
+      this.$router.push({name: 'checkout'})
+
+      // if (this.variableProduct) {
+      //   if (this.variationId !== '') {
+      //     this.addToCart()
+      //     this.$router.push({name: 'checkout'})
+      //   } else {
+      //     // window.alert('please choose an option first')
+      //   }
+      // } else {
+      //   this.addToCart()
+      //   this.$router.push({name: 'checkout'})
+      // }
     }
   },
   destroyed() {
     this.CLEAR_SINGLE_PRODUCT()
+  },
+  watch: {
+    'shop.singleProduct.product.attributes'(val) {
+      for (let i = 0; i < val.length; i++) {
+        let valueToSet = {
+          id: val[i].id,
+          key: val[i].name,
+          value: val[i].name
+        }
+        this.$set(this.selectedAttributes, val[i].name, valueToSet)
+      }
+    }
   }
 }
 </script>

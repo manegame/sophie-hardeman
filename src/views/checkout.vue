@@ -4,8 +4,6 @@
     <navbar />
     <topbar />
 
-    <span style='color: red' v-html='complete.billing + " " + complete.method' />
-
     <!-- BEGIN CHECKOUT -->
     <div  class="checkout__main"
           v-if='shop.cart.length > 0'>

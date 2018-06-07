@@ -43,6 +43,7 @@ export default {
       'REMOVE_FROM_CART',
       'SET_CUSTOMER_INFO',
       'SET_SHIPPING',
+      'SET_PAID',
       'PLACE_ORDER',
       'PAY_ORDER'
     ]),
@@ -148,8 +149,10 @@ export default {
         onAuthorize: function(data, actions) {
           vm.msg = 'processing payment...'
           return actions.payment.execute().then(function(payment) {
-            vm.shop.order.payment_method = 'paypal'
-            vm.shop.order.set_paid = true
+            vm.SET_PAID({
+              payment_method: 'paypal',
+              set_paid: true
+            })
             vm.PLACE_ORDER(vm.shop.order).then(() => {
               if (vm.shop.payment.orderResponse.message) {
                 vm.msg = 'Something went wrong. Please contact <a href="mailto:sales@hardeman.co">sales@hardeman.co</a>. Our apologies for the inconvenience'

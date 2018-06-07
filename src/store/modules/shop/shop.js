@@ -91,6 +91,9 @@ const actions = {
   [actionTypes.SET_CUSTOMER_INFO]({commit, state}, data) {
     commit(mutationTypes.SET_CUSTOMER_INFO, data)
   },
+  [actionTypes.SET_PAID]({commit, state}, data) {
+    commit(mutationTypes.SET_PAID, data)
+  },
   [actionTypes.SET_SHIPPING]({commit, state}, data) {
     commit(mutationTypes.SET_SHIPPING, data)
   },
@@ -189,10 +192,16 @@ const mutations = {
       } else {
         // 1. add to order
         console.log('add new variable product')
+        let meta = []
+        Object.keys(data.attributes).forEach(function (key) {
+          meta.push(data.attributes[key])
+        })
+        console.log(meta)
         state.order.line_items.push({
           product_id: data.product.id,
           quantity: 1,
-          variation_id: data.variation.id
+          variation_id: data.variation.id,
+          meta_data: meta
         })
         // 2. add to cart
         state.cart.push({
@@ -216,10 +225,16 @@ const mutations = {
         })
       } else {
         console.log('add new simple product')
+        let meta = []
+        Object.keys(data.attributes).forEach(function (key) {
+          meta.push(data.attributes[key])
+        })
+        console.log(meta)
         // 1. add to order
         state.order.line_items.push({
           product_id: data.product.id,
-          quantity: 1
+          quantity: 1,
+          meta_data: meta
         })
         // 2. add to cart
         state.cart.push({
@@ -307,6 +322,11 @@ const mutations = {
     s.country = data.shipping.country
     if (data.shipping_line) { sl.push(data.shipping_line) }
   },
+  [mutationTypes.SET_PAID](state, data) {
+    // set the response data of the post request to the state
+    state.order.set_paid = data.set_paid
+    state.order.payment_method = data.payment_method
+  },
   [mutationTypes.PLACE_ORDER](state, data) {
     // set the response data of the post request to the state
     state.payment.orderResponse = data
@@ -325,6 +345,7 @@ const mutations = {
 const getters = {
   shippingLoadedState: state => state.shippingLoaded,
   productVariationByOption: (state) => (option) => {
+    console.log('option', option)
     if (state.singleProduct.variations.length > 0) {
       return state.singleProduct.variations.find(v => v.attributes[0].option === option)
     } else return false
