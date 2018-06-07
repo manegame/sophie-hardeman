@@ -22,10 +22,7 @@ input[placeholder='email'] {
   width: calc(50% - 4px);
 }
 
-#billing,
-#payment,
-#shipping,
-#shipping_method {
+fieldset {
   border: $border;
   max-width: $left-col-width * 1.5;
   padding: 8px;
@@ -43,11 +40,6 @@ input[placeholder='email'] {
 
 #message {
   color: $orange;
-}
-
-.pay-with-stripe {
-  color: $black;
-  margin-top: 8px;
 }
 
 input[type='submit'] {
