@@ -9,11 +9,7 @@
     </span>
     <!-- SHOW IMAGE FROM ACF OR VARIATION -->
     <img  class='cart_item__image' 
-          v-if='!item.data.variation' 
-          :src='item.data.product.acf.image.sizes["s-h-small"]' />
-    <img  class='cart_item__image' 
-          v-else
-          :src='item.data.variation.image.src' />
+          :src='imageSource' />
     <div  class="cart_item__meta">
       <h6>
         <span class='cart_item__meta__season' 
@@ -37,7 +33,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'cart-item',
@@ -52,6 +48,15 @@ export default {
       'ADD_TO_CART',
       'REMOVE_FROM_CART'
     ])
+  },
+  computed: {
+    imageSource() {
+      if (this.item.data.variation) {
+        return this.item.data.variation.image.src
+      } else {
+        return this.item.data.product.acf.image.sizes['s-h-medium']
+      }
+    }
   }
 }
 </script>

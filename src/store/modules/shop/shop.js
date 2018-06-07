@@ -124,10 +124,10 @@ const mutations = {
   },
   [mutationTypes.CLEAR_SINGLE_PRODUCT](state) {
     // clear single product
-    console.log('single clear')
+    // console.log('single clear')
     state.singleProduct.product = {}
     state.singleProduct.variations = []
-    console.log(state.singleProduct)
+    // console.log(state.singleProduct)
   },
   [mutationTypes.SHIPPING_LOADED](state) {
     // executes when all shipping actions have been accounted for
@@ -340,27 +340,17 @@ const mutations = {
 
 const getters = {
   shippingLoadedState: state => state.shippingLoaded,
-  productVariationByAttributes: (state) => (attributes) => {
-    let result = state.singleProduct.variations.filter(variation => {
-      console.log(variation.attributes.length)
+  singleProductVariationByAttributes: (state) => (attributes) => {
+    let result
+    // IN CASE YOU PASS AN OBJECT!
+    result = state.singleProduct.variations.filter(variation => {
+      // console.log(variation.attributes.length)
       return variation.attributes.every(option => {
-        console.log(option.name, attributes[option.name].key)
+        // console.log(option.name, attributes[option.name].key)
         return option.name === attributes[option.name].key && option.option === attributes[option.name].value
       })
-      // console.log('these attributes', variation.attributes[0])
     })
     return result[0]
-  },
-  productVariationByOption: (state) => (option) => {
-    // returns either a product variation, or false,
-    // where option is ???
-    if (state.singleProduct.variations.length > 0) {
-      return state.singleProduct.variations.find(v => {
-        v.attributes.forEach(attr => {
-          return attr.option === option
-        })
-      })
-    } else return false
   },
   productById: (state) => (id) => {
     if (state.products.length > 0) {
@@ -409,7 +399,7 @@ let variableProductExists = (state, id) => {
   let res = state.order.line_items.filter(item => {
     return item.variation_id === id
   })
-  console.log(res)
+  // console.log(res)
   if (res.length > 0) {
     return true
   } else {
@@ -433,7 +423,7 @@ let isLastVariableProduct = (state, data) => {
   state.order.line_items.map(li => {
     if (li.variation_id === data.variation.id) quantity = li.quantity
   })
-  console.log(quantity)
+  // console.log(quantity)
   if (quantity === 1) return true
   else return false
 }
@@ -443,7 +433,7 @@ let isLastSimpleProduct = (state, data) => {
   state.order.line_items.map(li => {
     if (li.product_id === data.product.id) quantity = li.quantity
   })
-  console.log(quantity)
+  // console.log(quantity)
   if (quantity === 1) return true
   else return false
 }

@@ -27,24 +27,28 @@
                 <div class="single_sale__main__left__info__form">
                   <fieldset>
                     <legend v-html='"price"' />
+                    <span v-html='price.on_sale ? "for sale!" : ""'></span>
+                    <span v-html='"€" + price.price'></span>
                   </fieldset>
-                  <fieldset @submit.prevent='purchase'>
-                    <legend v-html='"options"' />
-                    <!-- ATTRIBUTES -->
-                    <select v-for='attr in shop.singleProduct.product.attributes'
-                            v-if='selectedAttributes[attr.name]'
-                            :key='"attr" + attr.name'
-                            v-model='selectedAttributes[attr.name].value'>
-                      <option disabled 
-                              :value='attr.name'
-                              v-html='attr.name' />
-                      <option v-for='option in attr.options'
-                              :key='option'
-                              :value='option'
-                              v-html='option'/>
-                    </select>
+                  <form @submit.prevent='purchase'>
+                    <fieldset>
+                      <legend v-html='"options"' />
+                      <!-- ATTRIBUTES -->
+                      <select v-for='attr in shop.singleProduct.product.attributes'
+                              v-if='selectedAttributes[attr.name]'
+                              :key='"attr" + attr.name'
+                              v-model='selectedAttributes[attr.name].value'>
+                        <option disabled 
+                                :value='attr.name'
+                                v-html='attr.name' />
+                        <option v-for='option in attr.options'
+                                :key='option'
+                                :value='option'
+                                v-html='option'/>
+                      </select>
+                    </fieldset>
                     <input type='submit' value='Order' />
-                  </fieldset>
+                  </form>
                 </div>
               </template>
            </div>
@@ -92,10 +96,24 @@ export default {
   },
   computed: {
     ...mapState(['main', 'shop']),
-    ...mapGetters({ byAttr: 'productVariationByAttributes' }),
+    ...mapGetters({ byAttr: 'singleProductVariationByAttributes' }),
     variableProduct() {
       if (this.shop.singleProduct.variations.length > 0) return true
       else return false
+    },
+    price () {
+      if (this.selectedVariation === undefined) {
+        return {
+          on_sale: this.shop.singleProduct.product.on_sale,
+          price: this.shop.singleProduct.product.price
+        }
+      } else {
+        return {
+          on_sale: this.selectedVariation.on_sale,
+          price: this.selectedVariation.price
+        }
+      }
+      // return this.selectedVariation === undefined ? this.shop.singleProduct.product.price : this.selectedVariation.price
     },
     imageSource() {
       if (this.selectedVariation) {
@@ -127,6 +145,7 @@ export default {
       }
     },
     purchase() {
+      console.log('purchase!!!')
       if (this.optionsSelected) {
         this.addToCart()
         this.$router.push({name: 'checkout'})
@@ -158,18 +177,14 @@ export default {
         // END JACKPOT?
 
         // Loop over all attributes to compare them with variable products
-        // let allOptions = []
+        let allOptions = []
 
-        // Object.keys(val).forEach(key => {
-        //   // 1. Loop over all attributes to compare them with variable products
-        //   if (this.byAttr(this.selectedAttributes[key]) !== undefined) {
-        //     this.selectedVariation = this.byAttr(this.selectedAttributes[key])
-        //   }
-        //   // 2. Check if the user has selected an option
-        //   allOptions.push(this.selectedAttributes[key].key !== this.selectedAttributes[key].value)
-        // })
-        // // check if all fields passed the test and return to value
-        // allOptions.every(option => option === true) ? this.optionsSelected = true : this.optionsSelected = false
+        // Check if the user has selected an option
+        Object.keys(val).forEach(key => {
+          allOptions.push(this.selectedAttributes[key].key !== this.selectedAttributes[key].value)
+        })
+        // check if all fields passed the test and return to value
+        allOptions.every(option => option === true) ? this.optionsSelected = true : this.optionsSelected = false
       },
       deep: true
     }
