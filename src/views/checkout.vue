@@ -27,7 +27,8 @@
           <!-- SHIPPING METHODS -->
           <shipping-method  :selectedZone='selectedZone'
                             @complete='methodComplete($event)'
-                            @shippingMethodChange='setShippingMethod($event)' />
+                            @shippingMethodChange='setShippingMethod($event)'
+                            @focusout='setShippingMethod($event)' />
 
           <totals />
           <!-- START PAYMENT -->

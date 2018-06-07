@@ -160,6 +160,7 @@ export default {
                 vm.$router.push({ name: 'order-complete' })
               }
             })
+            vm.msg = ''
             // The payment is complete!
             // You can now show a confirmation message to the customer
           })

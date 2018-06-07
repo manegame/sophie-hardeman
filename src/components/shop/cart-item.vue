@@ -7,6 +7,7 @@
       <button @click='ADD_TO_CART(item.data)'
               v-html='"+"' />
     </span>
+    <!-- SHOW IMAGE FROM ACF OR VARIATION -->
     <img  class='cart_item__image' 
           v-if='!item.data.variation' 
           :src='item.data.product.acf.image.sizes["s-h-small"]' />
@@ -17,20 +18,19 @@
       <h6>
         <span class='cart_item__meta__season' 
               v-html='item.data.product.acf.season' />
-        <template v-if='item.data.variation'>
-          <span class="cart_item__meta__title"
-                v-html='item.data.product.name + " (" + item.data.variation.attributes[0].option + ")"' />
+          <span class="cart_item__meta__title">
+            <span v-html='item.data.product.name'/>
+            <span v-for='attribute in item.attributes'
+                  :key='attribute.id'
+                  v-html='"(" + attribute.value + ") "'/>
+          </span>
           <span class="cart_item__meta__price"
-                v-html='item.data.variation.price' />
-          <br />
-        </template>
-        <template v-else>
-          <span class="cart_item__meta__title"
-                v-html='item.data.product.name' />
+                v-if='item.data.variation'
+                v-html='item.data.product.price' />
           <span class="cart_item__meta__price"
+                v-else
                 v-html='item.data.product.price' />
           <br />
-        </template>
       </h6>
     </div>
   </div>

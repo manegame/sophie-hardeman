@@ -171,6 +171,11 @@ const mutations = {
     state.singleProduct.variations = data
   },
   [mutationTypes.ADD_TO_CART](state, data) {
+    // SET SELECTED ATTRS
+    let selectedAttributes = []
+    Object.keys(data.attributes).forEach(function (key) {
+      selectedAttributes.push(data.attributes[key])
+    })
     // 1. check if product is variable
     // 2. check if it is already in store
     // 3. add to cart
@@ -191,21 +196,16 @@ const mutations = {
         })
       } else {
         // 1. add to order
-        console.log('add new variable product')
-        let meta = []
-        Object.keys(data.attributes).forEach(function (key) {
-          meta.push(data.attributes[key])
-        })
-        console.log(meta)
         state.order.line_items.push({
           product_id: data.product.id,
           quantity: 1,
           variation_id: data.variation.id,
-          meta_data: meta
+          meta_data: selectedAttributes
         })
         // 2. add to cart
         state.cart.push({
           data: data,
+          attributes: selectedAttributes,
           quantity: 1
         })
       }
@@ -225,20 +225,16 @@ const mutations = {
         })
       } else {
         console.log('add new simple product')
-        let meta = []
-        Object.keys(data.attributes).forEach(function (key) {
-          meta.push(data.attributes[key])
-        })
-        console.log(meta)
         // 1. add to order
         state.order.line_items.push({
           product_id: data.product.id,
           quantity: 1,
-          meta_data: meta
+          meta_data: selectedAttributes
         })
         // 2. add to cart
         state.cart.push({
           data: data,
+          attributes: selectedAttributes,
           quantity: 1
         })
       }
