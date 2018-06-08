@@ -161,30 +161,35 @@ export default {
   },
   watch: {
     'shop.singleProduct.product.attributes'(val) {
-      for (let i = 0; i < val.length; i++) {
-        let valueToSet = {
-          id: val[i].id,
-          key: val[i].name,
-          value: val[i].name
+      console.log('has attributes?', val)
+      if (val.length > 0) {
+        for (let i = 0; i < val.length; i++) {
+          let valueToSet = {
+            id: val[i].id,
+            key: val[i].name,
+            value: val[i].name
+          }
+          this.$set(this.selectedAttributes, val[i].name, valueToSet)
         }
-        this.$set(this.selectedAttributes, val[i].name, valueToSet)
+      } else {
+        this.$set(this.selectedAttributes, null, null)
       }
     },
     selectedAttributes: {
       handler(val) {
-        // JACKPOT?
-        this.selectedVariation = this.byAttr(val)
-        // END JACKPOT?
-
-        // Loop over all attributes to compare them with variable products
-        let allOptions = []
-
-        // Check if the user has selected an option
-        Object.keys(val).forEach(key => {
-          allOptions.push(this.selectedAttributes[key].key !== this.selectedAttributes[key].value)
-        })
-        // check if all fields passed the test and return to value
-        allOptions.every(option => option === true) ? this.optionsSelected = true : this.optionsSelected = false
+        if (val.null !== null) {
+          this.selectedVariation = this.byAttr(val)
+          // Loop over all attributes to compare them with variable products
+          let allOptions = []
+          // Check if the user has selected an option
+          Object.keys(val).forEach(key => {
+            allOptions.push(this.selectedAttributes[key].key !== this.selectedAttributes[key].value)
+          })
+          // check if all fields passed the test and return to value
+          allOptions.every(option => option === true) ? this.optionsSelected = true : this.optionsSelected = false
+        } else {
+          this.optionsSelected = true
+        }
       },
       deep: true
     }

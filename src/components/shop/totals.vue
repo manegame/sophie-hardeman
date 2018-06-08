@@ -3,14 +3,22 @@
     <legend class="totals__legend">Order</legend>
     <ul class="totals__list">
       <li class="totals__list__item naturel" 
-          v-for='item in shop.cart'
+          v-for='(item, index) in shop.cart'
           v-if='item.data.variation'
-          :key='"listVar" + item.data.variation.id'>
-        <span v-html='item.quantity + " x " + item.data.product.name + " (" + item.data.variation.attributes[0].option + "): €" + item.data.variation.price' />
+          :key='"listVar" + index'>
+        <span v-html='item.quantity + " x " + item.data.product.name' />
+        <span v-for='attr in item.attributes'
+              :key='attr.key'
+              v-html='"(" + attr.value + ") "' />
+        <span v-html='"€" + item.data.variation.price + ""' />
       </li>
       <li v-else
-          :key='"listSim" + item.data.product.id'>
-      <span v-html='item.quantity + " x " + item.data.product.name + " €" + item.data.product.price' />
+          :key='"listSim" + index'>
+        <span v-html='item.quantity + " x " + item.data.product.name' />
+        <span v-for='attr in item.attributes'
+              :key='attr.key'
+              v-html='"(" + attr.value + ") "' />
+        <span v-html='"€" + item.data.product.price + ""' />
       </li>
     </ul>
     <ul class="totals__list" v-if='shippingTotal !== null'>

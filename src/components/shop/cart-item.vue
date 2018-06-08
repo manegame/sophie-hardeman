@@ -22,7 +22,7 @@
           </span>
           <span class="cart_item__meta__price"
                 v-if='item.data.variation'
-                v-html='item.data.product.price' />
+                v-html='item.data.variation.price' />
           <span class="cart_item__meta__price"
                 v-else
                 v-html='item.data.product.price' />
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'cart-item',

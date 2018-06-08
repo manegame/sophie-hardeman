@@ -171,30 +171,42 @@ const mutations = {
     state.singleProduct.variations = data
   },
   [mutationTypes.ADD_TO_CART](state, data) {
+    console.log('ADD_TO_CART', data.attributes)
     // SET SELECTED ATTRS
-    let selectedAttributes = []
-    Object.keys(data.attributes).forEach(function (key) {
-      selectedAttributes.push(data.attributes[key])
-    })
-    // 1. check if product is variable
-    // 2. check if it is already in store
-    // 3. add to cart
-    if (isVariable(data)) {
-      // 2a
-      if (variableProductExists(state, data.variation.id)) {
-        console.log('add existing variable product')
-        // existing variable product
+    if (data.attributes.null !== null) {
+      console.log('has attributes')
+      let selectedAttributes = []
+      Object.keys(data.attributes).forEach(function (key) {
+        selectedAttributes.push(data.attributes[key])
+      })
+      // check if exists
+      let filtered = state.cart.filter(li => {
+        return JSON.stringify(li.attributes) === JSON.stringify(selectedAttributes)
+      })
+      if (filtered.length > 0) {
+        console.log('existing with attr')
         // 1. add to order
         state.order.line_items.map(li => {
-          if (li.variation_id === data.variation.id) li.quantity++
+          if (data.variation && li.variation_id) {
+            if (li.variation_id === data.variation.id) {
+              li.quantity++
+            }
+          } else {
+            if (li.product_id === data.product.id) {
+              li.quantity++
+            }
+          }
         })
         // 2. add to cart
         state.cart.map(item => {
-          if (item.data.product.id === data.product.id) {
+          if (data.variation && item.data.variation) {
             if (item.data.variation.id === data.variation.id) item.quantity++
+          } else {
+            if (item.data.product.id === data.product.id) item.quantity++
           }
         })
       } else {
+        console.log('new with attr')
         // 1. add to order
         state.order.line_items.push({
           product_id: data.product.id,
@@ -210,86 +222,40 @@ const mutations = {
         })
       }
     } else {
-      if (simpleProductExists(state, data.product.id)) {
-        console.log('add existing simple product')
-        // existing simple product
+      console.log('simple product')
+      // check if exists
+      let filtered = state.cart.filter(li => {
+        return li.data.product.id === data.product.id
+      })
+      if (filtered.length > 0) {
+        console.log('existing simple')
         // 1. add to order
         state.order.line_items.map(li => {
-          if (li.product_id === data.product.id) li.quantity++
+          if (li.product_id === data.product.id) {
+            li.quantity++
+          }
         })
         // 2. add to cart
         state.cart.map(item => {
-          if (item.data.product.id === data.product.id) {
-            item.quantity++
-          }
+          if (item.data.product.id === data.product.id) item.quantity++
         })
       } else {
-        console.log('add new simple product')
+        console.log('new simple')
         // 1. add to order
         state.order.line_items.push({
           product_id: data.product.id,
-          quantity: 1,
-          meta_data: selectedAttributes
+          quantity: 1
         })
         // 2. add to cart
         state.cart.push({
           data: data,
-          attributes: selectedAttributes,
           quantity: 1
         })
       }
     }
   },
   [mutationTypes.REMOVE_FROM_CART](state, data) {
-    // 1. check if product is variable
-    // 2. check if it is the last one
-    // 3. remove from cart
-    if (isVariable(data)) {
-      // existing variable product
-      if (isLastVariableProduct(state, data)) {
-        // 1. remove from order
-        let removeOrder = state.order.line_items.filter(li => { return li.variation_id === data.variation.id })
-        let orderIndex = state.order.line_items.indexOf(removeOrder[0])
-        if (orderIndex > -1) state.order.line_items.splice(orderIndex, 1) // this does the deletion
-        // 2. remove from cart
-        let removeCart = state.cart.filter(i => { return i.data.variation.id === data.variation.id })
-        let cartIndex = state.cart.indexOf(removeCart[0])
-        if (cartIndex > -1) state.cart.splice(cartIndex, 1)
-      } else {
-        state.order.line_items.map(li => {
-          if (li.variation_id === data.variation.id) li.quantity--
-        })
-        // 2. remove from cart
-        state.cart.map(item => {
-          if (item.data.product.id === data.product.id) {
-            if (item.data.variation.id === data.variation.id) item.quantity--
-          }
-        })
-      }
-    } else {
-      // existing simple product
-      if (isLastSimpleProduct(state, data)) {
-        // 1. remove from order
-        let removeOrder = state.order.line_items.filter(li => { return li.product_id === data.product.id })
-        let orderIndex = state.order.line_items.indexOf(removeOrder[0])
-        if (orderIndex > -1) state.order.line_items.splice(orderIndex, 1) // this does the deletion
-        // 2. remove from cart
-        let removeCart = state.cart.filter(i => { return i.data.product.id === data.product.id })
-        let cartIndex = state.cart.indexOf(removeCart[0])
-        if (cartIndex > -1) state.cart.splice(cartIndex, 1)
-      } else {
-        // 1. remove from order
-        state.order.line_items.map(li => {
-          if (li.product_id === data.product.id) li.quantity--
-        })
-        // 2. add to cart
-        state.cart.map(item => {
-          if (item.data.product.id === data.product.id) {
-            item.quantity--
-          }
-        })
-      }
-    }
+
   },
   [mutationTypes.SET_SHIPPING](state, data) {
     state.order.shipping_lines.splice(0, 1)
@@ -395,28 +361,28 @@ let isVariable = (passedData) => {
   else return false
 }
 
-let variableProductExists = (state, id) => {
-  let res = state.order.line_items.filter(item => {
-    return item.variation_id === id
-  })
-  // console.log(res)
-  if (res.length > 0) {
-    return true
-  } else {
-    return false
-  }
-}
+// let variableProductExists = (state, id) => {
+//   let res = state.order.line_items.filter(item => {
+//     return item.variation_id === id
+//   })
+//   // console.log(res)
+//   if (res.length > 0) {
+//     return true
+//   } else {
+//     return false
+//   }
+// }
 
-let simpleProductExists = (state, id) => {
-  let res = state.order.line_items.filter(item => {
-    return item.product_id === id
-  })
-  if (res.length > 0) {
-    return true
-  } else {
-    return false
-  }
-}
+// let simpleProductExists = (state, id) => {
+//   let res = state.order.line_items.filter(item => {
+//     return item.product_id === id
+//   })
+//   if (res.length > 0) {
+//     return true
+//   } else {
+//     return false
+//   }
+// }
 
 let isLastVariableProduct = (state, data) => {
   let quantity
