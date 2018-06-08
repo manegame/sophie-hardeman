@@ -19,19 +19,22 @@
         <!-- FORM -->
         <form @submit.prevent='placePaidOrder'>
           <!-- SHIPPING AND BILLING INFO -->
-          <billing-shipping :billingData='billing'
+          <billing-shipping class='form__item'
+                            :billingData='billing'
                             :shippingData='shipping'
                             @complete='billingComplete($event)'
                             @shippingZoneChange='setShippingZone($event)'/>
 
           <!-- SHIPPING METHODS -->
-          <shipping-method  :selectedZone='selectedZone'
+          <shipping-method  class='form__item'
+                            :selectedZone='selectedZone'
                             @complete='methodComplete($event)'
                             @shippingMethodChange='setShippingMethod($event)' />
 
-          <totals />
+          <totals class='form__item' />
           <!-- START PAYMENT -->
-          <fieldset id='payment' 
+          <fieldset class='form__item'
+                    id='payment'
                     :class='{"incomplete": !orderComplete}'>
             <legend>Payment</legend>
             <div id="paypal-button"></div>

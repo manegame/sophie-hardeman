@@ -1,9 +1,7 @@
 <template>
   <div class='cart_item'>
     <span class="cart_item__amount">
-      <button @click='REMOVE_FROM_CART(item.data)'
-              v-html='"-"' />
-      {{item.quantity}} x
+      {{item.quantity}} items
       <button @click='ADD_TO_CART(item.data)'
               v-html='"+"' />
     </span>

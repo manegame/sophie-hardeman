@@ -25,13 +25,15 @@
               <!-- ALL PRODUCTS -->
               <template>
                 <div class="single_sale__main__left__info__form">
-                  <fieldset>
+                  <fieldset class='form__item'>
                     <legend v-html='"price"' />
-                    <span v-html='price.on_sale ? "for sale!" : ""'></span>
-                    <span v-html='"€" + price.price'></span>
+                    <span class='form__item__price' 
+                          v-html='"€" + price.price'></span>
+                    <sup v-html='price.on_sale ? "sale!" : ""' />
                   </fieldset>
-                  <form @submit.prevent='purchase'>
-                    <fieldset>
+                  <form class='form__item'
+                        @submit.prevent='purchase'>
+                    <fieldset v-if='shop.singleProduct.product.attributes.length > 0'>
                       <legend v-html='"options"' />
                       <!-- ATTRIBUTES -->
                       <select v-for='attr in shop.singleProduct.product.attributes'
@@ -47,7 +49,7 @@
                                 v-html='option'/>
                       </select>
                     </fieldset>
-                    <input type='submit' value='Order' />
+                    <input class='form__item' type='submit' value='Order' />
                   </form>
                 </div>
               </template>
@@ -102,7 +104,7 @@ export default {
       else return false
     },
     price () {
-      if (this.selectedVariation === undefined) {
+      if (this.selectedVariation === undefined || this.selectedVariation === '') {
         return {
           on_sale: this.shop.singleProduct.product.on_sale,
           price: this.shop.singleProduct.product.price

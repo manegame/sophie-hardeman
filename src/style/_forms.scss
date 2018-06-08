@@ -32,11 +32,15 @@ fieldset {
   }
 }
 
-#payment,
-#shipping,
-#message,
-#shipping_method {
-  margin-top: 10px;
+.form {
+  &__item {
+    margin-top: 10px;
+
+    &__price {
+      font-size: $font-size;
+      line-height: $line-height;
+    }
+  }
 }
 
 #message {
