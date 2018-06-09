@@ -208,18 +208,33 @@ const mutations = {
       } else {
         console.log('new with attr')
         // 1. add to order
-        state.order.line_items.push({
-          product_id: data.product.id,
-          quantity: 1,
-          variation_id: data.variation.id,
-          meta_data: selectedAttributes
-        })
-        // 2. add to cart
-        state.cart.push({
-          data: data,
-          attributes: selectedAttributes,
-          quantity: 1
-        })
+        if (data.variation) {
+          state.order.line_items.push({
+            product_id: data.product.id,
+            quantity: 1,
+            variation_id: data.variation.id,
+            meta_data: selectedAttributes
+          })
+          // 2. add to cart
+          state.cart.push({
+            data: data,
+            attributes: selectedAttributes,
+            quantity: 1
+          })
+        } else {
+          // 1. add to order
+          state.order.line_items.push({
+            product_id: data.product.id,
+            quantity: 1,
+            meta_data: selectedAttributes
+          })
+          // 2. add to cart
+          state.cart.push({
+            data: data,
+            attributes: selectedAttributes,
+            quantity: 1
+          })
+        }
       }
     } else {
       console.log('simple product')
@@ -255,7 +270,7 @@ const mutations = {
     }
   },
   [mutationTypes.REMOVE_FROM_CART](state, data) {
-
+    //
   },
   [mutationTypes.SET_SHIPPING](state, data) {
     state.order.shipping_lines.splice(0, 1)
@@ -354,52 +369,4 @@ export default {
   actions,
   mutations,
   getters
-}
-
-let isVariable = (passedData) => {
-  if (passedData.variation) return true
-  else return false
-}
-
-// let variableProductExists = (state, id) => {
-//   let res = state.order.line_items.filter(item => {
-//     return item.variation_id === id
-//   })
-//   // console.log(res)
-//   if (res.length > 0) {
-//     return true
-//   } else {
-//     return false
-//   }
-// }
-
-// let simpleProductExists = (state, id) => {
-//   let res = state.order.line_items.filter(item => {
-//     return item.product_id === id
-//   })
-//   if (res.length > 0) {
-//     return true
-//   } else {
-//     return false
-//   }
-// }
-
-let isLastVariableProduct = (state, data) => {
-  let quantity
-  state.order.line_items.map(li => {
-    if (li.variation_id === data.variation.id) quantity = li.quantity
-  })
-  // console.log(quantity)
-  if (quantity === 1) return true
-  else return false
-}
-
-let isLastSimpleProduct = (state, data) => {
-  let quantity
-  state.order.line_items.map(li => {
-    if (li.product_id === data.product.id) quantity = li.quantity
-  })
-  // console.log(quantity)
-  if (quantity === 1) return true
-  else return false
 }
