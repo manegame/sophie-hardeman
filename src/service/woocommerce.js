@@ -25,7 +25,7 @@ const WooCommerce = new WooCommerceAPI({
 export default {
   getProducts() {
     return new Promise((resolve, reject) => {
-      WooCommerce.getAsync('products').then(
+      WooCommerce.getAsync('products?per_page=99').then(
         response => {
           resolve(JSON.parse(response.toJSON().body))
         },

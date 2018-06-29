@@ -118,7 +118,7 @@ export default {
       const vm = this
       // eslint-disable-next-line
       paypal.Button.render({
-        env: 'sandbox', // 'production' or 'sandbox',
+        env: 'production', // 'production' or 'sandbox',
 
         commit: true, // Show a 'Pay Now' button
 
