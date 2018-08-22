@@ -10,8 +10,9 @@ Vue.http.options.crossOrigin = true
 export default {
   getBanner() {
     return new Promise((resolve, reject) => {
-      Vue.http.get(API_ROOT + API_VERSION + 'pages?slug=banner&fields=acf').then(
+      Vue.http.get(API_ROOT + API_VERSION + 'pages?slug=banner').then(
         response => {
+          console.log(response.body)
           resolve(response.body[0].acf)
         },
         response => {

@@ -21,6 +21,7 @@
                                 :key='"a" + label.ID'>{{label.post_title}}</sup>
                         </span>
                        </router-link>
+                       <!-- this is a nav item -->
                        <ul  class="nav__item__sub"
                             :key='"list" + collection.id'
                             :class='{"nav__item__sub--show": main.single.slug === collection.slug}'>
@@ -39,11 +40,11 @@
                                         :to="{ name: 'collection', params: {slug: collection.slug, section: 'video'} }"
                                         v-html='"video"' />
                            <router-link tag='li'
-                                        v-if='main.single.acf.campaign_images'
+                                        v-if='main.single.acf.campaign_images.length > 0'
                                         class="nav__item__sub__item"
                                         :class="{
                                                   'nav__item__sub__item--active': $route.params.section === 'campaign',
-                                                  'nav__item__sub__item--show': main.single.acf.campaign_description !== ''
+                                                  'nav__item__sub__item--show': main.single.acf.campaign_images.length > 0
                                                 }"
                                         :to="{ name: 'collection', params: {slug: collection.slug, section: 'campaign'} }"
                                         v-html='"campaign"' />
