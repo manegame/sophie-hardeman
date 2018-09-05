@@ -4,6 +4,7 @@ import App from './App'
 import router from './router'
 import store from './store'
 import VueHead from 'vue-head'
+import VueAnalytics from 'vue-ua'
 import {format} from 'date-fns'
 
 // --- GOOGLE ANALYTICS
@@ -22,6 +23,12 @@ import {format} from 'date-fns'
 Vue.config.productionTip = false
 
 Vue.use(VueHead)
+Vue.use(VueAnalytics, {
+  appName: 'HARDEMAN',
+  appVersion: '1.0',
+  trackingId: 'UA-69252921-6',
+  vueRouter: router
+})
 
 Vue.filter('dotted', (date) => {
   return format(date, 'DD.MM.YYYY')
