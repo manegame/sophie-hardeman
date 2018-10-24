@@ -10,16 +10,21 @@
     "build": "node build/build.js",
     "unit": "jest --config test/unit/jest.conf.js --coverage",
     "e2e": "node test/e2e/runner.js",
-    "test": "npm run unit && npm run e2e",
+    "test": "cross-env NODE_ENV=test nyc mocha-webpack --webpack-config build/webpack.base.conf.js --require test/setup.js test/**/*.spec.js",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
   "dependencies": {
+    "@vue/test-utils": "^1.0.0-beta.25",
     "animated-scrollto": "^1.1.0",
     "babel-polyfill": "^6.26.0",
     "contentful": "^5.0.5",
+    "cross-env": "^5.2.0",
     "date-fns": "^1.29.0",
     "embed-video": "^2.0.0",
+    "global": "^4.3.2",
     "js-cookie": "^2.2.0",
+    "mocha": "^5.2.0",
+    "mocha-webpack": "^1.1.0",
     "prismic-javascript": "^1.5.0-beta.1",
     "raven-js": "^3.20.1",
     "swiper": "^4.1.6",
@@ -42,6 +47,7 @@
     "babel-jest": "^22.1.0",
     "babel-loader": "^7.1.1",
     "babel-plugin-dynamic-import-node": "^1.2.0",
+    "babel-plugin-istanbul": "^5.1.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
     "babel-plugin-transform-runtime": "^6.22.0",
     "babel-preset-env": "^1.3.2",
@@ -62,15 +68,19 @@
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-standard": "^3.0.1",
     "eventsource-polyfill": "^0.9.6",
+    "expect": "^23.6.0",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^1.1.4",
     "friendly-errors-webpack-plugin": "^1.6.1",
     "html-webpack-plugin": "^2.30.1",
     "jest": "^22.1.4",
     "jest-serializer-vue": "^0.3.0",
+    "jsdom": "^12.2.0",
+    "jsdom-global": "^3.0.2",
     "nightwatch": "^0.9.12",
     "node-notifier": "^5.1.2",
     "node-sass": "^4.7.2",
+    "nyc": "^13.1.0",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
     "ora": "^1.2.0",
     "portfinder": "^1.0.13",
@@ -90,7 +100,8 @@
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-server": "^2.9.1",
-    "webpack-merge": "^4.1.0"
+    "webpack-merge": "^4.1.0",
+    "webpack-node-externals": "^1.7.2"
   },
   "engines": {
     "node": ">= 4.0.0",
@@ -100,5 +111,12 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "nyc": {
+    "include": [
+      "src/**/*.(js|vue)"
+    ],
+    "instrument": false,
+    "sourceMap": false
+  }
 }

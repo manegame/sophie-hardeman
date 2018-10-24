@@ -5,8 +5,9 @@
     <div v-if='main.single_event.acf'
          class="events__main">
       <div class="events__main__left">
-        <img class="events__main__left__image"
-             :src='main.single_event.acf.image.sizes["s-h-medium"]' />
+        <img  class="events__main__left__image"
+              v-if='main.single_event.acf.image'
+              :src='main.single_event.acf.image.sizes["s-h-medium"]' />
       </div>
       <div class="events__main__right">
         <h5 class='events__main__right__title'>
