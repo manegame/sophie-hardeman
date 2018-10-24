@@ -7,28 +7,31 @@ import VueHead from 'vue-head'
 import VueAnalytics from 'vue-ua'
 import {format} from 'date-fns'
 
-// --- GOOGLE ANALYTICS
-// import ga from 'vue-ga'
-// --- ERROR TRACKING
-// import Raven from 'raven-js'
-// import RavenVue from 'raven-js/plugins/vue'
-
-// Raven
-//     .config('https://---0@sentry.io/---')
-//     .addPlugin(RavenVue, Vue)
-//     .install()
-
-// ga(router, 'UA-XXXXX')
+/**
+ * Config
+ */
 
 Vue.config.productionTip = false
 
-Vue.use(VueHead)
+/**
+* Plugins
+*/
+
+window.jQuery = window.$ = require('jquery')
+
 Vue.use(VueAnalytics, {
   appName: 'HARDEMAN',
-  appVersion: '1.0',
+  appVersion: '1.1',
   trackingId: 'UA-69252921-6',
+  trackPage: true,
   vueRouter: router
 })
+
+Vue.use(VueHead)
+
+/**
+ * Filters
+ */
 
 Vue.filter('dotted', (date) => {
   return format(date, 'DD.MM.YYYY')
@@ -39,12 +42,11 @@ Vue.filter('temperature', (temp) => {
   else return temp + '°c'
 })
 
-// required by FullCalendar
-window.jQuery = window.$ = require('jquery')
-// import 'fullcalendar/dist/fullcalendar.min.js'
+/**
+ * Initiation
+ */
 
-/* eslint-disable no-new */
-new Vue({
+new Vue({ // eslint-disable-line no-new
   el: '#app',
   store,
   router,

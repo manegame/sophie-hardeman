@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+Vue.use(Router)
+
 const landing = () => import('@/views/landing')
 const collection = () => import('@/views/collection')
 const about = () => import('@/views/about')
@@ -14,8 +16,6 @@ const impressum = () => import('@/views/impressum')
 const community = () => import('@/views/community')
 const checkout = () => import('@/views/checkout')
 const orderComplete = () => import('@/views/order-complete')
-
-Vue.use(Router)
 
 export default new Router({
   mode: 'history',

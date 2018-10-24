@@ -45,15 +45,6 @@
                  v-html='main.single.acf.info' />
                  <section v-if='main.single.acf.items_for_sale'
                           class="collection__main__lookbook__info__for_sale">
-                   <!-- <p>The following items are for sale:</p>
-                   <ul class="collection__main__lookbook__info__for_sale">
-                     <router-link class="collection__main__lookbook__info__for_sale__item"
-                                  v-for='c in main.single.acf.items_for_sale'
-                                  tag='li'
-                                  :key='c.id'
-                                  :to='{name: "sale", params: {slug: c.slug}}'
-                                  v-html='c.name' /> -->
-                   </ul>
                  </section>
             </div>
       </div>
@@ -81,7 +72,8 @@
               <span v-html='main.single.acf.season' />
               <span v-html='main.single.title.rendered' />
             </h5>
-            <p v-html='main.single.acf.campaign_description' />
+            <p  v-if='main.single.acf.campaign_description'
+                v-html='main.single.acf.campaign_description' />
           </div>
         </div>
       </div>
