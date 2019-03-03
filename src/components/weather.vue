@@ -1,6 +1,6 @@
 <template>
   <div class="weather" v-if='main.weather.weather'>
-    <h3 class="weather__head">what to wear?</h3>
+    <h3 class="weather__head">weather</h3>
     <div class="weather__top">
       <p class="weather__top__title" v-html='main.weather.name'/>
       <div class="weather__top__info">
@@ -19,15 +19,24 @@
         <p class="weather__bottom__temps__temp">hi: {{main.weather.main.temp_max | temperature}}</p><br />
       </div>
     </div>
+    <h3 class="weather__foot">what to wear?</h3>
+    <template v-if="season !== null">
+      <router-link :to='`collection/${season.slug}/lookbook`' tag='img' class='weather__pic' :src='main.single_garment.acf.image.sizes["s-h-tiny"]' />
+    </template>
   </div>
 </template>
 
 <script>
-import {mapState, mapActions} from 'vuex'
-import {format} from 'date-fns'
+import { mapState, mapActions, mapGetters } from 'vuex'
+import { format } from 'date-fns'
 
 export default {
   name: 'weather',
+  data() {
+    return {
+      season: null
+    }
+  },
   props: [],
   computed: {
     ...mapState(['main']),
@@ -38,6 +47,20 @@ export default {
   },
   mounted() {
     this.GET_WEATHER()
+    this.GET_COLLECTIONS()
+      .then(() => {
+        let slug = this.getRandomGarment().post_name
+        console.log('slug', slug)
+        this.GET_SINGLE_GARMENT(slug)
+          .then(() => {
+            this.season = this.main.collections.find(collection => {
+              return collection.acf.garments.find(garment => {
+                console.log('garment', garment.ID, this.main.single_garment.id, garment.ID === this.main.single_garment.id)
+                return garment.ID === this.main.single_garment.id
+              })
+            })
+          })
+      })
   },
   updated: function() {
     this.$nextTick(function() {
@@ -46,7 +69,12 @@ export default {
     })
   },
   methods: {
-    ...mapActions(['GET_WEATHER'])
+    ...mapActions([
+      'GET_WEATHER',
+      'GET_COLLECTIONS',
+      'GET_SINGLE_GARMENT'
+    ]),
+    ...mapGetters(['getRandomGarment'])
   }
 }
 </script>
@@ -70,6 +98,22 @@ export default {
     border-top: $border-light;
     border-bottom: $border-light;
     cursor: pointer;
+  }
+
+  &__foot {
+    text-align: center;
+    margin-bottom: 4px;
+    background: $grey;
+    border-top: none;
+    border-bottom: $border-light;
+    cursor: pointer;
+  }
+
+  &__pic {
+    width: 100%;
+    max-height: $line-height * 7;
+    object-fit: contain;
+    object-position: center;
   }
 
   &__top {

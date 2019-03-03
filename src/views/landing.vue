@@ -21,7 +21,7 @@
               href='https://www.instagram.com/hardeman_'
               target='_blank'></a>
         </section>
-        <ul class="landing__column_left__head__links"
+        <!-- <ul class="landing__column_left__head__links"
             v-if='main.collections.length > 0 && main.stockists.length > 0 && main.community.length > 0 && main.videos.length > 0'>
           <router-link tag='li'
                         class="landing__column_left__head__links__item"
@@ -38,7 +38,7 @@
           <router-link tag='li'
                         class="landing__column_left__head__links__item"
                         :to="{name: 'community', params: { slug: main.community[0].slug}}">community</router-link>
-        </ul>
+        </ul> -->
       </div>
       <div class="landing__column_left__toe">
         <weather />
@@ -424,8 +424,8 @@ export default {
       background: $grey;
       height: auto;
       overflow: hidden;
-      position: absolute;
-      width: calc(100% - 40px);
+      // position: absolute;
+      width: 100%;
       bottom: 40px;
 
       @include screen-size('small') {

@@ -159,6 +159,7 @@ const mutations = {
     state.single.garments.push(data)
   },
   [mutationTypes.SET_SINGLE_GARMENT](state, data) {
+    console.log('set single garment ', data)
     state.single_garment = data
   },
   [mutationTypes.SET_GARMENTS](state, data) {
@@ -187,8 +188,19 @@ const mutations = {
   }
 }
 
+const getters = {
+  getRandomGarment: state => {
+    let colLen = state.collections.length
+    let collection = state.collections[Math.floor(Math.random() * colLen)]
+    let garLen = collection.acf.garments.length
+    let garment = collection.acf.garments[Math.floor(Math.random() * garLen)]
+    return garment
+  }
+}
+
 export default {
   state,
   actions,
+  getters,
   mutations
 }

@@ -47,8 +47,9 @@
                     class="sale__main__item__sold_out" 
                     v-html='"sold out"'/>
               <span v-if='item.on_sale'
-                    class="sale__main__item__sold_out" 
-                    v-html='"¡ for sale !"'/>
+                    class="sale__main__item__sold_out">
+                ! <del>{{ item.regular_price }} €</del> ! FOR SALE ! <del>{{ item.regular_price }} € </del> !
+              </span>
               <span class="sale__main__item__price-tag">
                 <!-- get the product by linked id and display price -->
                 {{item.price}}
