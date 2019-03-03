@@ -62,12 +62,12 @@
         <!-- - -->
         <!-- - -->
         <!-- - -->
-        <!-- For Sale -->
+        <!-- Shop -->
         <section  class="landing__column_middle__sections__shop"
                   v-if='shop.products.length > 0'>
           <router-link :to='{name: "sale", params: {slug: "all"}}'
                         tag='h2' >
-                        for sale
+                        shop
                         </router-link>
           <ul class="duo">
             <router-link tag='li'

@@ -12,7 +12,6 @@ export default {
     return new Promise((resolve, reject) => {
       Vue.http.get(API_ROOT + API_VERSION + 'pages?slug=banner').then(
         response => {
-          console.log(response.body)
           resolve(response.body[0].acf)
         },
         response => {
@@ -109,7 +108,6 @@ export default {
   },
   getGarments(slug) {
     if (slug === 'all') {
-      console.log('getting all garments!')
       return new Promise((resolve, reject) => {
         Vue.http.get(API_ROOT + API_VERSION + 's-h_garments?per_page=99&filter[orderby]=rand').then(
           response => {
@@ -121,7 +119,6 @@ export default {
         )
       })
     } else {
-      console.log('getting some garments')
       return new Promise((resolve, reject) => {
         Vue.http.get(API_ROOT + API_VERSION + 's-h_garments?s-h_garment_category=' + slug).then(
           response => {

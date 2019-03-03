@@ -211,6 +211,12 @@ export default {
   },
   watch: {
     $route(to, from) {
+      // Component Usage
+      this.$ua.trackEvent(
+        'page',
+        this.$route.fullPath,
+        this.$route.fullPath
+      )
       switch (to) {
         case (to.name === 'collection' && to.params.slug === from.params.slug):
           this.ready = true
@@ -266,6 +272,31 @@ export default {
 .fc-widget-content {
   height: 100%;
   padding: 0;
+}
+
+.fc-content-skeleton tbody {
+  height: 100px;
+}
+
+.fc-event-container {
+  width: 100%;
+  height: 6px;
+
+  a {
+    height: 100%;
+  }
+
+  &::after {
+    content: '';
+    width: 32px;
+    height: 100%;
+    display: block;
+    position: absolute;
+    top: 0;
+    background-image: url('/static/lit.gif');
+    background-size: contain;
+    pointer-events: none;
+  }
 }
 
 .wikipedia {

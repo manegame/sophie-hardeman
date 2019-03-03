@@ -32,7 +32,7 @@ export default {
   computed: {
     ...mapState(['main']),
     reccomendLink() {
-      return 'mailto:?subject=Hey! Check it out&body=Made by Hardeman... \nhardeman.com'
+      return 'mailto:info@hardeman.co?subject=Hey! Check it out&body=Made by Hardeman... \nhardeman.com'
     },
     mailSophie() {
       return 'mailto:info@hardeman.co?subject=It\'s been a while since we last talked...'

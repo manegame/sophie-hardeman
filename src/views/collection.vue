@@ -189,6 +189,7 @@ export default {
 @import '../style/helpers/_responsive.scss';
 @import '../style/vendor/swiper.css';
 @import '../style/_variables.scss';
+@include swiper;
 
 .collection {
 @include single;
@@ -338,57 +339,58 @@ embed {
   height: 100%;
 }
 
-
-.swiper-container {
-  width: 100%;
-  height: 300px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.swiper-slide {
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: top;
-}
-.gallery-top {
-  height: $left-col-width * 1.5;
-  width: 100%;
-
-  @include screen-size('medium') {
-    height: 450px;
+@mixin swiper {
+  .swiper-container {
+    width: 100%;
+    height: 300px;
+    margin-left: auto;
+    margin-right: auto;
   }
-
-  @include screen-size('small') {
-    height: 450px;
-    width: 300px;
-  }
-
   .swiper-slide {
+    width: 100%;
+    height: 100%;
     background-size: cover;
-    background-color: $white;
-    background-repeat: no-repeat;
+    background-position: top;
   }
-}
-.gallery-thumbs {
-  height: 140px;
-  box-sizing: border-box;
-  padding: 4px 0 0;
+  .gallery-top {
+    height: $left-col-width * 1.5;
+    width: 100%;
 
-  @include screen-size ('medium') {
-    height: 120px;
-  }
+    @include screen-size('medium') {
+      height: 450px;
+    }
 
-  @include screen-size('small') {
-    height: 120px;
-    width: 300px;
+    @include screen-size('small') {
+      height: 450px;
+      width: 300px;
+    }
+
+    .swiper-slide {
+      background-size: cover;
+      background-color: $white;
+      background-repeat: no-repeat;
+    }
   }
-}
-.gallery-thumbs .swiper-slide {
-  width: calc(25% - 2px);
-  height: 100%;
-}
-.gallery-thumbs .swiper-slide-active {
-  opacity: 1;
+  .gallery-thumbs {
+    height: 140px;
+    box-sizing: border-box;
+    padding: 4px 0 0;
+
+    @include screen-size ('medium') {
+      height: 120px;
+    }
+
+    @include screen-size('small') {
+      height: 120px;
+      width: 300px;
+    }
+  }
+  .gallery-thumbs .swiper-slide {
+    width: calc(25% - 2px);
+    height: 100%;
+  }
+  .gallery-thumbs .swiper-slide-active {
+    opacity: 1;
+  }
 }
 </style>

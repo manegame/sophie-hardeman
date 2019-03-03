@@ -10,9 +10,28 @@
            <span class='single_sale__main__title--title' v-html='shop.singleProduct.product.name' />
          </h5>
          <!-- IMAGE -->
+         <!-- ? Multiple -->
          <div class="single_sale__main__left">
-           <zoom-img :imageSource='imageSource' />
-           <div class="single_sale__main__left__text">
+          <template v-if='hasSwiper'>
+            <div  class='single_sale__main__left__slider'>
+              <div class="swiper-container" id='swiper_container'>
+                <div class="swiper-wrapper">
+                  <div  class="swiper-slide"
+                        v-for='image in shop.singleProduct.product.acf.images'
+                        :key='image.image.id'>
+                    <zoom-img :imageSource='image.image.sizes.medium' />
+                  </div>
+                </div>
+                <!-- Add Arrows -->
+                <div class="arrow-right swiper-button-next swiper-button-white" @click='nextButton'></div>
+                <div class="arrow-left swiper-button-prev swiper-button-white" @click='prevButton'></div>
+              </div>
+            </div>
+          </template>
+          <!-- ? Single -->
+          <zoom-img v-else :imageSource='imageSource' />
+          <!--  -->
+          <div class="single_sale__main__left__text">
              <!-- DESCRIPTION -->
              <template v-if='shop.singleProduct.product.acf.details'>
                <p class="single_sale__main__left__text--head">Description</p>
@@ -64,6 +83,7 @@
 
 <script>
 import {mapState, mapActions, mapGetters} from 'vuex'
+import Swiper from 'swiper'
 import navbar from '@/components/navbar'
 import topbar from '@/components/topbar'
 import zoomImg from '@/components/base/zoomImg'
@@ -93,12 +113,23 @@ export default {
     return {
       selectedAttributes: {},
       selectedVariation: '',
-      optionsSelected: false
+      optionsSelected: false,
+      swiper: null
     }
+  },
+  updated() {
+    this.$nextTick(() => {
+      if (this.hasSwiper) this.initSwiper()
+    })
   },
   computed: {
     ...mapState(['main', 'shop']),
     ...mapGetters({ byAttr: 'singleProductVariationByAttributes' }),
+    hasSwiper() {
+      if (this.shop.singleProduct.product.acf.images) {
+        return this.shop.singleProduct.product.acf.images.length > 1
+      }
+    },
     variableProduct() {
       if (this.shop.singleProduct.variations.length > 0) return true
       else return false
@@ -130,6 +161,25 @@ export default {
       'ADD_TO_CART',
       'CLEAR_SINGLE_PRODUCT'
     ]),
+    nextButton() {
+      this.swiper.slideNext()
+    },
+    prevButton() {
+      this.swiper.slidePrev()
+    },
+    initSwiper() {
+      this.swiper = new Swiper('#swiper_container', {
+        preloadImages: true,
+        updateOnImagesReady: true,
+        touchRatio: 1,
+        spaceBetween: 4,
+        navigation: {
+          nextEl: '.swiper-button-next--top',
+          prevEl: '.swiper-button-prev--top'
+        }
+      })
+      // this.swiper.navigation.update()
+    },
     addToCart() {
       if (this.variableProduct === true) {
         console.log('add to cart variable')
@@ -204,6 +254,38 @@ export default {
 @import '../style/helpers/_responsive.scss';
 @import '../style/_variables.scss';
 @import '../style/_forms.scss';
+@import '../style/vendor/swiper.css';
+@include swiper;
+
+.swiper-container {
+  height: 100%;
+  width: 100%;
+
+  .swiper-slide {
+    height: 100% !important;
+  }
+
+  .swiper-button-next {
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    right: 6px;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93QXJ0Ym9hcmQgMTwvdGl0bGU+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjAgMCAwIDEwMCAxMDAgNTAgMCAwIi8+PC9zdmc+')
+  }
+
+  .swiper-button-prev {
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    left: 6px;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93QXJ0Ym9hcmQgMSBjb3B5PC90aXRsZT48cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iMTAwIDAgMTAwIDEwMCAwIDUwIDEwMCAwIi8+PC9zdmc+')
+  }
+
+  .swiper-button-disabled {
+    opacity: 0;
+  }
+}
+
 
 .single_sale {
   @include single;
@@ -243,6 +325,13 @@ export default {
 
       @include screen-size('small') {
         width: 100%;
+      }
+
+      &__slider {
+        width: 100%;
+        height: 400px;
+        margin-bottom: $line-height;
+
       }
 
       &__text {

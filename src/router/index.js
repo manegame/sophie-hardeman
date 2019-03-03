@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import VueAnalytics from 'vue-ua'
 
 Vue.use(Router)
 
@@ -17,7 +18,7 @@ const community = () => import('@/views/community')
 const checkout = () => import('@/views/checkout')
 const orderComplete = () => import('@/views/order-complete')
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: [
     {
@@ -147,3 +148,14 @@ export default new Router({
     }
   ]
 })
+
+Vue.use(VueAnalytics, {
+  appName: 'HARDEMAN',
+  debug: true,
+  appVersion: '1.1',
+  trackingId: 'UA-69252921-6',
+  trackPage: true,
+  vueRouter: router
+})
+
+export default router

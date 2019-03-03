@@ -30,9 +30,6 @@
                         v-html='item.name' />
                   <span class="sale__main__item__meta__price" 
                         v-html='item.price' />
-                  <!-- <span class="sale__main__item__meta__brackets">
-                    (amsterdam west)
-                  </span> -->
                 </h6>
               </div>
         </router-link>
@@ -49,6 +46,9 @@
               <span v-if='!item.in_stock'
                     class="sale__main__item__sold_out" 
                     v-html='"sold out"'/>
+              <span v-if='item.on_sale'
+                    class="sale__main__item__sold_out" 
+                    v-html='"¡ for sale !"'/>
               <span class="sale__main__item__price-tag">
                 <!-- get the product by linked id and display price -->
                 {{item.price}}
@@ -63,9 +63,6 @@
                         v-html='item.name' />
                   <span class="sale__main__item__meta__price" 
                         v-html='item.price' />
-                  <!-- <span class="sale__main__item__meta__brackets">
-                    (amsterdam west)
-                  </span> -->
                 </h6>
               </div>
         </router-link>
@@ -85,12 +82,12 @@ export default {
   head: {
     title: () => {
       return {
-        inner: 'Sale'
+        inner: 'Shop'
       }
     },
     meta: () => {
       return [
-        { name: 'title', content: 'Sale' }
+        { name: 'title', content: 'Shop' }
       ]
     }
   },

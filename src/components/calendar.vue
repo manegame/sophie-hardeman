@@ -1,14 +1,18 @@
 <template>
   <section class="calendar">
-    <router-link v-if='main.events.length' tag='h3' :to="{name: 'events', params: {slug: main.events[0].slug}}" class="calendar__head">where to go?</router-link>
+    <router-link 
+      v-if='main.events.length' 
+      tag='h3' 
+      :to="{ name: 'events', params: { slug: main.events[0].slug }}" 
+      class="calendar__head">event calendar</router-link>
     <full-calendar :events='events'
                    :config='config' />
   </section>
 </template>
 
 <script>
-import {mapState} from 'vuex'
-import {FullCalendar} from 'vue-full-calendar'
+import { mapState } from 'vuex'
+import { FullCalendar } from 'vue-full-calendar'
 export default {
   name: 'calendar',
   components: {

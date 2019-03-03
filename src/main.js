@@ -4,7 +4,6 @@ import App from './App'
 import router from './router'
 import store from './store'
 import VueHead from 'vue-head'
-import VueAnalytics from 'vue-ua'
 import {format} from 'date-fns'
 
 /**
@@ -18,14 +17,6 @@ Vue.config.productionTip = false
 */
 
 window.jQuery = window.$ = require('jquery')
-
-Vue.use(VueAnalytics, {
-  appName: 'HARDEMAN',
-  appVersion: '1.1',
-  trackingId: 'UA-69252921-6',
-  trackPage: true,
-  vueRouter: router
-})
 
 Vue.use(VueHead)
 
