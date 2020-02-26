@@ -47,7 +47,7 @@
                   <fieldset class='form__item'>
                     <legend v-html='"price"' />
                     <span class='form__item__price' 
-                          v-html='"€" + price.price'></span>
+                          v-html='shop[shop.currency.value] + price.price'></span>
                     <sup v-html='price.on_sale ? "sale!" : ""' />
                   </fieldset>
                   <form class='form__item'

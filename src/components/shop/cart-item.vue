@@ -20,10 +20,10 @@
           </span>
           <span class="cart_item__meta__price"
                 v-if='item.data.variation'
-                v-html='item.data.variation.price' />
+                v-html='`${item.data.variation.price} ${shop[shop.currency.value]}`' />
           <span class="cart_item__meta__price"
                 v-else
-                v-html='item.data.product.price' />
+                v-html='`${item.data.product.price} ${shop[shop.currency.value]}`' />
           <br />
       </h6>
     </div>
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'cart-item',
@@ -48,6 +48,7 @@ export default {
     ])
   },
   computed: {
+    ...mapState(['shop']),
     imageSource() {
       if (this.item.data.variation) {
         return this.item.data.variation.image.src
@@ -122,10 +123,6 @@ export default {
       padding: 2px 6px;
       border-radius: 6px;
       border: 1px solid $grey-dark;
-
-      &::after {
-        content: " €"
-      }
     }
 
     &__brackets {

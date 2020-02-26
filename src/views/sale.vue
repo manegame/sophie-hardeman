@@ -18,7 +18,7 @@
                     v-html='"sold out"'/>
               <span class="sale__main__item__price-tag">
                 <!-- get the product by linked id and display price -->
-                {{item.price}}
+                {{item.price}} {{ shop[shop.currency.value] }}
               </span>
               <load-img  class="sale__main__item__image"
                         :item='item' />
@@ -29,7 +29,7 @@
                   <span class="sale__main__item__meta__title" 
                         v-html='item.name' />
                   <span class="sale__main__item__meta__price" 
-                        v-html='item.price' />
+                        v-html='`${item.price} ${shop[shop.currency.value]}`' />
                 </h6>
               </div>
         </router-link>
@@ -48,11 +48,11 @@
                     v-html='"sold out"'/>
               <span v-if='item.on_sale'
                     class="sale__main__item__sold_out">
-                ! <del>{{ item.regular_price }} €</del> ! FOR SALE ! <del>{{ item.regular_price }} € </del> !
+                ! <del>{{ item.regular_price }} {{ shop.currency.value }}</del> ! FOR SALE ! <del>{{ item.regular_price }} {{shop[shop.currency.value]}} </del> !
               </span>
               <span class="sale__main__item__price-tag">
                 <!-- get the product by linked id and display price -->
-                {{item.price}}
+                {{item.price}} {{ shop[shop.currency.value] }}
               </span>
               <load-img class="sale__main__item__image"
                         :item='item' />
@@ -63,7 +63,7 @@
                   <span class="sale__main__item__meta__title" 
                         v-html='item.name' />
                   <span class="sale__main__item__meta__price" 
-                        v-html='item.price' />
+                        v-html='`${item.price} ${shop[shop.currency.value]}`' />
                 </h6>
               </div>
         </router-link>
@@ -172,10 +172,6 @@ export default {
         border-bottom: 1px solid $grey-darker;
         border-right: 1px solid $grey-darker;
         white-space: nowrap;
-
-        &::after {
-          content: " €"
-        }
       }
 
       &__sold_out {
@@ -234,10 +230,6 @@ export default {
           border-radius: 6px;
           border: 1px solid $grey-dark;
           white-space: nowrap;
-
-          &::after {
-            content: " €"
-          }
         }
 
         &__brackets {

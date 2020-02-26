@@ -10,7 +10,7 @@
         <span v-for='attr in item.attributes'
               :key='attr.key'
               v-html='"(" + attr.value + ") "' />
-        <span v-html='"€" + item.data.variation.price + ""' />
+        <span v-html='shop[shop.currency.value] + item.data.variation.price + ""' />
       </li>
       <li v-else
           :key='"listSim" + index'>
@@ -18,15 +18,15 @@
         <span v-for='attr in item.attributes'
               :key='attr.key'
               v-html='"(" + attr.value + ") "' />
-        <span v-html='"€" + item.data.product.price + ""' />
+        <span v-html='shop[shop.currency.value] + item.data.product.price + ""' />
       </li>
     </ul>
     <ul class="totals__list" v-if='shippingTotal !== null'>
       <li class="totals__list__item naturel">
-        Shipping: €{{shippingTotal}}
+        Shipping: {{shop[shop.currency.value]}}{{shippingTotal}}
       </li>
     </ul>
-      Grand Total: €{{cartTotal + shippingTotal}} (VAT incl.)
+      Grand Total: {{shop[shop.currency.value]}}{{cartTotal + shippingTotal}} (VAT incl.)
   </fieldset>
 </template>
 

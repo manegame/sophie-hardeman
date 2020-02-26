@@ -39,6 +39,10 @@ const emptyOrder = {
 }
 
 const state = {
+  currency: {},
+  // Hacky
+  USD: '$',
+  EUR: '€',
   countryList: countries,
   cart: [],
   products: [],
@@ -54,6 +58,9 @@ const state = {
 }
 
 const actions = {
+  async [actionTypes.GET_CURRENCY]({commit}) {
+    commit(mutationTypes.SET_CURRENCY, await api.getCurrency())
+  },
   async [actionTypes.GET_PRODUCTS]({commit, state}) {
     commit(mutationTypes.SET_PRODUCTS, await api.getProducts())
   },
@@ -110,6 +117,9 @@ const actions = {
 }
 
 const mutations = {
+  [mutationTypes.SET_CURRENCY](state, data) {
+    state.currency = data
+  },
   [mutationTypes.SET_PRODUCTS](state, data) {
     // sets all products in state
     state.products = data

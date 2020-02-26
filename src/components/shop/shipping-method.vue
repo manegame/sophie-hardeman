@@ -15,13 +15,13 @@
                 v-html='method.method_title' />
         <span v-if='method.settings.cost'
               :key='"euro" + index'
-              v-html='method.settings.cost.value ? "€" + method.settings.cost.value : "free"' />
+              v-html='method.settings.cost.value ? shop[shop.currency.value] + method.settings.cost.value : "free"' />
     </template>
   </fieldset>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 
 export default {
   name: 'shipping-method',
@@ -38,7 +38,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['cartTotal'])
+    ...mapGetters(['cartTotal']),
+    ...mapState(['shop'])
   },
   watch: {
     selectedMethod(val) {

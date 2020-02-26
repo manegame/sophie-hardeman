@@ -69,6 +69,7 @@ export default {
       //
       // WOOCOMMERCE
       //
+      'GET_CURRENCY',
       'GET_PRODUCTS',
       'GET_PRODUCT_VARIATIONS',
       'GET_PRODUCT_CATEGORIES',
@@ -92,6 +93,7 @@ export default {
       this.GET_IMPRESSUM()
       switch (route.name) {
         case ('first load'):
+          this.GET_CURRENCY()
           this.GET_PRODUCTS()
           this.GET_BANNER()
           this.GET_COLLECTIONS()
@@ -104,6 +106,7 @@ export default {
           this.GET_COMMUNITY()
           break
         case ('landing'):
+          this.GET_CURRENCY()
           this.GET_PRODUCTS()
           this.CLEAR_SINGLES()
           this.GET_BANNER()
@@ -127,10 +130,12 @@ export default {
           this.GET_SINGLE_ABOUT(route.params.slug)
           break
         case ('sale'):
+          this.GET_CURRENCY()
           this.GET_GARMENT_CATEGORIES()
           this.GET_PRODUCTS()
           break
         case ('single sale'):
+          this.GET_CURRENCY()
           this.GET_GARMENT_CATEGORIES()
           this.GET_PRODUCT(route.params.item)
             .then(() => {
@@ -139,6 +144,7 @@ export default {
             })
           break
         case 'checkout':
+          this.GET_CURRENCY()
           this.GET_PRODUCTS()
           this.GET_SHIPPING_ZONES()
             .then(() => {

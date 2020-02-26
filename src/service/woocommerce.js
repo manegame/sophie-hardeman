@@ -23,6 +23,18 @@ const WooCommerce = new WooCommerceAPI({
 })
 
 export default {
+  getCurrency() {
+    return new Promise((resolve, reject) => {
+      WooCommerce.getAsync('settings/general/woocommerce_currency').then(
+        response => {
+          resolve(JSON.parse(response.toJSON().body))
+        },
+        response => {
+          reject(response)
+        }
+      )
+    })
+  },
   getProducts() {
     return new Promise((resolve, reject) => {
       WooCommerce.getAsync('products?per_page=99').then(
