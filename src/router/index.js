@@ -10,6 +10,7 @@ const about = () => import('@/views/about')
 const hardemanTV = () => import('@/views/hardeman-tv')
 const sale = () => import('@/views/sale')
 const shopify = () => import('@/views/shopify')
+const shopifySingle = () => import('@/views/shopify-single')
 const singleSale = () => import('@/views/single-sale')
 const diary = () => import('@/views/diary')
 const stockists = () => import('@/views/stockists')
@@ -62,9 +63,14 @@ const router = new Router({
       component: sale
     },
     {
-      path: '/shopify/:slug',
+      path: '/shopify',
       name: 'shopify',
       component: shopify
+    },
+    {
+      path: '/shopify/:handle',
+      name: 'shopify single',
+      component: shopifySingle
     },
     {
       path: '/product/:slug/:item',

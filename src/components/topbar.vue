@@ -5,10 +5,15 @@
                  :to="{ name: 'sale', params: {slug: $route.params.slug} }">
                  <- back to sale
     </router-link>
+    <router-link v-if='$route.name === "shopify single"'
+                 class="topbar__back"
+                 :to="{ name: 'shopify' }">
+                 <- back to sale
+    </router-link>
     <a v-else-if='$route.name === "checkout"'
                  class="topbar__back"
                  @click.prevent='goBack'>
-                 <- back to item
+                <- back to item
     </a>
     <router-link v-else
                  class="topbar__back"
@@ -16,6 +21,7 @@
                  <- back to overview
     </router-link>
                 <span v-if='$route.name === "collection"' class="topbar__posted">updated {{main.single.modified | dotted}}</span>
+                <cart class="topbar__cart" />
                 <a class="topbar__recommend"
                    :href='reccomendLink'>mail to a friend</a>
                 <a class="topbar__reply"
@@ -26,9 +32,14 @@
 </template>
 
 <script>
+import cart from '@/components/shopify/cart'
 import {mapState} from 'vuex'
+
 export default {
   name: 'topbar',
+  components: {
+    cart
+  },
   computed: {
     ...mapState(['main']),
     reccomendLink() {
@@ -87,6 +98,7 @@ export default {
     cursor: pointer;
   }
 
+  &__cart,
   &__posted,
   &__recommend,
   &__reply {

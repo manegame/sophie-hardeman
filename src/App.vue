@@ -82,6 +82,8 @@ export default {
       //
       // SHOPIFY
       //
+      'GET_SHOPIFY_COLLECTIONS',
+      'GET_PRODUCT',
       'GET_PRODUCTS'
     ]),
     $_setMetaTags(meta = {}) {
@@ -184,8 +186,13 @@ export default {
           this.GET_SINGLE_IMPRESSUM(route.params.slug)
           break
         case ('shopify'):
-          console.log(this.GET_PRODUCTS)
+          this.GET_SHOPIFY_COLLECTIONS()
           this.GET_PRODUCTS()
+          break
+        case ('shopify single'):
+          console.log(route.params)
+          this.GET_SHOPIFY_COLLECTIONS()
+          this.GET_PRODUCT(route.params.handle)
           break
       }
     }

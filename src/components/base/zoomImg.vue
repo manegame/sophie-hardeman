@@ -50,7 +50,8 @@ export default {
   height: 50vh;
   object-fit: contain;
   background: $grey;
-  margin-bottom: 10px;
+  margin-bottom: 0;
+  display: block;
   cursor: zoom-in;
 
   &--zoomed {
