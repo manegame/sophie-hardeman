@@ -56,7 +56,13 @@
                             v-html='value.value' />
                   </select>
                 </fieldset>
-                <input class='form__item' type='submit' value='Order' />
+                <input @click="ADD_LINE_ITEMS({
+                  id: shopify.checkout.id,
+                  lineItemsToAdd: {
+                    variantId: selectedVariant.id,
+                    quantity: 1
+                  }
+                })" class='form__item' type='submit' value='Order' />
               </form>
             </div>
           </template>
@@ -65,6 +71,7 @@
       <div class="single_sale__main__right">
         <aboutSophie />
         <div v-if="selectedVariant">
+          {{ shopify.checkout.id }}
           {{ selectedVariant }}
         </div>
         <p @click='slideToIndex(2)'>Sorry, we don't stock that variation</p>
@@ -147,6 +154,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['ADD_LINE_ITEMS']),
     nextButton() {
       this.swiper.slideNext()
     },

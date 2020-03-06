@@ -22,6 +22,9 @@ const actions = {
   async [actionTypes.CREATE_CHECKOUT]({commit}) {
     commit(mutationTypes.SET_CHECKOUT, await shopify.createCheckout())
   },
+  async [actionTypes.ADD_LINE_ITEMS]({commit}, data) {
+    commit(mutationTypes.SET_CHECKOUT, await shopify.addLineItems(data.id, data.lineItemsToAdd))
+  },
   async [actionTypes.GET_CHECKOUT]({commit}, id) {
     commit(mutationTypes.SET_CHECKOUT, await shopify.getCheckout(id))
   }

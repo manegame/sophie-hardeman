@@ -2,6 +2,7 @@
   <section class="cart">
     <strong v-if="shopify.checkout">({{ shopify.checkout.lineItems.length }}) items in cart</strong>
     <span class="button">Show cart</span>
+    <a v-if="shopify.checkout.webUrl" :href="shopify.checkout.webUrl" class="button">Direct checkout</a>
   </section>
 </template>
 
