@@ -58,35 +58,35 @@ const state = {
 }
 
 const actions = {
-  async [actionTypes.GET_CURRENCY]({commit}) {
+  async [actionTypes.GET_WC_CURRENCY]({commit}) {
     commit(mutationTypes.SET_CURRENCY, await api.getCurrency())
   },
-  async [actionTypes.GET_PRODUCTS]({commit, state}) {
+  async [actionTypes.GET_WC_PRODUCTS]({commit, state}) {
     commit(mutationTypes.SET_PRODUCTS, await api.getProducts())
   },
-  async [actionTypes.GET_PRODUCT_CATEGORIES]({commit, state}) {
+  async [actionTypes.GET_WC_PRODUCT_CATEGORIES]({commit, state}) {
     commit(mutationTypes.SET_PRODUCT_CATEGORIES, await api.getProductCategories())
   },
-  async [actionTypes.GET_PRODUCT]({commit, state}, id) {
+  async [actionTypes.GET_WC_PRODUCT]({commit, state}, id) {
     commit(mutationTypes.SET_PRODUCT, await api.getProduct(id))
   },
   [actionTypes.CLEAR_SINGLE_PRODUCT]({commit, state}) {
     commit(mutationTypes.CLEAR_SINGLE_PRODUCT)
   },
-  async [actionTypes.GET_PRODUCT_VARIATIONS]({commit, state}, id) {
+  async [actionTypes.GET_WC_PRODUCT_VARIATIONS]({commit, state}, id) {
     commit(mutationTypes.SET_PRODUCT_VARIATIONS, await api.getProductVariations(id))
   },
-  async [actionTypes.GET_SHIPPING_ZONES]({commit, state}) {
+  async [actionTypes.GET_WC_SHIPPING_ZONES]({commit, state}) {
     commit(mutationTypes.SET_SHIPPING_ZONES, await api.getShippingZones())
   },
-  async [actionTypes.GET_SHIPPING_ZONE_LOCATIONS]({commit, state}, id) {
+  async [actionTypes.GET_WC_SHIPPING_ZONE_LOCATIONS]({commit, state}, id) {
     commit(mutationTypes.SET_SHIPPING_ZONE_LOCATIONS, await api.getShippingZoneLocations(id))
   },
-  async [actionTypes.GET_SHIPPING_ZONE_METHODS]({commit, state}, id) {
+  async [actionTypes.GET_WC_SHIPPING_ZONE_METHODS]({commit, state}, id) {
     commit(mutationTypes.SET_SHIPPING_ZONE_METHODS, await api.getShippingZoneMethods(id))
   },
-  [actionTypes.SHIPPING_LOADED]({commit}) {
-    commit(mutationTypes.SHIPPING_LOADED)
+  [actionTypes.WC_SHIPPING_LOADED]({commit}) {
+    commit(mutationTypes.WC_SHIPPING_LOADED)
   },
   // BUILDING THE ORDER
   [actionTypes.ADD_TO_CART]({commit, state}, data) {
@@ -111,8 +111,8 @@ const actions = {
   async [actionTypes.PAY_ORDER]({commit, state}, data) {
     commit(mutationTypes.PAY_ORDER, await api.payOrder(data))
   },
-  [actionTypes.EMPTY_ORDER]({commit}) {
-    commit(mutationTypes.EMPTY_ORDER)
+  [actionTypes.WC_EMPTY_ORDER]({commit}) {
+    commit(mutationTypes.WC_EMPTY_ORDER)
   }
 }
 
@@ -139,7 +139,7 @@ const mutations = {
     state.singleProduct.variations = []
     // console.log(state.singleProduct)
   },
-  [mutationTypes.SHIPPING_LOADED](state) {
+  [mutationTypes.WC_SHIPPING_LOADED](state) {
     // executes when all shipping actions have been accounted for
     state.shippingLoaded = true
   },
@@ -322,7 +322,7 @@ const mutations = {
     // pay order, set progress to the returned value
     state.payment.progress = data
   },
-  [mutationTypes.EMPTY_ORDER](state) {
+  [mutationTypes.WC_EMPTY_ORDER](state) {
     // empty order and cart
     state.order = emptyOrder
     state.cart = []

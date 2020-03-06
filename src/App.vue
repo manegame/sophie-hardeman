@@ -38,7 +38,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['main', 'shop'])
+    ...mapState(['main', 'shop', 'shopify'])
   },
   methods: {
     ...mapActions([
@@ -69,16 +69,20 @@ export default {
       //
       // WOOCOMMERCE
       //
-      'GET_CURRENCY',
-      'GET_PRODUCTS',
-      'GET_PRODUCT_VARIATIONS',
-      'GET_PRODUCT_CATEGORIES',
-      'GET_SHIPPING_ZONES',
-      'GET_SHIPPING_ZONE_LOCATIONS',
-      'GET_SHIPPING_ZONE_METHODS',
-      'GET_PRODUCT',
-      'SHIPPING_LOADED',
-      'EMPTY_ORDER'
+      'GET_WC_CURRENCY',
+      'GET_WC_PRODUCTS',
+      'GET_WC_PRODUCT_VARIATIONS',
+      'GET_WC_PRODUCT_CATEGORIES',
+      'GET_WC_SHIPPING_ZONES',
+      'GET_WC_SHIPPING_ZONE_LOCATIONS',
+      'GET_WC_SHIPPING_ZONE_METHODS',
+      'GET_WC_PRODUCT',
+      'WC_SHIPPING_LOADED',
+      'WC_EMPTY_ORDER',
+      //
+      // SHOPIFY
+      //
+      'GET_PRODUCTS'
     ]),
     $_setMetaTags(meta = {}) {
       this.meta.title = meta.title || this.meta.defaults.title
@@ -93,8 +97,8 @@ export default {
       this.GET_IMPRESSUM()
       switch (route.name) {
         case ('first load'):
-          this.GET_CURRENCY()
-          this.GET_PRODUCTS()
+          this.GET_WC_CURRENCY()
+          this.GET_WC_PRODUCTS()
           this.GET_BANNER()
           this.GET_COLLECTIONS()
           this.GET_ABOUT()
@@ -106,8 +110,8 @@ export default {
           this.GET_COMMUNITY()
           break
         case ('landing'):
-          this.GET_CURRENCY()
-          this.GET_PRODUCTS()
+          this.GET_WC_CURRENCY()
+          this.GET_WC_PRODUCTS()
           this.CLEAR_SINGLES()
           this.GET_BANNER()
           this.GET_COLLECTIONS()
@@ -130,31 +134,31 @@ export default {
           this.GET_SINGLE_ABOUT(route.params.slug)
           break
         case ('sale'):
-          this.GET_CURRENCY()
+          this.GET_WC_CURRENCY()
           this.GET_GARMENT_CATEGORIES()
-          this.GET_PRODUCTS()
+          this.GET_WC_PRODUCTS()
           break
         case ('single sale'):
-          this.GET_CURRENCY()
+          this.GET_WC_CURRENCY()
           this.GET_GARMENT_CATEGORIES()
-          this.GET_PRODUCT(route.params.item)
+          this.GET_WC_PRODUCT(route.params.item)
             .then(() => {
               const id = this.shop.singleProduct.product.id
-              this.GET_PRODUCT_VARIATIONS(id)
+              this.GET_WC_PRODUCT_VARIATIONS(id)
             })
           break
         case 'checkout':
-          this.GET_CURRENCY()
-          this.GET_PRODUCTS()
-          this.GET_SHIPPING_ZONES()
+          this.GET_WC_CURRENCY()
+          this.GET_WC_PRODUCTS()
+          this.GET_WC_SHIPPING_ZONES()
             .then(() => {
               let promises = []
               this.shop.shipping_zones.forEach((zone) => {
-                promises.push(this.GET_SHIPPING_ZONE_LOCATIONS(zone.id))
-                promises.push(this.GET_SHIPPING_ZONE_METHODS(zone.id))
+                promises.push(this.GET_WC_SHIPPING_ZONE_LOCATIONS(zone.id))
+                promises.push(this.GET_WC_SHIPPING_ZONE_METHODS(zone.id))
               })
               return Promise.all(promises)
-            }).then(this.SHIPPING_LOADED)
+            }).then(this.WC_SHIPPING_LOADED)
           break
         case ('hardeman tv'):
           this.GET_VIDEOS().then(() => {
@@ -178,6 +182,10 @@ export default {
           break
         case ('impressum'):
           this.GET_SINGLE_IMPRESSUM(route.params.slug)
+          break
+        case ('shopify'):
+          console.log(this.GET_PRODUCTS)
+          this.GET_PRODUCTS()
           break
       }
     }
@@ -240,7 +248,7 @@ export default {
           break
       }
       // Empty order after leaving the complete route
-      if (from.name === 'order-complete') this.EMPTY_ORDER()
+      if (from.name === 'order-complete') this.WC_EMPTY_ORDER()
     },
     'main.single.acf'() {
       if (this.main.single.acf.videos) this.main.single.acf.videos.map(v => this.GET_VIDEO(v.ID))
