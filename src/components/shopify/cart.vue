@@ -13,18 +13,11 @@ export default {
   name: 'Cart',
   methods: {
     ...mapActions([
-      'CREATE_CHECKOUT',
       'GET_CHECKOUT'
     ])
   },
   computed: {
     ...mapState(['shopify'])
-  },
-  mounted () {
-    if (!this.shopify.checkout) {
-      this.CREATE_CHECKOUT()
-        .then(() => { console.log(this.shopify.checkout) })
-    } // is null to begin with
   }
 }
 </script>

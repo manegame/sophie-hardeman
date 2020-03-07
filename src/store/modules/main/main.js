@@ -159,7 +159,6 @@ const mutations = {
     state.single.garments.push(data)
   },
   [mutationTypes.SET_SINGLE_GARMENT](state, data) {
-    console.log('set single garment ', data)
     state.single_garment = data
   },
   [mutationTypes.SET_GARMENTS](state, data) {
@@ -176,7 +175,6 @@ const mutations = {
   },
   [mutationTypes.SET_VIDEO](state, data) {
     state.single.videos.push(data)
-    console.log('get a video')
   },
   [mutationTypes.SET_SINGLE_VIDEO](state, data) {
     state.single_video = data

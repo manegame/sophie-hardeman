@@ -1,23 +1,35 @@
 import shopify from '../../../service/shopify.js'
+import ShopifyClient from '../../../service/shopifyExtended'
 import * as actionTypes from './actionTypes'
 import * as mutationTypes from './mutationTypes'
+
+const shopifyExtended = new ShopifyClient()
+console.log('type ', typeof (shopifyExtended))
+console.log('type ', typeof (shopifyExtended))
 
 const state = {
   collections: [],
   product: null,
   products: [],
+  productTypes: [],
   checkout: null
 }
 
 const actions = {
+  [actionTypes.RESET_SHOPIFY]({commit}) {
+    commit(mutationTypes.RESET_SHOPIFY)
+  },
   async [actionTypes.GET_SHOPIFY_COLLECTIONS]({commit}) {
-    commit(mutationTypes.SET_COLLECTIONS, await shopify.getCollections())
+    commit(mutationTypes.SET_SHOPIFY_COLLECTIONS, await shopify.getCollections())
   },
   async [actionTypes.GET_PRODUCT]({commit}, handle) {
     commit(mutationTypes.SET_PRODUCT, await shopify.getProductByHandle(handle))
   },
   async [actionTypes.GET_PRODUCTS]({commit}) {
     commit(mutationTypes.SET_PRODUCTS, await shopify.getProducts())
+  },
+  async [actionTypes.GET_PRODUCT_TYPES]({commit}) {
+    commit(mutationTypes.SET_PRODUCT_TYPES, await shopifyExtended.allProductTypes())
   },
   async [actionTypes.CREATE_CHECKOUT]({commit}) {
     commit(mutationTypes.SET_CHECKOUT, await shopify.createCheckout())
@@ -31,7 +43,13 @@ const actions = {
 }
 
 const mutations = {
-  [mutationTypes.SET_COLLECTIONS](state, data) {
+  [mutationTypes.RESET_SHOPIFY](state) {
+    state.collections = []
+    state.product = null
+    state.products = []
+    state.checkout = null
+  },
+  [mutationTypes.SET_SHOPIFY_COLLECTIONS](state, data) {
     state.collections = data
   },
   [mutationTypes.SET_PRODUCT](state, data) {
@@ -40,13 +58,28 @@ const mutations = {
   [mutationTypes.SET_PRODUCTS](state, data) {
     state.products = data
   },
+  [mutationTypes.SET_PRODUCT_TYPES](state, data) {
+    state.productTypes = data
+  },
   [mutationTypes.SET_CHECKOUT](state, data) {
     state.checkout = data
   }
 }
 
 const getters = {
-  // shippingLoadedState: state => state.shippingLoaded
+  uniqueProductTypes: (state) => {
+    const mapped = state.productTypes.map((type) => {
+      return type.node.productType
+    })
+
+    const result = mapped.reduce((p, c) => {
+      if (!p.includes(c)) p.push(c)
+      return p
+    }, [])
+    console.log(result)
+
+    return result
+  }
 }
 
 export default {

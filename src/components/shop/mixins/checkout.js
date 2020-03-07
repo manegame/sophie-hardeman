@@ -73,15 +73,12 @@ export default {
 
       // set selectedZone
       if (byCountry !== undefined) {
-        console.log('by country')
         // try by country
         this.selectedZone = this.shop.shipping_zones.find(zone => zone.id === byCountry.id)
       } else if (byContinent !== undefined) {
-        console.log('by continent')
         // try by continent
         this.selectedZone = this.shop.shipping_zones.find(zone => zone.id === byContinent.id)
       } else {
-        console.log('set to other')
         // set to `other`
         this.selectedZone = this.shop.shipping_zones.find(zone => zone.id === 0)
       }
@@ -114,7 +111,7 @@ export default {
     //   }
     // },
     paypalInit() {
-      console.log('initiate paypal')
+      
       const vm = this
       // eslint-disable-next-line
       paypal.Button.render({

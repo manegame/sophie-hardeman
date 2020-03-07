@@ -162,7 +162,6 @@ export default {
       this.swiper.slidePrev()
     },
     slideToIndex(index) {
-      console.log(this.swiper.activeIndex, this.swiper.slides.length)
       this.swiper.activeIndex = index
     },
     initSelection () {

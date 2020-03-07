@@ -108,9 +108,6 @@ export default {
         paypal.addEventListener('load', this.payBuddyLoadHandler)
       }
     })
-  },
-  destroyed() {
-    console.log(document.head)
   }
 }
 </script>

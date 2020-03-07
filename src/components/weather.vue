@@ -50,12 +50,10 @@ export default {
     this.GET_COLLECTIONS()
       .then(() => {
         let slug = this.getRandomGarment().post_name
-        console.log('slug', slug)
         this.GET_SINGLE_GARMENT(slug)
           .then(() => {
             this.season = this.main.collections.find(collection => {
               return collection.acf.garments.find(garment => {
-                console.log('garment', garment.ID, this.main.single_garment.id, garment.ID === this.main.single_garment.id)
                 return garment.ID === this.main.single_garment.id
               })
             })

@@ -64,13 +64,13 @@
         <!-- - -->
         <!-- Shop -->
         <section  class="landing__column_middle__sections__shop"
-                  v-if='shop.products.length > 0'>
-          <router-link :to='{name: "sale", params: {slug: "all"}}'
+                  v-if='shopify.products.length > 0'>
+          <router-link :to='{name: "shopify"}'
                         tag='h2' >
                         shop
                         </router-link>
           <ul class="duo">
-            <router-link tag='li'
+            <!-- <router-link tag='li'
                           v-for='garment in main.garment_categories'
                           :key='garment.id'
                           v-if='categoryPopulated(garment.id)'
@@ -81,7 +81,7 @@
                                   :key='"sale-" + label.id'
                                   v-html='label.post_title' />
                           </span>
-            </router-link>
+            </router-link> -->
           </ul>
         </section>
         <!-- - -->
@@ -275,7 +275,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['main', 'shop']),
+    ...mapState(['main', 'shopify']),
     emphasizedCollection() {
       if (this.main.collections.length > 0) return this.main.collections.filter(c => c.acf.emphasis)[0].slug
     }

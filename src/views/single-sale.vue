@@ -182,14 +182,12 @@ export default {
     },
     addToCart() {
       if (this.variableProduct === true) {
-        console.log('add to cart variable')
         this.ADD_TO_CART({
           product: this.shop.singleProduct.product,
           variation: this.selectedVariation,
           attributes: this.selectedAttributes
         })
       } else {
-        console.log('add to cart simple')
         this.ADD_TO_CART({
           product: this.shop.singleProduct.product,
           attributes: this.selectedAttributes
@@ -197,7 +195,6 @@ export default {
       }
     },
     purchase() {
-      console.log('purchase!!!')
       if (this.optionsSelected) {
         this.addToCart()
         this.$router.push({name: 'checkout'})
@@ -213,7 +210,6 @@ export default {
   },
   watch: {
     'shop.singleProduct.product.attributes'(val) {
-      console.log('has attributes?', val)
       if (val.length > 0) {
         for (let i = 0; i < val.length; i++) {
           let valueToSet = {

@@ -14,16 +14,12 @@ export default {
   },
   methods: {
     handleLoaded(event) {
-      event.currentTarget.src = this.item.acf.image.sizes['s-h-medium']
+      event.currentTarget.src = this.item
     }
   },
   computed: {
     imageSource() {
-      if (this.item.acf) {
-        return this.item.acf.image.sizes['s-h-pixel']
-      } else {
-        return this.item
-      }
+      return this.item
     }
   }
 }

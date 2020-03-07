@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import {mapState, mapActions} from 'vuex'
+import {mapState, mapActions, mapGetters} from 'vuex'
 import foot from './components/foot'
 
 export default {
@@ -38,7 +38,8 @@ export default {
     }
   },
   computed: {
-    ...mapState(['main', 'shop', 'shopify'])
+    ...mapState(['main', 'shopify']),
+    ...mapGetters(['uniqueProductTypes'])
   },
   methods: {
     ...mapActions([
@@ -67,23 +68,13 @@ export default {
       'GET_IMPRESSUM',
       'GET_SINGLE_IMPRESSUM',
       //
-      // WOOCOMMERCE
-      //
-      'GET_WC_CURRENCY',
-      'GET_WC_PRODUCTS',
-      'GET_WC_PRODUCT_VARIATIONS',
-      'GET_WC_PRODUCT_CATEGORIES',
-      'GET_WC_SHIPPING_ZONES',
-      'GET_WC_SHIPPING_ZONE_LOCATIONS',
-      'GET_WC_SHIPPING_ZONE_METHODS',
-      'GET_WC_PRODUCT',
-      'WC_SHIPPING_LOADED',
-      'WC_EMPTY_ORDER',
-      //
       // SHOPIFY
       //
+      'RESET_SHOPIFY',
+      'CREATE_CHECKOUT',
       'GET_SHOPIFY_COLLECTIONS',
       'GET_PRODUCT',
+      'GET_PRODUCT_TYPES',
       'GET_PRODUCTS'
     ]),
     $_setMetaTags(meta = {}) {
@@ -96,11 +87,12 @@ export default {
     },
     $_fetchData(route) {
       // All requests for data from the server originates from this function
+      if (!this.shopify.checkout) {
+        this.CREATE_CHECKOUT()
+      }
       this.GET_IMPRESSUM()
       switch (route.name) {
         case ('first load'):
-          this.GET_WC_CURRENCY()
-          this.GET_WC_PRODUCTS()
           this.GET_BANNER()
           this.GET_COLLECTIONS()
           this.GET_ABOUT()
@@ -110,10 +102,10 @@ export default {
           this.GET_EVENTS()
           this.GET_STOCKISTS()
           this.GET_COMMUNITY()
+          this.GET_PRODUCTS()
+          this.GET_PRODUCT_TYPES()
           break
         case ('landing'):
-          this.GET_WC_CURRENCY()
-          this.GET_WC_PRODUCTS()
           this.CLEAR_SINGLES()
           this.GET_BANNER()
           this.GET_COLLECTIONS()
@@ -124,6 +116,9 @@ export default {
           this.GET_EVENTS()
           this.GET_STOCKISTS()
           this.GET_COMMUNITY()
+          this.GET_PRODUCTS()
+          this.GET_PRODUCT_TYPES()
+          // this.RESET_SHOPIFY()
           break
         case ('collection'):
           this.CLEAR_SINGLES()
@@ -134,33 +129,6 @@ export default {
           this.CLEAR_SINGLES()
           this.GET_ABOUT()
           this.GET_SINGLE_ABOUT(route.params.slug)
-          break
-        case ('sale'):
-          this.GET_WC_CURRENCY()
-          this.GET_GARMENT_CATEGORIES()
-          this.GET_WC_PRODUCTS()
-          break
-        case ('single sale'):
-          this.GET_WC_CURRENCY()
-          this.GET_GARMENT_CATEGORIES()
-          this.GET_WC_PRODUCT(route.params.item)
-            .then(() => {
-              const id = this.shop.singleProduct.product.id
-              this.GET_WC_PRODUCT_VARIATIONS(id)
-            })
-          break
-        case 'checkout':
-          this.GET_WC_CURRENCY()
-          this.GET_WC_PRODUCTS()
-          this.GET_WC_SHIPPING_ZONES()
-            .then(() => {
-              let promises = []
-              this.shop.shipping_zones.forEach((zone) => {
-                promises.push(this.GET_WC_SHIPPING_ZONE_LOCATIONS(zone.id))
-                promises.push(this.GET_WC_SHIPPING_ZONE_METHODS(zone.id))
-              })
-              return Promise.all(promises)
-            }).then(this.WC_SHIPPING_LOADED)
           break
         case ('hardeman tv'):
           this.GET_VIDEOS().then(() => {
@@ -187,14 +155,20 @@ export default {
           break
         case ('shopify'):
           this.GET_SHOPIFY_COLLECTIONS()
+          this.GET_PRODUCT_TYPES()
           this.GET_PRODUCTS()
           break
         case ('shopify single'):
-          console.log(route.params)
           this.GET_SHOPIFY_COLLECTIONS()
+          this.GET_PRODUCT_TYPES()
           this.GET_PRODUCT(route.params.handle)
           break
       }
+    }
+  },
+  created () {
+    if (!this.shopify.checkout) {
+      this.CREATE_CHECKOUT()
     }
   },
   head: {

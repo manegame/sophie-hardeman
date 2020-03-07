@@ -79,15 +79,15 @@ export default {
    */
   getCollections: () => {
     return new Promise((resolve, reject) => {
-      console.log('get collections')
+      
       client.collection.fetchAllWithProducts()
         .then(
           collections => {
-            console.log('colkectuibssss')
+            
             resolve(collections)
           },
           error => {
-            console.error(error)
+            
             reject(error)
           }
         )
@@ -179,7 +179,7 @@ export default {
       client.checkout.addLineItems(id, lineItemsToAdd)
         .then(
           checkout => {
-            // console.log(checkout.lineItems); // Array with one additional line item
+            //  // Array with one additional line item
             resolve(checkout)
           },
           error => {
@@ -203,7 +203,7 @@ export default {
       client.checkout.updateLineItems(id, lineItemsToUpdate)
         .then(
           checkout => {
-            // console.log(checkout.lineItems); // Array with updated line item
+            //  // Array with updated line item
             resolve(checkout)
           },
           error => {
@@ -227,7 +227,7 @@ export default {
       client.checkout.updateLineItems(id, lineItemsToRemove)
         .then(
           checkout => {
-            // console.log(checkout.lineItems); // Array without removed line item
+            //  // Array without removed line item
             resolve(checkout)
           },
           error => {
@@ -247,7 +247,7 @@ export default {
       client.checkout.fetch(id)
         .then(
           checkout => {
-            // console.log(checkout.lineItems); // Array without removed line item
+            //  // Array without removed line item
             resolve(checkout)
           },
           error => {

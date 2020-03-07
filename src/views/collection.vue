@@ -153,9 +153,6 @@ export default {
         on: {
           slideChange: () => {
             this.galleryThumbs.navigation.update()
-          },
-          reachEnd: () => {
-            console.log('last slide')
           }
         },
         navigation: {
