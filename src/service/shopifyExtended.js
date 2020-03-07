@@ -1,5 +1,5 @@
 import axios from 'axios'
-import GraphSql from './GraphSQL'
+import GraphSql from './GraphSQL.js'
 
 export default class {
   constructor () {
