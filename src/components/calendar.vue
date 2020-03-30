@@ -13,6 +13,7 @@
 <script>
 import { mapState } from 'vuex'
 import { FullCalendar } from 'vue-full-calendar'
+
 export default {
   name: 'calendar',
   components: {
@@ -75,6 +76,7 @@ export default {
   height: auto;
   min-height: 160px;
   box-sizing: border-box;
+  position: relative;
 
   &__head {
     width: 100%;
@@ -84,6 +86,26 @@ export default {
     border-top: $border-light;
     border-bottom: none;
     cursor: pointer;
+  }
+
+  #calendar {
+    position: relative;
+    &::after {
+      position: absolute;
+      content: '';
+      width: 100%;
+      height: 100%;
+      display: block;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      background-image: url('/static/cancelled.png');
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: 999;
+    }
   }
 }
 
