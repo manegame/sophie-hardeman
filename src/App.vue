@@ -73,6 +73,7 @@ export default {
       'RESET_SHOPIFY',
       'CREATE_CHECKOUT',
       'GET_SHOPIFY_COLLECTIONS',
+      'GET_SHOPIFY_COLLECTION',
       'GET_PRODUCT',
       'GET_PRODUCT_TYPES',
       'GET_PRODUCTS'
@@ -103,6 +104,7 @@ export default {
           this.GET_STOCKISTS()
           this.GET_COMMUNITY()
           this.GET_PRODUCTS()
+          this.GET_SHOPIFY_COLLECTIONS()
           this.GET_PRODUCT_TYPES()
           break
         case ('landing'):
@@ -117,6 +119,7 @@ export default {
           this.GET_STOCKISTS()
           this.GET_COMMUNITY()
           this.GET_PRODUCTS()
+          this.GET_SHOPIFY_COLLECTIONS()
           this.GET_PRODUCT_TYPES()
           // this.RESET_SHOPIFY()
           break
@@ -154,13 +157,17 @@ export default {
           this.GET_SINGLE_IMPRESSUM(route.params.slug)
           break
         case ('shopify'):
-          this.GET_SHOPIFY_COLLECTIONS()
           this.GET_PRODUCT_TYPES()
+          this.GET_SHOPIFY_COLLECTIONS()
           this.GET_PRODUCTS()
           break
-        case ('shopify single'):
-          this.GET_SHOPIFY_COLLECTIONS()
+        case ('shopify collection'):
           this.GET_PRODUCT_TYPES()
+          this.GET_SHOPIFY_COLLECTIONS()
+          break
+        case ('shopify single'):
+          this.GET_PRODUCT_TYPES()
+          this.GET_SHOPIFY_COLLECTIONS()
           this.GET_PRODUCT(route.params.handle)
           break
       }

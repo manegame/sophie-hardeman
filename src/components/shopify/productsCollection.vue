@@ -1,53 +1,74 @@
 <template>
-  <div class='sale'>
-    <navbar />
-    <topbar />
-    <productsCollection v-if="$route.name === 'shopify collection'" :collection="$route.params.handle" />
-    <products v-else />
-  </div>
+  <section class="sale__main">
+    <router-link  tag='div'
+                  v-for='item in collection.products'
+                  :key='item.id'
+                  :to="`/shopify/${item.handle}`"
+                  class="sale__main__item" >
+          <span v-if='!item.availableForSale'
+                class="sale__main__item__sold_out"
+                v-html='"sold out"'/>
+          <span class="sale__main__item__price-tag">
+            {{ priceRange(item.id) }}
+          </span>
+          <load-img  class="sale__main__item__image"
+                    :item='item.images[0].src' />
+          <div class="sale__main__item__meta">
+            <h6>
+              <span class='sale__main__item__meta__season' 
+                    v-html='"SEASON"' />
+              <span class="sale__main__item__meta__title" 
+                    v-html='item.title' />
+              <span class="sale__main__item__meta__price" 
+                    v-html='priceRange(item.id)' />
+            </h6>
+          </div>
+    </router-link>
+  </section>
 </template>
 
 <script>
-import { mapState } from 'vuex'
 import loadImg from '@/components/base/load-img'
-import navbar from '@/components/navbar'
-import topbar from '@/components/topbar'
-import products from '@/components/shopify/products'
-import productsCollection from '@/components/shopify/productsCollection'
-import cart from '@/components/shopify/cart'
+import { mapState } from 'vuex'
 
 export default {
-  name: 'shopify',
-  head: {
-    title: () => {
-      return {
-        inner: 'Shopify'
+  name: 'products-collection',
+  components: {
+    loadImg
+  },
+  methods: {
+    priceRange (id) {
+      const product = this.collection.products.find((pr) => {
+        return pr.id === id
+      })
+
+      if (product.variants.length > 1) {
+        let p = product.variants.map((vr) => {
+          return Number.parseFloat(vr.priceV2.amount)
+        })
+        const u = new Set(p)
+        const prizes = [...u]
+        return 'Starting from ' + product.variants[0].priceV2.currencyCode + ' ' + Math.min(prizes)
+      } else {
+        return product.variants[0].priceV2.currencyCode + ' ' + product.variants[0].priceV2.amount
       }
-    },
-    meta: () => {
-      return [
-        { name: 'title', content: 'Shop' }
-      ]
     }
   },
-  components: {
-    navbar,
-    topbar,
-    loadImg,
-    cart,
-    products,
-    productsCollection
-  },
   computed: {
-    ...mapState(['main', 'shopify'])
+    ...mapState(['shopify']),
+    collection () {
+      return this.shopify.collections.find((col) => {
+        return col.handle === this.$route.params.handle
+      })
+    }
   }
 }
 </script>
 
 <style scoped lang='scss'>
-@import '../style/helpers/_mixins.scss';
-@import '../style/helpers/_responsive.scss';
-@import '../style/_variables.scss';
+@import '../../style/helpers/_mixins.scss';
+@import '../../style/helpers/_responsive.scss';
+@import '../../style/_variables.scss';
 
 .sale {
   @include single;
@@ -56,21 +77,20 @@ export default {
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
-    align-self:flex-start;
     padding-bottom: 80px;
 
     @include screen-size('small') {
       justify-content: center;
     }
 
-    &::after {
-      content: "";
-      flex: auto;
+    // &::after {
+    //   content: "";
+    //   flex: auto;
 
-      @include screen-size('small') {
-        flex: none;
-      }
-    }
+    //   @include screen-size('small') {
+    //     flex: none;
+    //   }
+    // }
 
     &__item {
       width: $left-col-width;
@@ -82,6 +102,7 @@ export default {
       border: 1px solid $grey-darker;
       overflow: hidden;
       cursor: pointer;
+      align-self:flex-start;
 
       @include screen-size('small') {
         margin-right: 0;

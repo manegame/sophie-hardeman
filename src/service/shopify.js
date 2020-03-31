@@ -13,15 +13,35 @@ export default {
    */
 
   /**
-   * Get all products
+   * Get products
    *
    */
   getProducts: () => {
     return new Promise((resolve, reject) => {
-      client.product.fetchAll()
+      client.product.fetchAll(200)
         .then(
           product => {
             resolve(product)
+          },
+          error => {
+            reject(error)
+          }
+        )
+    })
+  },
+
+  /**
+   * Get more products
+   *
+   */
+  getMoreProducts: (products) => {
+    console.log(client.graphQLClient, products)
+    return new Promise((resolve, reject) => {
+      client.fetchNextPage(products)
+        .then(
+          products => {
+            console.log(client, products)
+            resolve(products)
           },
           error => {
             reject(error)
@@ -79,15 +99,12 @@ export default {
    */
   getCollections: () => {
     return new Promise((resolve, reject) => {
-      
       client.collection.fetchAllWithProducts()
         .then(
           collections => {
-            
             resolve(collections)
           },
           error => {
-            
             reject(error)
           }
         )
@@ -102,7 +119,7 @@ export default {
    */
   getCollection: (id, amount) => {
     return new Promise((resolve, reject) => {
-      client.collection.fetchWithProducts(id, {productsFirst: amount})
+      client.collection.fetchWithProducts(id, {productsFirst: amount || 99})
         .then(
           collection => {
             resolve(collection)

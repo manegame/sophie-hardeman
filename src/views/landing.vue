@@ -65,23 +65,19 @@
         <!-- Shop -->
         <section  class="landing__column_middle__sections__shop"
                   v-if='shopify.products.length > 0'>
-          <router-link :to='{name: "shopify"}'
+          <router-link  :to='{name: "shopify"}'
                         tag='h2' >
                         shop
                         </router-link>
           <ul class="duo">
-            <!-- <router-link tag='li'
-                          v-for='garment in main.garment_categories'
-                          :key='garment.id'
-                          v-if='categoryPopulated(garment.id)'
-                          :to='{name: "sale", params: {slug: garment.slug}}'>
+            <router-link tag='li'
+                          v-for='collection in shopify.collections'
+                          :key='collection.id'
+                          :to='{ name: "shopify collection", params: { handle: collection.handle } }'>
                           <span>
-                            <span v-html='garment.name' />
-                            <sup  v-for='label in garment.acf.labels'
-                                  :key='"sale-" + label.id'
-                                  v-html='label.post_title' />
+                            {{ collection.title }}
                           </span>
-            </router-link> -->
+            </router-link>
           </ul>
         </section>
         <!-- - -->

@@ -6,6 +6,27 @@
                  hardeman
                </router-link>
     <!-- COLLECTIONS -->
+    <template v-if='$route.name === "shopify" || $route.name === "shopify collection" || $route.name === "shopify single"'>
+      <p class='navbar__head'>collections </p>
+      <ul class="nav">
+        <router-link class="nav__item"
+                      tag='li'
+                      :class='{"nav__item--emphasis": $route.name === "shopify"}'
+                      :to='{name: "shopify"}'>
+                      All
+        </router-link>
+        <br>
+        <template v-for='collection in shopify.collections'>
+          <router-link class="nav__item"
+                       :class='{"nav__item--emphasis": collection.handle === $route.params.handle}'
+                       :key='collection.id'
+                       tag='li'
+                       :to='{name: "shopify collection", params: {handle: collection.handle}}'>
+              {{ collection.title }}
+          </router-link>
+        </template>
+      </ul>
+    </template>
     <template v-if='$route.name === "collection"'>
       <p class='navbar__head'>collections </p>
       <ul class="nav">
@@ -194,7 +215,7 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import { mapState } from 'vuex'
 import calendar from '@/components/calendar'
 
 export default {
@@ -203,7 +224,7 @@ export default {
     calendar
   },
   computed: {
-    ...mapState(['main', 'shop'])
+    ...mapState(['main', 'shopify'])
   },
   methods: {
     categoryPopulated(id) {

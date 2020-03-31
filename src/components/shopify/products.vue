@@ -1,9 +1,7 @@
 <template>
   <section class="sale__main">
-    <!-- :event='!item.availableForSale ? "" : "click"' -->
-    <!-- :to="{ name: 'single sale', params: {slug: $route.params.slug, item: item.slug}}" -->
     <router-link  tag='div'
-                  v-for='item in shopify.products'
+                  v-for='item in products'
                   :key='item.id'
                   :to="`/shopify/${item.handle}`"
                   class="sale__main__item" >
@@ -15,7 +13,8 @@
             {{ priceRange(item.id) }}
             <!-- {{item.price}} {{ shop[shop.currency.value] }} -->
           </span>
-          <load-img  class="sale__main__item__image"
+          <load-img v-if="item.images.length > 0" 
+                    class="sale__main__item__image"
                     :item='item.images[0].src' />
           <div class="sale__main__item__meta">
             <h6>
@@ -28,6 +27,10 @@
             </h6>
           </div>
     </router-link>
+    <a href="#" v-if="hasNextPage" @click.prevent="showNextPage" class="sale__main__item sale__main__item--no_border">
+                <span class="sale__main__item__center"
+                v-html='"load more items"' />
+    </a>
   </section>
 </template>
 
@@ -37,10 +40,23 @@ import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'products',
+  data () {
+    return {
+      activePage: 1,
+      itemsPerPage: 9
+    }
+  },
+  props: {
+    collection: {
+      type: String,
+      required: false
+    }
+  },
   components: {
     loadImg
   },
   methods: {
+    ...mapActions(['GET_MORE_PRODUCTS']),
     priceRange (id) {
       const product = this.shopify.products.find((pr) => {
         return pr.id === id
@@ -56,10 +72,19 @@ export default {
       } else {
         return product.variants[0].priceV2.currencyCode + ' ' + product.variants[0].priceV2.amount
       }
+    },
+    showNextPage () {
+      this.activePage++
     }
   },
   computed: {
-    ...mapState(['shopify'])
+    ...mapState(['shopify']),
+    hasNextPage () {
+      return this.products.length < this.shopify.products.length
+    },
+    products () {
+      return this.shopify.products.slice(0, this.activePage * this.itemsPerPage)
+    }
   }
 }
 </script>
@@ -103,6 +128,10 @@ export default {
       cursor: pointer;
       align-self:flex-start;
 
+      &--no_border {
+        border: none;
+      }
+
       @include screen-size('small') {
         margin-right: 0;
       }
@@ -133,6 +162,20 @@ export default {
         border-bottom: $border;
         border-top: $border;
         top: 40%;
+      }
+
+      &__center {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        z-index: 8;
+        color: $orange;
+        background: $white;
+        top: 50%;
+
+        &:hover {
+          text-decoration: underline;
+        }
       }
 
       &__image {

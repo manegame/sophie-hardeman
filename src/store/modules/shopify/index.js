@@ -9,6 +9,7 @@ console.log('type ', typeof (shopifyExtended))
 
 const state = {
   collections: [],
+  collection: null,
   product: null,
   products: [],
   productTypes: [],
@@ -27,6 +28,9 @@ const actions = {
   },
   async [actionTypes.GET_PRODUCTS]({commit}) {
     commit(mutationTypes.SET_PRODUCTS, await shopify.getProducts())
+  },
+  async [actionTypes.GET_MORE_PRODUCTS]({commit}, products) {
+    commit(mutationTypes.SET_MORE_PRODUCTS, await shopify.getMoreProducts(products))
   },
   async [actionTypes.GET_PRODUCT_TYPES]({commit}) {
     commit(mutationTypes.SET_PRODUCT_TYPES, await shopifyExtended.allProductTypes())
@@ -56,7 +60,12 @@ const mutations = {
     state.product = data
   },
   [mutationTypes.SET_PRODUCTS](state, data) {
+    console.log(data)
     state.products = data
+  },
+  [mutationTypes.SET_MORE_PRODUCTS](state, data) {
+    console.log('more', data)
+    state.products.push(data)
   },
   [mutationTypes.SET_PRODUCT_TYPES](state, data) {
     state.productTypes = data
@@ -76,7 +85,6 @@ const getters = {
       if (!p.includes(c)) p.push(c)
       return p
     }, [])
-    console.log(result)
 
     return result
   }

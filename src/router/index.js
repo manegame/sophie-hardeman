@@ -68,6 +68,11 @@ const router = new Router({
       component: shopify
     },
     {
+      path: '/shopify/collection/:handle',
+      name: 'shopify collection',
+      component: shopify
+    },
+    {
       path: '/shopify/:handle',
       name: 'shopify single',
       component: shopifySingle

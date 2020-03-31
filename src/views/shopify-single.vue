@@ -70,11 +70,11 @@
       </div>
       <div class="single_sale__main__right">
         <aboutSophie />
-        <div v-if="selectedVariant">
+        <!-- <div v-if="selectedVariant">
           {{ shopify.checkout.id }}
           {{ selectedVariant }}
-        </div>
-        <p @click='slideToIndex(2)'>Sorry, we don't stock that variation</p>
+        </div> -->
+        <!-- <p @click='slideToIndex(2)'>Sorry, we don't stock that variation</p> -->
       </div>
     </div>
   </div>
