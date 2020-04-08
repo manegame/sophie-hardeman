@@ -42,7 +42,7 @@
               </fieldset>
               <form class='form__item'
                     @submit.prevent=''>
-                <fieldset v-if='selectedOptions'>
+                <fieldset v-if="optionsAvailable > 0">
                   <legend v-html='"options"' />
                   <select v-for='(option, index) in shopify.product.options'
                           :key='"option" + option.name'
@@ -70,11 +70,6 @@
       </div>
       <div class="single_sale__main__right">
         <aboutSophie />
-        <!-- <div v-if="selectedVariant">
-          {{ shopify.checkout.id }}
-          {{ selectedVariant }}
-        </div> -->
-        <!-- <p @click='slideToIndex(2)'>Sorry, we don't stock that variation</p> -->
       </div>
     </div>
   </div>
@@ -151,6 +146,11 @@ export default {
         }
       })
       return variant
+    },
+    optionsAvailable () {
+      return this.shopify.product.options.map((option) => {
+        return option.name
+      }).filter((name) => name !== 'Title').length
     }
   },
   methods: {
@@ -187,6 +187,7 @@ export default {
   watch: {
     selectedOptions: {
       handler (to) {
+        console.log(this)
         if (this.selectedVariant) {
           const index = this.shopify.product.images.map(img => { return img.id }).indexOf(this.selectedVariant.image.id)
           this.slideToIndex(index)

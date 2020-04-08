@@ -1,23 +1,50 @@
 <template>
   <section class="cart">
-    <strong v-if="shopify.checkout">({{ shopify.checkout.lineItems.length }}) items in cart</strong>
-    <span class="button">Show cart</span>
+    <strong v-if="shopify.checkout">({{ totalItems }}) items in cart</strong>
+    <span class="button" @click="cartVisible = true">Show cart</span>
+
+    <div class="inner" v-if="cartVisible">
+      <div class="col">
+        <h1 @click="cartVisible = false">Shoppin cart</h1>
+        <cart-item v-for="item in shopify.checkout.lineItems" :item="item" :key="item.id" />
+      </div>
+      <div class="col">
+        <totals />
+        <p>Ur shopping bag: {{shopify.checkout.currencyCode}} {{shopify.checkout.paymentDue}}</p>
+        <a v-if="shopify.checkout.webUrl" :href="shopify.checkout.webUrl" class="button">Go to checkout</a>
+      </div>
+    </div>
+
     <a v-if="shopify.checkout.webUrl" :href="shopify.checkout.webUrl" class="button">Direct checkout</a>
   </section>
 </template>
 
 <script>
+import cartItem from '@/components/shopify/cart-item'
+import totals from '@/components/shopify/totals'
 import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'Cart',
+  components: {
+    totals,
+    cartItem
+  },
+  data () {
+    return {
+      cartVisible: false
+    }
+  },
   methods: {
     ...mapActions([
-      'GET_CHECKOUT'
+      'ADD_LINE_ITEMS'
     ])
   },
   computed: {
-    ...mapState(['shopify'])
+    ...mapState(['shopify']),
+    totalItems () {
+      return this.shopify.checkout.lineItems.map(item => item.quantity).reduce((total, item) => total + item)
+    }
   }
 }
 </script>
@@ -27,6 +54,19 @@ export default {
 
 .cart {
   line-height: 20px;
+
+  .inner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    background: #fff;
+    display: flex;
+
+    .col {
+      width: 50%;
+    }
+  }
 }
 
 .button {
