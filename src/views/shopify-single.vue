@@ -37,7 +37,7 @@
               <fieldset class='form__item'>
                 <legend v-html='"price"' />
                 <span class='form__item__price' 
-                      v-html='"price"'></span>
+                      v-html='priceRange(shopify.product.id)'></span>
                 <sup v-html='"sale price!"' />
               </fieldset>
               <form class='form__item'
@@ -76,15 +76,17 @@
 </template>
 
 <script>
-import {mapState, mapActions, mapGetters} from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import Swiper from 'swiper'
 import navbar from '@/components/navbar'
 import topbar from '@/components/topbar'
 import zoomImg from '@/components/base/zoomImg'
 import aboutSophie from '@/components/about-sophie'
+import utils from '@/components/shopify/mixins/utils'
 
 export default {
   name: 'shopify-single',
+  mixins: [utils],
   head: {
     title: () => {
       return {

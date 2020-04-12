@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 import main from './modules/main/main'
 import shopify from './modules/shopify'
 import createPersistedState from 'vuex-persistedstate'
-// import * as Cookies from 'js-cookie'
+import Cookies from 'js-cookie'
 
 Vue.use(Vuex)
 
@@ -16,18 +16,15 @@ export default new Vuex.Store({
     shopify
   },
   plugins: [createPersistedState({
-    paths: ['shopify.checkout']
-    // storage: {
-    //   getItem: (key) => {
-    //     const result = Cookies.get(key)
-    //     Cookies.getJSON(key)
-    //   },
-    //   // Please see https://github.com/js-cookie/js-cookie#json, on how to handle JSON.
-    //   setItem: (key, state) => {
-    //     Cookies.set(key, state)
-    //   },
-    //   removeItem: (key) => { Cookies.remove(key) }
-    // }
+    paths: ['shopify.checkoutId'],
+    storage: {
+      getItem: key => Cookies.get(key),
+      setItem: (key, value) => {
+        console.log('set cookie', key, value)
+        Cookies.set(key, value, { expires: 3, secure: false })
+      },
+      removeItem: key => Cookies.remove(key)
+    }
   })],
   strict: DEBUG
 })

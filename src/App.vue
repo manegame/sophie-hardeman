@@ -1,8 +1,6 @@
 <template>
   <div class='app'>
-    <keep-alive exclude='checkout,single-sale'>
-      <router-view id='view' />
-    </keep-alive>
+    <router-view id='view' />
     <foot />
   </div>
 </template>
@@ -71,7 +69,7 @@ export default {
       // SHOPIFY
       //
       'RESET_SHOPIFY',
-      'CREATE_CHECKOUT',
+      'INITIALIZE_CHECKOUT',
       'GET_SHOPIFY_COLLECTIONS',
       'GET_SHOPIFY_COLLECTION',
       'GET_PRODUCT',
@@ -87,10 +85,6 @@ export default {
       this.$emit('updateHead')
     },
     $_fetchData(route) {
-      // All requests for data from the server originates from this function
-      if (!this.shopify.checkout) {
-        this.CREATE_CHECKOUT()
-      }
       this.GET_IMPRESSUM()
       switch (route.name) {
         case ('first load'):
@@ -173,11 +167,6 @@ export default {
       }
     }
   },
-  created () {
-    if (!this.shopify.checkout) {
-      this.CREATE_CHECKOUT()
-    }
-  },
   head: {
     title() {
       return {
@@ -210,6 +199,9 @@ export default {
         {itemprop: 'image', content: this.meta.image}
       ]
     }
+  },
+  created () {
+    this.INITIALIZE_CHECKOUT()
   },
   watch: {
     $route(to, from) {

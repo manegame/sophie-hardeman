@@ -38,6 +38,7 @@
     "vue-cookie": "^1.1.4",
     "vue-full-calendar": "^2.5.2",
     "vue-head": "^2.0.11",
+    "vue-lazyload": "^1.3.3",
     "vue-resource": "^1.3.4",
     "vue-router": "^3.0.1",
     "vue-stripe-elements": "^0.2.3",

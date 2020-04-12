@@ -9199,6 +9199,10 @@ vue-jest@^2.0.1:
     tsconfig "^7.0.0"
     vue-template-es2015-compiler "^1.5.3"
 
+vue-lazyload@^1.3.3:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/vue-lazyload/-/vue-lazyload-1.3.3.tgz#4df50a271bde9b74c3caf7a228d6e0af50d5682f"
+
 vue-loader@^14.1.1:
   version "14.1.1"
   resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-14.1.1.tgz#331f197fcea790d6b8662c29b850806e7eb29342"

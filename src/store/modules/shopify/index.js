@@ -4,8 +4,6 @@ import * as actionTypes from './actionTypes'
 import * as mutationTypes from './mutationTypes'
 
 const shopifyExtended = new ShopifyClient()
-console.log('type ', typeof (shopifyExtended))
-console.log('type ', typeof (shopifyExtended))
 
 const state = {
   collections: [],
@@ -13,12 +11,21 @@ const state = {
   product: null,
   products: [],
   productTypes: [],
-  checkout: null
+  checkout: null,
+  checkoutId: null
 }
 
 const actions = {
   [actionTypes.RESET_SHOPIFY]({commit}) {
     commit(mutationTypes.RESET_SHOPIFY)
+  },
+  [actionTypes.INITIALIZE_CHECKOUT]({dispatch, state}) {
+    if (state.checkoutId === null) {
+      console.log(state.checkoutId)
+      dispatch(actionTypes.CREATE_CHECKOUT)
+    } else {
+      dispatch(actionTypes.GET_CHECKOUT, state.checkoutId)
+    }
   },
   async [actionTypes.GET_SHOPIFY_COLLECTIONS]({commit}) {
     commit(mutationTypes.SET_SHOPIFY_COLLECTIONS, await shopify.getCollections())
@@ -71,7 +78,9 @@ const mutations = {
     state.productTypes = data
   },
   [mutationTypes.SET_CHECKOUT](state, data) {
+    console.log('set checkout')
     state.checkout = data
+    state.checkoutId = data.id
   }
 }
 

@@ -168,7 +168,7 @@ const router = new Router({
 
 Vue.use(VueAnalytics, {
   appName: 'HARDEMAN',
-  debug: true,
+  // debug: true,
   appVersion: '1.1',
   trackingId: 'UA-69252921-6',
   trackPage: true,

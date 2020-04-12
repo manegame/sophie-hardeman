@@ -1,9 +1,11 @@
 import Vue from 'vue'
 import 'babel-polyfill'
 import App from './App'
+// import AppTest from './AppTest'
 import router from './router'
 import store from './store'
 import VueHead from 'vue-head'
+import VueLazyLoad from 'vue-lazyload'
 import {format} from 'date-fns'
 
 /**
@@ -19,6 +21,7 @@ Vue.config.productionTip = false
 window.jQuery = window.$ = require('jquery')
 
 Vue.use(VueHead)
+Vue.use(VueLazyLoad)
 
 /**
  * Filters
@@ -42,5 +45,5 @@ new Vue({ // eslint-disable-line no-new
   store,
   router,
   template: '<App/>',
-  components: {App}
+  components: { App }
 })

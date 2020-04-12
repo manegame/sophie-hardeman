@@ -21,24 +21,6 @@
               href='https://www.instagram.com/hardeman_'
               target='_blank'></a>
         </section>
-        <!-- <ul class="landing__column_left__head__links"
-            v-if='main.collections.length > 0 && main.stockists.length > 0 && main.community.length > 0 && main.videos.length > 0'>
-          <router-link tag='li'
-                        class="landing__column_left__head__links__item"
-                        :to="{name: 'collection', params: { slug: emphasizedCollection, section: 'lookbook'}}">collections</router-link>
-          <router-link tag='li'
-                        class="landing__column_left__head__links__item"
-                        :to="{name: 'hardeman tv', params: { slug: main.videos[0].slug}}">hardeman tv</router-link>
-          <router-link tag='li'
-                        class="landing__column_left__head__links__item"
-                        :to="{name: 'sale', params: { slug: 'all' }}">for sale</router-link>
-          <router-link tag='li'
-                        class="landing__column_left__head__links__item"
-                        :to="{name: 'stockists', params: { slug: main.stockists[0].slug}}">stockists</router-link>
-          <router-link tag='li'
-                        class="landing__column_left__head__links__item"
-                        :to="{name: 'community', params: { slug: main.community[0].slug}}">community</router-link>
-        </ul> -->
       </div>
       <div class="landing__column_left__toe">
         <weather />
