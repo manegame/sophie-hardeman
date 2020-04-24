@@ -23,7 +23,9 @@
           </div>
         </div>
       </template>
-      <zoom-img v-else :imageSource='shopify.product.images[0].src' />
+      <div v-else class="single_sale__main__left__slider">
+        <zoom-img :imageSource='shopify.product.images[0].src' />
+      </div>
       <div class="single_sale__main__left__text">
           <template>
             <p class="single_sale__main__left__text--head">Description</p>
@@ -243,7 +245,7 @@ export default {
 
   &__main {
     &__title {
-      width: calc(100% - #{$left-col-width});
+      width: 100%;
       margin-bottom: 10px;
       color: $black;
 
@@ -281,7 +283,8 @@ export default {
       &__slider {
         width: 100%;
         background-color: #e5e5e5;
-        margin-bottom: $line-height;
+        // margin-bottom: $line-height;
+        margin-bottom: 20px;
       }
 
       &__text {

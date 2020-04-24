@@ -63,17 +63,19 @@ const router = new Router({
       component: sale
     },
     {
-      path: '/shopify',
+      alias: '/shopify',
+      path: '/shop',
       name: 'shopify',
       component: shopify
     },
     {
-      path: '/shopify/collection/:handle',
+      alias: '/shopify/collection/:handle',
+      path: '/shop/collection/:handle',
       name: 'shopify collection',
       component: shopify
     },
     {
-      path: '/shopify/:handle',
+      path: '/shop/:handle',
       name: 'shopify single',
       component: shopifySingle
     },

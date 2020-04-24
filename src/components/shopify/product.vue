@@ -1,6 +1,11 @@
 <template>
   <router-link  tag='div'
-              :to="`/shopify/${product.handle}`"
+              :to="{
+                name: 'shopify single',
+                params: {
+                  handle: product.handle
+                }
+              }"
               class="product" >
       <span v-if='!product.availableForSale'
             class="product__sold_out"
