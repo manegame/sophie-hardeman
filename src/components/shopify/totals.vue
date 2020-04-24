@@ -10,23 +10,22 @@
             <span v-for='attr in item.attributes'
                   :key='attr.key'
                   v-html='"(" + attr.value + ") "' />
-            <span v-html='shopify.checkout.currencyCode + " " + item.variant.price + ""' />
+            <span>
+              {{ shopify.checkout.currencyCode | dollify }}{{ item.variant.price }}
+            </span>
           </span>
           <span v-else>
             <span v-html='item.quantity + " x " + item.title' />
             <span v-for='attr in item.attributes'
                   :key='attr.key'
                   v-html='"(" + attr.value + ") "' />
-            <span v-html='shopify.checkout.currencyCode + " " + item.price + ""' />
+            <span>
+              {{ shopify.checkout.currencyCode | dollify }}{{ item.price }}
+            </span>
           </span>
       </li>
     </ul>
-    <ul class="totals__list">
-      <li class="totals__list__item naturel">
-        Shipping: {{shopify.checkout.currencyCode}}
-      </li>
-    </ul>
-      Grand Total: {{shopify.checkout.currencyCode}} (VAT incl.)
+      Grand Total: {{ shopify.checkout.currencyCode | dollify }} {{ shopify.checkout.paymentDue }} (VAT incl.)
   </fieldset>
 </template>
 

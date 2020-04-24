@@ -5,7 +5,7 @@
       <button @click='ADD_LINE_ITEMS({
           id: shopify.checkout.id,
           lineItemsToAdd: {
-            variantId: selectedVariant.id,
+            variantId: item.variant.id,
             quantity: 1
           }
         })'
@@ -20,16 +20,19 @@
               v-html='item.data.product.acf.season' /> -->
           <span class="cart_item__meta__title">
             <span v-html='item.title'/>
-            <!-- <span v-for='attribute in item.attributes'
-                  :key='attribute.id'
-                  v-html='"(" + attribute.value + ") "'/> -->
+            <span v-if="item.variant.selectedOptions.length > 0">
+              <span v-for="option in item.variant.selectedOptions" :key="`${option.value}${option.name}`">
+                ( {{ option.value }} )
+              </span>
+            </span>
           </span>
           <span class="cart_item__meta__price"
-                v-if='item.variant'
-                v-html='`${item.variant.price} ${shopify.checkout.currencyCode}`' />
-          <span class="cart_item__meta__price"
-                v-else
-                v-html='`${item.price} ${shopify.checkout.currencyCode}`' />
+                v-if='item.variant'>
+            {{ item.variant.price }}{{ shopify.checkout.currencyCode | dollify }}
+          </span>
+          <span class="cart_item__meta__price" v-else>
+            {{ item.price }}{{ shopify.checkout.currencyCode | dollify }}
+          </span>
           <br />
       </h6>
     </div>

@@ -36,6 +36,16 @@ Vue.filter('temperature', (temp) => {
   else return temp + '°c'
 })
 
+Vue.filter('dollify', (code) => {
+  if (code === 'USD') {
+    return '$'
+  } else if (code === 'EUR') {
+    return '€'
+  } else {
+    return ''
+  }
+})
+
 /**
  * Initiation
  */

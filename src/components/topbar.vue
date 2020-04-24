@@ -1,14 +1,9 @@
 <template>
   <div class="topbar">
-    <router-link v-if='$route.name === "single sale"'
-                 class="topbar__back"
-                 :to="{ name: 'sale', params: {slug: $route.params.slug} }">
-                 <- back to sale
-    </router-link>
     <router-link v-if='$route.name === "shopify single"'
                  class="topbar__back"
                  :to="{ name: 'shopify' }">
-                 <- back to sale
+                 <- back to shop
     </router-link>
     <a v-else-if='$route.name === "checkout"'
                  class="topbar__back"
@@ -22,7 +17,7 @@
     </router-link>
     <!-- Cart links -->
     <template v-if="shopify.checkout">
-      <strong v-if="totalItems > 0">({{ totalItems }}) items in cart</strong>
+      <strong v-if="totalItems > 0">({{ totalItems }}) items in cart &nbsp;</strong>
       <router-link tag="span" to="#cart" class="topbar__link">Show cart</router-link>
     </template>
     <span v-if='$route.name === "collection"' class="topbar__posted">updated {{main.single.modified | dotted}}</span>

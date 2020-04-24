@@ -38,7 +38,6 @@
                 <legend v-html='"price"' />
                 <span class='form__item__price' 
                       v-html='priceRange(shopify.product)'></span>
-                <sup v-html='"sale price!"' />
               </fieldset>
               <form class='form__item'
                     @submit.prevent=''>
