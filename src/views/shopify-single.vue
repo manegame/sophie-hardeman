@@ -37,7 +37,7 @@
               <fieldset class='form__item'>
                 <legend v-html='"price"' />
                 <span class='form__item__price' 
-                      v-html='priceRange(shopify.product.id)'></span>
+                      v-html='priceRange(shopify.product)'></span>
                 <sup v-html='"sale price!"' />
               </fieldset>
               <form class='form__item'

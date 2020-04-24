@@ -1,14 +1,17 @@
 import { mapState } from 'vuex'
+
 export default {
   computed: {
-    ...mapState(['shopify'])
+    ...mapState(['shopify']),
+    totalItems () {
+      if (this.shopify.checkout.lineItems.length > 0) {
+        return this.shopify.checkout.lineItems.map(item => item.quantity).reduce((total, item) => total + item)
+      }
+      return 0
+    }
   },
   methods: {
-    priceRange (id) {
-      const product = this.shopify.products.find((pr) => {
-        return pr.id === id
-      })
-
+    priceRange (product) {
       if (product.variants.length > 1) {
         let p = product.variants.map((vr) => {
           return Number.parseFloat(vr.priceV2.amount)

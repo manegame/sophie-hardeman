@@ -247,7 +247,9 @@ export default {
   height: $exact-height;
   position: relative;
   float: left;
-  padding: 0 20px;
+  padding: 0 20px 40px;
+  margin-bottom: 20px;
+  overflow-y: auto;
 
   @include screen-size('medium') {
     width: calc(4/14 * 100% - 20px);

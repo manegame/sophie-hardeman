@@ -20,8 +20,8 @@
                 <!-- get the product by linked id and display price -->
                 {{item.price}} {{ shop[shop.currency.value] }}
               </span>
-              <load-img  class="sale__main__item__image"
-                        :item='item' />
+              <img  class="sale__main__item__image"
+                        v-lazy="item.acf.image.sizes['s-h-medium']" />
               <div class="sale__main__item__meta">
                 <h6>
                   <span class='sale__main__item__meta__season' 
@@ -54,8 +54,8 @@
                 <!-- get the product by linked id and display price -->
                 {{item.price}} {{ shop[shop.currency.value] }}
               </span>
-              <load-img class="sale__main__item__image"
-                        :item='item' />
+              <img class="sale__main__item__image"
+                        v-lazy="item.acf.image.sizes['s-h-medium']" />
               <div class="sale__main__item__meta">
                 <h6>
                   <span class='sale__main__item__meta__season' 
@@ -74,7 +74,6 @@
 
 <script>
 import {mapState, mapGetters} from 'vuex'
-import loadImg from '@/components/base/load-img'
 import navbar from '@/components/navbar'
 import topbar from '@/components/topbar'
 

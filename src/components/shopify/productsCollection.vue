@@ -1,58 +1,17 @@
 <template>
   <section class="sale__main">
-    <router-link  tag='div'
-                  v-for='item in collection.products'
-                  :key='item.id'
-                  :to="`/shopify/${item.handle}`"
-                  class="sale__main__item" >
-          <span v-if='!item.availableForSale'
-                class="sale__main__item__sold_out"
-                v-html='"sold out"'/>
-          <span class="sale__main__item__price-tag">
-            {{ priceRange(item.id) }}
-          </span>
-          <load-img  class="sale__main__item__image"
-                    :item='item.images[0].src' />
-          <div class="sale__main__item__meta">
-            <h6>
-              <span class='sale__main__item__meta__season' 
-                    v-html='"SEASON"' />
-              <span class="sale__main__item__meta__title" 
-                    v-html='item.title' />
-              <span class="sale__main__item__meta__price" 
-                    v-html='priceRange(item.id)' />
-            </h6>
-          </div>
-    </router-link>
+    <product v-for='product in collection.products' :key="product.id" :product="product" />
   </section>
 </template>
 
 <script>
-import loadImg from '@/components/base/load-img'
+import product from '@/components/shopify/product'
 import { mapState } from 'vuex'
 
 export default {
   name: 'products-collection',
   components: {
-    loadImg
-  },
-  methods: {
-    priceRange (id) {
-      const product = this.collection.products.find((pr) => {
-        return pr.id === id
-      })
-
-      if (product.variants.length > 1) {
-        let p = product.variants.map((vr) => {
-          return Number.parseFloat(vr.priceV2.amount)
-        })
-        const u = new Set(p)
-        const prizes = [...u]
-        return 'Starting from ' + product.variants[0].priceV2.currencyCode + ' ' + Math.min(prizes)
-      } else {
-        return product.variants[0].priceV2.currencyCode + ' ' + product.variants[0].priceV2.amount
-      }
-    }
+    product
   },
   computed: {
     ...mapState(['shopify']),

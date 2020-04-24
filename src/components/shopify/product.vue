@@ -6,7 +6,7 @@
             class="product__sold_out"
             v-html='"sold out"'/>
       <span class="product__price-tag">
-        {{ priceRange(product.id) }}
+        {{ priceRange(product) }}
       </span>
       <img v-if="product.images.length > 0" v-lazy="product.images[0].src" class="product__image" />
       <div class="product__meta">
@@ -15,11 +15,11 @@
             ⭑
           </span>
           <span class='product__meta__season' 
-                v-html='"SEASON"' />
+                v-html='""' />
           <span class="product__meta__title" 
                 v-html='product.title' />
           <span class="product__meta__price" 
-                v-html='priceRange(product.id)' />
+                v-html='priceRange(product)' />
         </h6>
       </div>
 </router-link>

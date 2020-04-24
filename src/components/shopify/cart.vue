@@ -1,27 +1,24 @@
 <template>
   <section class="cart">
-    <strong v-if="shopify.checkout">({{ totalItems }}) items in cart</strong>
-    <span class="button" @click="cartVisible = true">Show cart</span>
-
-    <div class="inner" v-if="cartVisible">
-      <div class="col">
-        <h1 @click="cartVisible = false">Shoppin cart</h1>
-        <cart-item v-for="item in shopify.checkout.lineItems" :item="item" :key="item.id" />
-      </div>
-      <div class="col">
-        <totals />
-        <p>Ur shopping bag: {{shopify.checkout.currencyCode}} {{shopify.checkout.paymentDue}}</p>
-        <a v-if="shopify.checkout.webUrl" :href="shopify.checkout.webUrl" class="button">Go to checkout</a>
-      </div>
+    <router-link :to="-1">
+      Close
+    </router-link>
+    <div class="col">
+      <h1>Shoppin cart</h1>
+      <cart-item v-for="item in shopify.checkout.lineItems" :item="item" :key="item.id" />
     </div>
-
-    <a v-if="shopify.checkout.webUrl" :href="shopify.checkout.webUrl" class="button">Direct checkout</a>
+    <div class="col">
+      <totals />
+      <p>Ur shopping bag: {{shopify.checkout.currencyCode}} {{shopify.checkout.paymentDue}}</p>
+      <a v-if="shopify.checkout.webUrl && totalItems" :href="shopify.checkout.webUrl" class="button">Go to checkout</a>
+    </div>
   </section>
 </template>
 
 <script>
 import cartItem from '@/components/shopify/cart-item'
 import totals from '@/components/shopify/totals'
+import utils from '@/components/shopify/mixins/utils'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -30,6 +27,7 @@ export default {
     totals,
     cartItem
   },
+  mixins: [utils],
   data () {
     return {
       cartVisible: false
@@ -41,10 +39,7 @@ export default {
     ])
   },
   computed: {
-    ...mapState(['shopify']),
-    totalItems () {
-      return this.shopify.checkout.lineItems.map(item => item.quantity).reduce((total, item) => total + item)
-    }
+    ...mapState(['shopify'])
   }
 }
 </script>
@@ -53,19 +48,15 @@ export default {
 @import '../../style/_variables.scss';
 
 .cart {
-  line-height: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  background: #fff;
+  display: flex;
 
-  .inner {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    background: #fff;
-    display: flex;
-
-    .col {
-      width: 50%;
-    }
+  .col {
+    width: 50%;
   }
 }
 

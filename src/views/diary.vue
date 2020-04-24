@@ -10,8 +10,8 @@
               :key='"item" + entry.id'
               :ref='entry.id'
               :id='entry.slug' >
-            <load-img class="diary__main__item__image"
-                      :item='entry'
+            <img class="diary__main__item__image"
+                      v-lazy="entry.acf.image.sizes['s-h-medium']"
                       :key='"img" + entry.id' />
             <p class="diary__main__item__title"
                 :key='"p" + entry.id'>
@@ -26,7 +26,6 @@
 import {mapState} from 'vuex'
 import navbar from '@/components/navbar'
 import topbar from '@/components/topbar'
-import loadImg from '@/components/base/load-img'
 import dynamicScroll from '@/components/mixins/dynamicScroll'
 
 export default {
@@ -46,8 +45,7 @@ export default {
   mixins: [dynamicScroll],
   components: {
     navbar,
-    topbar,
-    loadImg
+    topbar
   },
   computed: {
     ...mapState(['main'])

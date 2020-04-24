@@ -2,17 +2,20 @@
   <div class='app'>
     <router-view id='view' />
     <foot />
+    <cart v-if="$route.hash === '#cart'" />
   </div>
 </template>
 
 <script>
 import {mapState, mapActions, mapGetters} from 'vuex'
 import foot from './components/foot'
+import cart from '@/components/shopify/cart'
 
 export default {
   name: 'app',
   components: {
-    foot
+    foot,
+    cart
   },
   data() {
     return {

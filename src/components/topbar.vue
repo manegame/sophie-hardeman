@@ -20,28 +20,34 @@
                  :to="{ name: 'landing'}">
                  <- back to overview
     </router-link>
-                <span v-if='$route.name === "collection"' class="topbar__posted">updated {{main.single.modified | dotted}}</span>
-                <cart class="topbar__cart" />
-                <a class="topbar__recommend"
-                   :href='reccomendLink'>mail to a friend</a>
-                <a class="topbar__reply"
-                   :href='mailSophie'>reply</a>
-                <a class="topbar__print"
-                   @click.prevent='printPage'>print</a>
+    <!-- Cart links -->
+    <template v-if="shopify.checkout">
+      <strong v-if="totalItems > 0">({{ totalItems }}) items in cart</strong>
+      <router-link tag="span" to="#cart" class="topbar__link">Show cart</router-link>
+    </template>
+    <span v-if='$route.name === "collection"' class="topbar__posted">updated {{main.single.modified | dotted}}</span>
+    <!-- <cart class="topbar__cart" /> -->
+    <a class="topbar__link"
+        :href='reccomendLink'>mail to a friend</a>
+    <a class="topbar__reply"
+        :href='mailSophie'>reply</a>
+    <a class="topbar__print"
+        @click.prevent='printPage'>print</a>
+    <a class="topbar__print"
+        v-if="totalItems > 0"
+        :href="shopify.checkout.webUrl">direct checkout</a>
   </div>
 </template>
 
 <script>
-import cart from '@/components/shopify/cart'
+import utils from '@/components/shopify/mixins/utils'
 import {mapState} from 'vuex'
 
 export default {
   name: 'topbar',
-  components: {
-    cart
-  },
+  mixins: [utils],
   computed: {
-    ...mapState(['main']),
+    ...mapState(['main', 'shopify']),
     reccomendLink() {
       return 'mailto:info@hardeman.co?subject=Hey! Check it out&body=Made by Hardeman... \nhardeman.com'
     },
@@ -100,7 +106,7 @@ export default {
 
   &__cart,
   &__posted,
-  &__recommend,
+  &__link,
   &__reply {
     color: $black;
     text-decoration: none;
@@ -109,7 +115,7 @@ export default {
     cursor: pointer;
   }
 
-  &__recommend,
+  &__link,
   &__reply {
     margin: 0 2px;
     border: $border;
@@ -132,7 +138,7 @@ export default {
     cursor: pointer;
   }
 
-  &__recommend,
+  &__link,
   &__reply,
   &__print {
     @include screen-size('small') {

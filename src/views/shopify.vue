@@ -9,7 +9,6 @@
 
 <script>
 import { mapState } from 'vuex'
-import loadImg from '@/components/base/load-img'
 import navbar from '@/components/navbar'
 import topbar from '@/components/topbar'
 import products from '@/components/shopify/products'
@@ -33,7 +32,6 @@ export default {
   components: {
     navbar,
     topbar,
-    loadImg,
     cart,
     products,
     productsCollection

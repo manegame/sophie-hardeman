@@ -11,8 +11,8 @@
             :key='"img"+entry.id'
             :id='entry.slug'
             :ref='entry.id'>
-        <load-img class="community__main__item__image"
-                  :item='entry'/>
+        <img class="community__main__item__image"
+                  v-lazy="entry.acf.image.sizes['s-h-medium']" />
         <p  class="community__main__item__title"
             :key='"p" + entry.id'
             v-html='entry.title.rendered' />
@@ -25,7 +25,6 @@
 import {mapState} from 'vuex'
 import navbar from '@/components/navbar'
 import topbar from '@/components/topbar'
-import loadImg from '@/components/base/load-img'
 import dynamicScroll from '@/components/mixins/dynamicScroll'
 
 export default {
@@ -45,8 +44,7 @@ export default {
   mixins: [dynamicScroll],
   components: {
     navbar,
-    topbar,
-    loadImg
+    topbar
   },
   computed: {
     ...mapState(['main'])
