@@ -161,10 +161,12 @@ export default {
         case ('shopify collection'):
           this.GET_PRODUCT_TYPES()
           this.GET_SHOPIFY_COLLECTIONS()
+          this.GET_PRODUCTS()
           break
         case ('shopify single'):
           this.GET_PRODUCT_TYPES()
           this.GET_SHOPIFY_COLLECTIONS()
+          this.GET_PRODUCTS()
           this.GET_PRODUCT(route.params.handle)
           break
       }

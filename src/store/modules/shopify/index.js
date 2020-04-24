@@ -12,7 +12,8 @@ const state = {
   products: [],
   productTypes: [],
   checkout: null,
-  checkoutId: null
+  checkoutId: null,
+  wishList: []
 }
 
 const actions = {
@@ -50,6 +51,9 @@ const actions = {
   },
   async [actionTypes.GET_CHECKOUT]({commit}, id) {
     commit(mutationTypes.SET_CHECKOUT, await shopify.getCheckout(id))
+  },
+  [actionTypes.ADD_WISHLIST]({commit}, id) {
+    commit(mutationTypes.ADD_WISHLIST, id)
   }
 }
 
@@ -81,6 +85,13 @@ const mutations = {
     console.log('set checkout')
     state.checkout = data
     state.checkoutId = data.id
+  },
+  [mutationTypes.ADD_WISHLIST](state, data) {
+    console.log('set wishlist')
+    state.wishList.push(data)
+  },
+  [mutationTypes.REMOVE_WISHLIST](state, data) {
+    // state.wishList.push(data)
   }
 }
 

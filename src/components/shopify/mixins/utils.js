@@ -4,7 +4,7 @@ export default {
   computed: {
     ...mapState(['shopify']),
     totalItems () {
-      if (this.shopify.checkout.lineItems.length > 0) {
+      if (this.shopify.checkout && this.shopify.checkout.lineItems.length > 0) {
         return this.shopify.checkout.lineItems.map(item => item.quantity).reduce((total, item) => total + item)
       }
       return 0

@@ -57,6 +57,7 @@
                             v-html='value.value' />
                   </select>
                 </fieldset>
+                <!-- <input @click="ADD_WISHLIST(selectedVariant.id)" class='form__item' type='submit' value='Add to wishlist' /> -->
                 <input @click="ADD_LINE_ITEMS({
                   id: shopify.checkout.id,
                   lineItemsToAdd: {
@@ -157,7 +158,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['ADD_LINE_ITEMS']),
+    ...mapActions(['ADD_LINE_ITEMS', 'ADD_WISHLIST']),
     nextButton() {
       this.swiper.slideNext()
     },
@@ -193,7 +194,9 @@ export default {
         console.log(this)
         if (this.selectedVariant) {
           const index = this.shopify.product.images.map(img => { return img.id }).indexOf(this.selectedVariant.image.id)
-          this.slideToIndex(index)
+          if (this.swiper) {
+            this.slideToIndex(index)
+          }
         }
       },
       deep: true

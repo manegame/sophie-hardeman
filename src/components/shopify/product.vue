@@ -16,7 +16,7 @@
       <img v-if="product.images.length > 0" v-lazy="product.images[0].src" class="product__image" />
       <div class="product__meta">
         <h6>
-          <span class='product__meta__star'>
+          <span class='product__meta__star' @click="ADD_WISHLIST(product.variants[0].id)">
             ⭑
           </span>
           <span class='product__meta__season' 
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import utils from './mixins/utils'
 
 export default {
@@ -45,6 +45,9 @@ export default {
   mixins: [utils],
   computed: {
     ...mapState(['shopify'])
+  },
+  methods: {
+    ...mapActions(['ADD_WISHLIST'])
   }
 }
 </script>

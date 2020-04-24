@@ -93,12 +93,10 @@ export default {
   },
   components: {
     navbar,
-    topbar,
-    loadImg
+    topbar
   },
   computed: {
     ...mapState(['main', 'shop']),
-    ...mapGetters(['productById']),
     currentCategory() {
       if (this.$route.name === 'sale') {
         return this.main.garment_categories.filter(c => {
