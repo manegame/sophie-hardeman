@@ -213,6 +213,10 @@ export default {
 @import '../style/vendor/swiper.css';
 @include swiper;
 
+.form__item {
+  min-height: $line-height * 2;
+}
+
 .swiper-container {
   height: 100%;
   width: 100%;
@@ -280,6 +284,7 @@ export default {
       }
 
       @include screen-size('small') {
+        float: right;
         width: 100%;
       }
 
@@ -306,7 +311,7 @@ export default {
         }
 
         @include screen-size('small') {
-          width: 66%;
+          width: 100%;
         }
       }
 
@@ -317,7 +322,7 @@ export default {
         float: right;
 
         @include screen-size('small') {
-          width: 33%;
+          width: 100%;
         } 
       }
     }

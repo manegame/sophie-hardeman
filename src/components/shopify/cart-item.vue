@@ -63,6 +63,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../style/_variables.scss';
+@import '../../style/helpers/_responsive.scss';
 
 .cart_item {
   width: $left-col-width;
@@ -73,6 +74,12 @@ export default {
   border: 1px solid $grey-darker;
   overflow: hidden;
   position: relative;
+
+  @include screen-size("small") {
+    width: 100%;
+    height: auto;
+    margin-right: 0;
+  }
 
   &__amount {
     background: $white;

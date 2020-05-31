@@ -17,8 +17,9 @@
     </router-link>
     <!-- Cart links -->
     <template v-if="shopify.checkout">
-      <strong v-if="totalItems > 0">({{ totalItems }}) items in cart &nbsp;</strong>
-      <router-link tag="span" to="#cart" class="topbar__link">Show cart</router-link>
+      <router-link tag="span" to="#cart">
+        <strong v-if="totalItems > 0">({{ totalItems }}) items in cart &nbsp;</strong>
+      </router-link>
     </template>
     <span v-if='$route.name === "collection"' class="topbar__posted">updated {{main.single.modified | dotted}}</span>
     <!-- <cart class="topbar__cart" /> -->
