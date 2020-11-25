@@ -183,6 +183,10 @@
     height: 300px;
     margin-left: auto;
     margin-right: auto;
+
+    &.gallery-thumbs {
+      height: 140px;
+    }
   }
   .swiper-slide {
     width: 100%;
@@ -210,7 +214,6 @@
     }
   }
   .gallery-thumbs {
-    height: 140px;
     box-sizing: border-box;
     padding: 4px 0 0;
 

@@ -1,6 +1,8 @@
 <template>
   <section class="sale__main">
-    <product v-for='product in collection.products' :key="product.id" :product="product" />
+    <template v-if="collection">
+      <product v-for='product in collection.products' :key="product.id" :product="product" />
+    </template>
   </section>
 </template>
 
@@ -41,15 +43,6 @@ export default {
     @include screen-size('small') {
       justify-content: center;
     }
-
-    // &::after {
-    //   content: "";
-    //   flex: auto;
-
-    //   @include screen-size('small') {
-    //     flex: none;
-    //   }
-    // }
 
     &__item {
       width: $left-col-width;

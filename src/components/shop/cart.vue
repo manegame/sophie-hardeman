@@ -1,6 +1,6 @@
 <template>
   <div class="cart">
-    <h1>Shoppin cart</h1>
+    <h1>shopping cart</h1>
     <ul>
       <li v-for='item in shop.cart'
           :key='item.data.id'>
@@ -18,9 +18,9 @@
         <button @click='REMOVE_FROM_CART(item.data)'>-</button>
       </li>
     </ul>
-    <p>Ur shopping bag: {{shop[shop.currency.value]}} {{cartTotal}}</p>
+    <p>Your shopping bag: {{shop[shop.currency.value]}} {{cartTotal}}</p>
     <p>Shipping costs: {{shop[shop.currency.value]}}{{shippingTotal}}</p>
-    <p>Gonna cost ya: {{shop[shop.currency.value]}}{{total}}</p>
+    <p>Total: {{shop[shop.currency.value]}}{{total}}</p>
     <router-link v-if='$route.name !== "checkout"'
                  tag='button'
                  :to="{ name: 'checkout' }">Checkout</router-link>

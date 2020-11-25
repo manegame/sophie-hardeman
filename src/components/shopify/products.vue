@@ -17,7 +17,8 @@ export default {
   data () {
     return {
       activePage: 1,
-      itemsPerPage: 9
+      itemsPerPage: 9,
+      interval: null
     }
   },
   props: {
@@ -33,7 +34,21 @@ export default {
     ...mapActions(['GET_MORE_PRODUCTS']),
     showNextPage () {
       this.activePage++
+    },
+    loadMore () {
+      if (this.hasNextPage) {
+        console.log('loading more')
+        this.showNextPage()
+      } else {
+        console.log('all loaded')
+        clearInterval(this.interval)
+      }
     }
+  },
+  mounted () {
+    this.$nextTick(() => {
+      this.interval = setInterval(this.loadMore, 1000)
+    })
   },
   computed: {
     ...mapState(['shopify']),

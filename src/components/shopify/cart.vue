@@ -2,7 +2,7 @@
   <section class="cart" @click.self="$router.go(-1)">
     <div class="inner">
       <div class="head">
-        <h1>shoppin cart</h1>
+        <h1>shopping cart</h1>
         <h1 @click.prevent="$router.go(-1)">
           x
         </h1>
@@ -14,7 +14,7 @@
         </div>
         <div class="col right sticky">
           <totals class="block" />
-          <p class="block">Ur shopping bag: {{shopify.checkout.currencyCode}} {{shopify.checkout.paymentDue}}</p>
+          <p class="block">Your shopping bag: {{shopify.checkout.currencyCode}} {{shopify.checkout.paymentDue}}</p>
         </div>
       </div>
 

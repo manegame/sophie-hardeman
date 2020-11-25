@@ -8,6 +8,7 @@
         <span class='single_sale__main__title--title' v-html='shopify.product.title' />
       </h5>
       <div class="single_sale__main__left">
+
       <template v-if='hasSwiper'>
         <div  class='single_sale__main__left__slider'>
           <div class="swiper-container" id='swiper_container'>
@@ -22,7 +23,19 @@
             <div class="arrow-left swiper-button-prev swiper-button-white" @click='prevButton'></div>
           </div>
         </div>
+        <div class="swiper-container gallery-thumbs" id="gallery-thumbs">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide"
+                  v-for='image in shopify.product.images'
+                  :key='"bottom" + image.id'
+                  :style='"background-image:url("+ image.src +")"' />
+          </div>
+          <!-- Add Arrows -->
+          <div class="swiper-button-next swiper-button-next--thumb swiper-button-white"></div>
+          <div class="swiper-button-prev swiper-button-prev--thumb swiper-button-white"></div>
+        </div>
       </template>
+
       <div v-else class="single_sale__main__left__slider">
         <zoom-img :imageSource='shopify.product.images[0].src' />
       </div>
@@ -110,7 +123,8 @@ export default {
   data() {
     return {
       selectedOptions: null,
-      swiper: null
+      swiper: null,
+      galleryThumbs: null
     }
   },
   updated() {
@@ -181,11 +195,44 @@ export default {
         updateOnImagesReady: true,
         touchRatio: 1,
         spaceBetween: 4,
+        on: {
+          slideChange: () => {
+            this.swiper.navigation.update()
+          }
+        },
         navigation: {
           nextEl: '.swiper-button-next--top',
           prevEl: '.swiper-button-prev--top'
         }
       })
+      this.galleryThumbs = new Swiper('.gallery-thumbs', {
+        preloadImages: true,
+        updateOnImagesReady: true,
+        spaceBetween: 4,
+        slidesPerView: 'auto',
+        touchRatio: 0.4,
+        slideToClickedSlide: true,
+        centeredSlides: true,
+        virtualTranslate: false,
+        slidesOffsetAfter: this.swiperWidth,
+        on: {
+          slideChange: () => {
+            this.galleryThumbs.navigation.update()
+          }
+        },
+        navigation: {
+          nextEl: '.swiper-button-next--thumb',
+          prevEl: '.swiper-button-prev--thumb'
+        }
+      })
+      if (this.swiper.controller) {
+        this.swiper.controller.control = this.galleryThumbs
+        this.galleryThumbs.controller.control = this.swiper
+        this.swiper.navigation.update()
+        this.galleryThumbs.navigation.update()
+      }
+
+      console.log(this.galleryThumbs)
     }
   },
   watch: {
@@ -220,6 +267,19 @@ export default {
 .swiper-container {
   height: 100%;
   width: 100%;
+
+  &.gallery-thumbs {
+    padding: 0;
+    margin-bottom: 40px;
+
+    .swiper-slide {
+      background-color: $grey;
+      object-fit: contain;
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  }
 
   .swiper-slide {
     height: 100% !important;
@@ -292,7 +352,7 @@ export default {
         width: 100%;
         background-color: #e5e5e5;
         // margin-bottom: $line-height;
-        margin-bottom: 20px;
+        margin-bottom: 4px;
       }
 
       &__text {
