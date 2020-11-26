@@ -240,8 +240,9 @@ export default {
     ]
    */
   removeLineItems: (id, lineItemsToRemove) => {
+    console.log(lineItemsToRemove)
     return new Promise((resolve, reject) => {
-      client.checkout.updateLineItems(id, lineItemsToRemove)
+      client.checkout.removeLineItems(id, lineItemsToRemove)
         .then(
           checkout => {
             //  // Array without removed line item

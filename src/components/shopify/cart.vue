@@ -9,8 +9,11 @@
       </div>
 
       <div class="scroll">
-        <div class="col left">
+        <div v-if="shopify.checkout.lineItems.length > 0" class="col left">
           <cart-item v-for="item in shopify.checkout.lineItems" :item="item" :key="item.id" />
+        </div>
+        <div class="col left" v-else>
+          There's nothing in your basket. <span v-if="randomCollection">Check out <router-link :to='{name: "shopify collection", params: {handle: randomCollection.handle}}'>{{ randomCollection.title }}</router-link>?</span>
         </div>
         <div class="col right sticky">
           <totals class="block" />
@@ -49,7 +52,12 @@ export default {
     ])
   },
   computed: {
-    ...mapState(['shopify'])
+    ...mapState(['shopify']),
+    randomCollection () {
+      if (this.shopify.collections.length > 0) {
+        return this.shopify.collections[Math.floor(Math.random() * this.shopify.collections.length)]
+      } else return false
+    }
   }
 }
 </script>

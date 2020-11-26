@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import {mapState, mapGetters} from 'vuex'
+import {mapState} from 'vuex'
 import navbar from '@/components/navbar'
 import topbar from '@/components/topbar'
 
@@ -120,12 +120,16 @@ export default {
 
 .sale {
   @include single;
+  overflow: scroll;
+  @include hide-scroll;
 
   &__main {
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
+    align-items: flex-start;
     padding-bottom: 80px;
+    height: auto;
 
     @include screen-size('small') {
       justify-content: center;

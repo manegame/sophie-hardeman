@@ -94,24 +94,7 @@ export default {
       this.payBuddy.loaded = true
       this.paypalInit()
     },
-    // placePaidOrder() {
-    //   //
-    //   // this payment function does a couple of things.
-    //   // 2. PLACE_ORDER sends the order
-    //   //
-    //   this.msg = 'hold on, processing...'
-    //   if (this.orderComplete) {
-    //     this.PLACE_ORDER(this.shop.order).then(() => {
-    //       if (this.shop.payment.orderResponse.message) {
-    //         this.msg = 'Something went wrong. Please contact <a href="mailto:sales@hardeman.co">sales@hardeman.co</a>. Apologies for the inconvenience'
-    //       } else {
-    //         this.$router.push({ name: 'order-complete' })
-    //       }
-    //     })
-    //   }
-    // },
-    paypalInit() {
-      
+    paypalInit () {
       const vm = this
       // eslint-disable-next-line
       paypal.Button.render({

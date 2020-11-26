@@ -1,6 +1,18 @@
 <template>
   <div class='cart_item'>
     <span class="cart_item__amount">
+      <button v-if="item.quantity === 1" @click='REMOVE_LINE_ITEMS({
+          id: shopify.checkout.id,
+          lineItemsToRemove: [item.id]
+        })'>✕</button>
+      <button v-else @click='ADD_LINE_ITEMS({
+          id: shopify.checkout.id,
+          lineItemsToAdd: {
+            variantId: item.variant.id,
+            quantity: -1
+          }
+        })'
+        v-html='"-"' />
       {{item.quantity}} items
       <button @click='ADD_LINE_ITEMS({
           id: shopify.checkout.id,
@@ -16,8 +28,6 @@
           :src='item.variant.image.src' />
     <div  class="cart_item__meta">
       <h6>
-        <!-- <span class='cart_item__meta__season' 
-              v-html='item.data.product.acf.season' /> -->
           <span class="cart_item__meta__title">
             <span v-html='item.title'/>
             <span v-if="item.variant.selectedOptions.length > 0">
@@ -52,6 +62,7 @@ export default {
   },
   methods: {
     ...mapActions([
+      'REMOVE_LINE_ITEMS',
       'ADD_LINE_ITEMS'
     ])
   },

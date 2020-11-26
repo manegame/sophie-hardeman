@@ -16,7 +16,7 @@ const allCollectionsQuery = `{
 }`
 
 const productTypesQuery = `{
-  products(first:250)	{
+  products(first:250) {
     edges{
       node{
         productType

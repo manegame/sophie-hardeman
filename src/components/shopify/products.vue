@@ -69,12 +69,15 @@ export default {
 
 .sale {
   @include single;
+  overflow: scroll;
+  @include hide-scroll;
 
   &__main {
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
     padding-bottom: 80px;
+    height: auto;
 
     @include screen-size('small') {
       justify-content: center;

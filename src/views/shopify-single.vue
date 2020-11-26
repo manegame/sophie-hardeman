@@ -58,7 +58,7 @@
                     @submit.prevent=''>
                 <fieldset v-if="optionsAvailable > 0">
                   <legend v-html='"options"' />
-                  <select v-for='(option, index) in shopify.product.options'
+                  <select v-for='option in shopify.product.options'
                           :key='"option" + option.name'
                           v-model='selectedOptions[option.name]'>
                     <option value="" disabled>
@@ -70,14 +70,8 @@
                             v-html='value.value' />
                   </select>
                 </fieldset>
-                <!-- <input @click="ADD_WISHLIST(selectedVariant.id)" class='form__item' type='submit' value='Add to wishlist' /> -->
-                <input @click="ADD_LINE_ITEMS({
-                  id: shopify.checkout.id,
-                  lineItemsToAdd: {
-                    variantId: selectedVariant.id,
-                    quantity: 1
-                  }
-                })" class='form__item' type='submit' value='Order' />
+                <router-link v-if="ordered" tag="input" type="submit" class='form__item' to="#cart" value="Show Cart" />
+                <input @click="order" class='form__item' type='submit' value='Order' />
               </form>
             </div>
           </template>
@@ -124,7 +118,8 @@ export default {
     return {
       selectedOptions: null,
       swiper: null,
-      galleryThumbs: null
+      galleryThumbs: null,
+      ordered: false
     }
   },
   updated() {
@@ -145,6 +140,9 @@ export default {
     ...mapState(['main', 'shopify']),
     hasSwiper() {
       return this.shopify.product.images.length > 1
+    },
+    isInCart () {
+      return this.shopify.checkout.lineItems.includes((i) => { return i.id === this.selectedVariant.id })
     },
     selectedVariant () {
       const variant = this.shopify.product.variants.find((variant) => {
@@ -181,6 +179,16 @@ export default {
     },
     slideToIndex(index) {
       this.swiper.activeIndex = index
+    },
+    order () {
+      this.ADD_LINE_ITEMS({
+        id: this.shopify.checkout.id,
+        lineItemsToAdd: {
+          variantId: this.selectedVariant.id,
+          quantity: 1
+        }
+      })
+      this.ordered = true
     },
     initSelection () {
       const newSelection = {}
@@ -262,6 +270,11 @@ export default {
 
 .form__item {
   min-height: $line-height * 2;
+  width: 100% !important;
+}
+
+fieldset {
+  max-width: unset !important;
 }
 
 .swiper-container {

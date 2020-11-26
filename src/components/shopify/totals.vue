@@ -1,7 +1,7 @@
 <template>
   <fieldset class="totals">
     <legend class="totals__legend">Order</legend>
-    <ul class="totals__list">
+    <ul v-if="shopify.checkout.lineItems.length > 0" class="totals__list">
       <li class="totals__list__item naturel" 
           v-for='(item, index) in shopify.checkout.lineItems'
           :key='"listVar" + index'>
@@ -25,12 +25,17 @@
           </span>
       </li>
     </ul>
+    <ul v-else class="totals__list">
+      <li class="totals__list__item naturel" >
+        Nothing here...
+      </li>
+    </ul>
       Grand Total: {{ shopify.checkout.currencyCode | dollify }} {{ shopify.checkout.paymentDue }} (VAT incl.)
   </fieldset>
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   name: 'totals',

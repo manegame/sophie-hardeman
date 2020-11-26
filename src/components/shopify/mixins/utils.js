@@ -18,7 +18,7 @@ export default {
         })
         const u = new Set(p)
         const prizes = [...u]
-        return 'Starting from ' + this.$options.filters.dollify(product.variants[0].priceV2.currencyCode) + Math.min(prizes)
+        return this.$options.filters.dollify(product.variants[0].priceV2.currencyCode) + Math.min(prizes)
       } else {
         return this.$options.filters.dollify(product.variants[0].priceV2.currencyCode) + product.variants[0].priceV2.amount
       }

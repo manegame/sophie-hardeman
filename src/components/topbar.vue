@@ -3,32 +3,26 @@
     <router-link v-if='$route.name === "shopify single"'
                  class="topbar__back"
                  :to="{ name: 'shopify' }">
-                 <- back to shop
+                 <span>← back to shop</span>
     </router-link>
     <a v-else-if='$route.name === "checkout"'
                  class="topbar__back"
                  @click.prevent='goBack'>
-                <- back to item
+                <span>← back to item</span>
     </a>
     <router-link v-else
                  class="topbar__back"
                  :to="{ name: 'landing'}">
-                 <- back to overview
+                 <span>← back to overview</span>
     </router-link>
     <!-- Cart links -->
-    <template v-if="shopify.checkout">
-      <router-link tag="span" to="#cart">
-        <strong v-if="totalItems > 0">({{ totalItems }}) items in cart &nbsp;</strong>
-      </router-link>
-    </template>
+    <router-link tag="span" to="#cart">
+      <strong v-if="totalItems > 0">({{ totalItems }}) items in cart &nbsp;</strong>
+    </router-link>
+    <router-link tag="a" to="#cart" class="topbar__link topbar__link--cart" v-if="shopify.checkout" ><img style="width:12px; margin-bottom: -2px; margin-right: 2px;" src="/static/cart.png" alt=""> show cart</router-link>
     <span v-if='$route.name === "collection"' class="topbar__posted">updated {{main.single.modified | dotted}}</span>
-    <!-- <cart class="topbar__cart" /> -->
     <a class="topbar__link"
         :href='reccomendLink'>mail to a friend</a>
-    <a class="topbar__reply"
-        :href='mailSophie'>reply</a>
-    <a class="topbar__print"
-        @click.prevent='printPage'>print</a>
     <a class="topbar__print"
         v-if="totalItems > 0"
         :href="shopify.checkout.webUrl">direct checkout</a>
@@ -54,9 +48,6 @@ export default {
   methods: {
     goBack() {
       this.$router.go(-1)
-    },
-    printPage() {
-      window.print()
     }
   }
 }
@@ -72,16 +63,18 @@ export default {
   font-size: $font-size-s;
   line-height: 20px;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   text-align: left;
   z-index: 9;
   border-bottom: $border;
   margin-bottom: $margin-top;
   background: $white;
   // grid-area: main;
-  position: absolute;
+  position: fixed;
   width: calc(11/14 * 100% - 20px);
   right: 20px;
+  height: 50px;
+  padding-bottom: 6px;
   top: 0;
 
   @include screen-size('medium') {
@@ -139,6 +132,10 @@ export default {
   &__print {
     @include screen-size('small') {
       display: none;
+
+      &--cart {
+        display: inline-block;
+      }
     }
   }
 }

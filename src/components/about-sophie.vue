@@ -13,7 +13,7 @@
           organizations.
         </p>
         <a class="about_sophie__text--button"
-           :href='mailSophie'>
+           :href='mailSophie' target="_blank">
           contact seller
         </a>
       </div>
@@ -28,7 +28,7 @@ export default {
   computed: {
     ...mapState(['main']),
     mailSophie() {
-      return 'mailto:sophie@hardemanonline.com?subject=It\'s been a while since we last talked...'
+      return 'https://www.instagram.com/hardeman_'
     }
   }
 }

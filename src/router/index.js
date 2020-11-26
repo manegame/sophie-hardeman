@@ -53,23 +53,11 @@ const router = new Router({
     // SHOP
     // COLLECTIONS
     {
-      path: '/product/:slug',
-      redirect: { name: 'sale' }
-    },
-    {
-      alias: '/product/:slug',
-      path: '/shop/:slug',
-      name: 'sale',
-      component: sale
-    },
-    {
-      alias: '/shopify',
       path: '/shop',
       name: 'shopify',
       component: shopify
     },
     {
-      alias: '/shopify/collection/:handle',
       path: '/shop/collection/:handle',
       name: 'shopify collection',
       component: shopify
@@ -80,11 +68,6 @@ const router = new Router({
       component: shopifySingle
     },
     {
-      path: '/product/:slug/:item',
-      redirect: { name: 'single sale' }
-    },
-    {
-      alias: '/product/:slug/:item',
       path: '/shop/:slug/:item',
       name: 'single sale',
       component: singleSale
