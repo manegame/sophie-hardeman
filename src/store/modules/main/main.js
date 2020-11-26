@@ -15,6 +15,8 @@ const emptySingle = {
 const emptyWeather = {}
 
 const state = {
+  firstVisit: true,
+  subscribed: false,
   single: emptySingle,
   single_stockist: {},
   single_about: {},
@@ -41,6 +43,12 @@ const state = {
 }
 
 const actions = {
+  [actionTypes.FIRST_VISIT]({commit}) {
+    commit(mutationTypes.FIRST_VISIT, false)
+  },
+  [actionTypes.SUBSCRIBED]({commit}) {
+    commit(mutationTypes.SUBSCRIBED, true)
+  },
   async [actionTypes.GET_COMMUNITY]({commit, state}) {
     commit(mutationTypes.SET_COMMUNITY, await api.getCommunity())
   },
@@ -110,6 +118,12 @@ const actions = {
 }
 
 const mutations = {
+  [mutationTypes.FIRST_VISIT](state, data) {
+    state.firstVisit = data
+  },
+  [mutationTypes.SUBSCRIBED](state, data) {
+    state.subscribed = data
+  },
   [mutationTypes.SET_SINGLE_IMPRESSUM](state, data) {
     state.single_impressum = data
   },

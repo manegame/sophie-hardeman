@@ -1,5 +1,8 @@
 <template>
   <div class="landing">
+    <transition name="fade" appear>
+      <flash-banner v-if="showTime" @close="showTime = false" />
+    </transition>
     <!-- - -->
     <!-- - -->
     <!-- - -->
@@ -224,9 +227,10 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import {mapState, mapActions} from 'vuex'
 import weather from '@/components/weather'
 import calendar from '@/components/calendar'
+import flashBanner from '@/components/flash-banner'
 
 export default {
   name: 'landing',
@@ -244,12 +248,14 @@ export default {
   },
   components: {
     weather,
-    calendar
+    calendar,
+    flashBanner
   },
   props: [],
   data() {
     return {
-      collapse: false
+      collapse: false,
+      showTime: false
     }
   },
   computed: {
@@ -286,6 +292,9 @@ export default {
         return product.acf.garment_category.term_id === id
       })
     }
+  },
+  mounted () {
+    setTimeout(() => { this.showTime = true }, 3000)
   }
 }
 </script>
@@ -294,6 +303,37 @@ export default {
 @import '../style/helpers/_mixins.scss';
 @import '../style/helpers/_responsive.scss';
 @import '../style/_variables.scss';
+
+.fade-enter-active {
+  transition: opacity 0.3s;
+}
+
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+
+.fade-slow-enter-active {
+  transition: opacity 2s;
+}
+
+.fade-slow-leave-active {
+  transition: opacity 0.5s;
+}
+
+.fade-enter,
+.fade-leave-to,
+.fade-slow-enter,
+.fade-slow-leave-to {
+  opacity: 0;
+}
+
+.fade-leave,
+.fade-enter-to,
+.fade-slow-leave,
+.fade-slow-enter-to {
+  opacity: 1;
+}
+
 
 .landing {
   background: $white;

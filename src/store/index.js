@@ -16,11 +16,10 @@ export default new Vuex.Store({
     shopify
   },
   plugins: [createPersistedState({
-    paths: ['shopify.checkoutId'],
+    paths: ['shopify.checkoutId', 'main.firstVisit', 'main.subscribed'],
     storage: {
       getItem: key => Cookies.get(key),
       setItem: (key, value) => {
-        console.log('set cookie', key, value)
         Cookies.set(key, value, { expires: 3, secure: false })
       },
       removeItem: key => Cookies.remove(key)
