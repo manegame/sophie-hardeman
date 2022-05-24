@@ -47,9 +47,9 @@ export default {
 
 .zoom_img {
   width: 100%;
-  height: 50vh;
+  height: 70vh;
   object-fit: contain;
-  background: $grey;
+  background: $white;
   margin-bottom: 0;
   display: block;
   cursor: zoom-in;
