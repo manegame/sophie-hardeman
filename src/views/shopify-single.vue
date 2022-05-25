@@ -19,8 +19,8 @@
                 <zoom-img :imageSource='image.src' />
               </div>
             </div>
-            <div class="arrow-right swiper-button-next swiper-button-white" @click='nextButton'></div>
-            <div class="arrow-left swiper-button-prev swiper-button-white" @click='prevButton'></div>
+            <div class="arrow-right swiper-button-next swiper-button-black" @click='nextButton'></div>
+            <div class="arrow-left swiper-button-prev swiper-button-black" @click='prevButton'></div>
           </div>
         </div>
         <div class="swiper-container gallery-thumbs" id="gallery-thumbs">
@@ -31,8 +31,8 @@
                   :style='"background-image:url("+ image.src +")"' />
           </div>
           <!-- Add Arrows -->
-          <div class="swiper-button-next swiper-button-next--thumb swiper-button-white"></div>
-          <div class="swiper-button-prev swiper-button-prev--thumb swiper-button-white"></div>
+          <div class="swiper-button-next swiper-button-next--thumb swiper-button-black"></div>
+          <div class="swiper-button-prev swiper-button-prev--thumb swiper-button-black"></div>
         </div>
       </template>
 
@@ -286,7 +286,7 @@ fieldset {
     margin-bottom: 40px;
 
     .swiper-slide {
-      background-color: $grey;
+      background-color: $white;
       object-fit: contain;
       background-size: contain;
       background-position: center;

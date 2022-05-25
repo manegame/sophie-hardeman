@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="about_sophie">
+    <!-- <div class="about_sophie">
       <img  class="about_sophie__pic"
             src='https://cms.hardeman.co/wp-content/uploads/2018/02/unnamed-500x667.jpg' />
       <div class="about_sophie__text">
@@ -17,7 +17,7 @@
           contact seller
         </a>
       </div>
-    </div>
+    </div> -->
   </section>
 </template>
 
