@@ -28,7 +28,7 @@
     "js-cookie": "^2.2.1",
     "mocha": "^5.2.0",
     "mocha-webpack": "^1.1.0",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "prismic-javascript": "^1.5.0-beta.1",
     "raven-js": "^3.20.1",
     "shopify-buy": "^2.9.1",
